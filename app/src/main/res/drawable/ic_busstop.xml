@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <path
+        android:fillColor="#999"
+        android:name="타원 1"
+        android:pathData="m256 51c113.2 0 205 91.8 205 205c0 113.2 -91.8 205 -205 205c-113.2 0 -205 -91.8 -205 -205c0 -113.2 91.8 -205 205 -205z" />
+    <path
+        android:fillColor="#fff"
+        android:strokeColor="#fff"
+        android:strokeWidth="6.1"
+        android:strokeMiterLimit="100"
+        android:name="모양 1"
+        android:pathData="m368 213 -112.7 113.1 -111.3 -111.7 -1 1 112.1 112.6 0.9 -0.9 0.1 0.1 112.8 -113.3 -1 -1z" />
+</vector>

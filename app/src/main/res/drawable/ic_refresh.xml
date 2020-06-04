@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <path
+        android:fillColor="#999"
+        android:name="타원 1"
+        android:pathData="m256 51c113.2 0 205 91.8 205 205c0 113.2 -91.8 205 -205 205c-113.2 0 -205 -91.8 -205 -205c0 -113.2 91.8 -205 205 -205z" />
+    <path
+        android:name="타원 1"
+        android:pathData="m389.4 269 -13.1 0h0c-6.5 60.7 -57.9 108 -120.3 108c-62.4 0 -113.8 -47.3 -120.3 -108h-0l-13.1 0c6.5 67.9 63.8 121 133.4 121c69.6 0 126.9 -53.1 133.4 -121z"
+        android:fillColor="#fff" />
+    <path
+        android:name="타원 1 사본"
+        android:pathData="m256 122c-69.6 0 -126.8 53.1 -133.4 121l13.1 -0c6.5 -60.7 57.9 -108 120.3 -108c62.4 0 113.8 47.3 120.3 107.9l13.1 -0c-6.6 -67.9 -63.8 -120.9 -133.4 -120.9z"
+        android:fillColor="#fff" />
+    <path
+        android:strokeColor="#fff"
+        android:strokeWidth="10"
+        android:strokeMiterLimit="100"
+        android:name="모양 1"
+        android:pathData="m380.3 263.3 -13 13 1.4 1.4 12.3 -12.3 12.3 12.3 1.4 -1.4 -13 -13 -0.7 0.7 -0.7 -0.7z" />
+    <path
+        android:strokeColor="#fff"
+        android:strokeWidth="10"
+        android:strokeMiterLimit="100"
+        android:name="모양 1 사본"
+        android:pathData="m119.4 234 -1.4 1.4 12.8 12.6 0.7 -0.7 0.7 0.7 12.8 -12.6 -1.4 -1.4 -12.1 11.9 -12.1 -11.9z" />
+</vector>
