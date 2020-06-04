@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 투명 & 못가져옴 -->
+    <color name="invisible">#00000000</color>
+    <color name="import_error">#AAAAAA</color>
+
     <!-- 기본색상들 -->
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#D8B4ED</color>
