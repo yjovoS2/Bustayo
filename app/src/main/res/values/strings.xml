@@ -1,10 +1,11 @@
 <resources>
     <!-- 앱 이름 -->
-    <string name="app_name">Bustayo</string>
+    <string name="app_name">버스타요</string>
 
     <!-- 메뉴 관련 -->
     <string name="bookmark">즐겨찾기</string>
     <string name="bottomNavi_map">주변 정류장</string>
     <string name="alarm_off">하차알람</string>
 
+    <!-- -->
 </resources>
