@@ -12,10 +12,15 @@
         android:background="@color/colorPrimaryDark"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <!--
+    - 초기 화면은 원래 즐겨찾기
+    - name 변경 필요
+    -->
     <fragment
-        android:id="@+id/fragment_main"
+        android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:name="com.bhsd.bustayo.NMapFragment"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"/>
 
@@ -25,7 +30,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         app:menu="@menu/bottom_navigation"
-        app:layout_constraintTop_toBottomOf="@id/fragment_main"
+        app:layout_constraintTop_toBottomOf="@id/fragment"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
