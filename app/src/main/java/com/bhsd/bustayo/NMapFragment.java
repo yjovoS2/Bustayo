@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.naver.maps.map.MapFragment;
+
 public class NMapFragment extends Fragment{
 
 
