@@ -17,8 +17,8 @@ public class NMapFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState); //이거 왜 하는거지
+        super.onCreateView(inflater, container, savedInstanceState); //이거 왜 하는거지 (질문)
 
-        return inflater.inflate(R.layout.fragment_nmap, container, false);// attachToRootㅇ ㅣ게 뭐지
+        return inflater.inflate(R.layout.fragment_nmap, container, false); //attachToRoot 이게 뭐지 (질문)
     }
 }

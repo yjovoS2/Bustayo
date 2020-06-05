@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
-
         nMapFragment = new NMapFragment();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
@@ -34,12 +33,15 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.bottomNavi_bookmark:
+                        //fragment 화면 전환 (즐겨찾기)
                         fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
                         return true;
                     case R.id.bottomNavi_map:
+                        //fragment 화면 전환 (지도)
                         fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
                         return true;
                     case R.id.bottomNavi_alarm_off:
+                        //하차알람 화면 연결 (하차알람)
                         fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
                         return true;
                 }
