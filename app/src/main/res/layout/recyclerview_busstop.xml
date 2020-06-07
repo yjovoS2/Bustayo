@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/dropdown_button"
         app:layout_constraintRight_toRightOf="@id/dropdown_button"
-        android:background="#ffffff"/>
+        android:background="@color/background_gray"/>
 
     <ImageView
         android:id="@+id/down"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/up"
         app:layout_constraintLeft_toLeftOf="@id/dropdown_button"
         app:layout_constraintRight_toRightOf="@id/dropdown_button"
-        android:background="#c0c0c0"/>
+        android:background="@color/background_gray"/>
 
     <ImageView
         android:id="@+id/dropdown_button"
