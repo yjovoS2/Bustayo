@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/drawerComplaint"
+        android:icon="@drawable/ic_complaint"
+        android:title="@string/complaint"/>
+    <item
+        android:id="@+id/drawerLostList"
+        android:icon="@drawable/ic_lost_list"
+        android:title="@string/lost_list"/>
+    <item
+        android:id="@+id/drawerSetLocation"
+        android:icon="@drawable/ic_set_location"
+        android:title="@string/set_location"/>
+    <item
+        android:id="@+id/drawerNotice"
+        android:icon="@drawable/ic_notice"
+        android:title="@string/notice"/>
+    <item
+        android:id="@+id/drawerSetting"
+        android:icon="@drawable/ic_setting"
+        android:title="@string/setting"/>
+</menu>
