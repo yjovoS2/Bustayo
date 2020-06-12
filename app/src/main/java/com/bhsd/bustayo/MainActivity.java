@@ -28,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
     ImageView drawerHandle;
 
     //프래그먼트 관련
-    FragmentManager fragmentManager;
     Fragment nMapFragment;
+    //test
+    Fragment searchBusFragment;
+    Fragment searchStationFragment;
 
     //바텀네비게이션 관련
     BottomNavigationView bottomNavigation;
@@ -40,17 +42,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /* 안해도 똑같은 이유
         //툴바 설정, 이름 비활성화
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        */
 
         search = findViewById(R.id.search);
         drawerLayout = findViewById(R.id.drawerLayout);
         drawer = findViewById(R.id.drawer);
         drawerHandle = findViewById(R.id.drawerHandle);
 
-        fragmentManager = getSupportFragmentManager();
         nMapFragment = new NMapFragment();
+        //test
+        searchBusFragment = new SearchBusFragment();
+        searchStationFragment = new SearchStationFragment();
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
     }
@@ -134,15 +140,15 @@ public class MainActivity extends AppCompatActivity {
                 switch(item.getItemId()){
                     //즐겨찾기
                     case R.id.bottomNavBookmark:
-                        fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, nMapFragment).addToBackStack(null).commit();
                         return true;
                     //주변 정류장
                     case R.id.bottomNavMap:
-                        fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchBusFragment).addToBackStack(null).commit();
                         return true;
                     //하차알림
                     case R.id.bottomNavAlarmOff:
-                        fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchStationFragment).addToBackStack(null).commit();
                         return true;
                 }
                 return false;

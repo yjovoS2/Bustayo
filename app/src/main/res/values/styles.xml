@@ -13,8 +13,8 @@
     <style name="NavigationViewTheme" parent="AppTheme">
         <item name="listPreferredItemHeightSmall">60dp</item>
         <item name="itemIconSize">25dp</item>
-        <item name="itemTextColor">#aa777777</item>
         <item name="itemIconTint">@color/colorAccent</item>
+        <item name="itemTextColor">#cc777777</item>
         <item name="android:textSize">15sp</item>
     </style>
 

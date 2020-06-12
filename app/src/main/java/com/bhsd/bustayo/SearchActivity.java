@@ -1,17 +1,27 @@
 package com.bhsd.bustayo;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class SearchActivity extends MainActivity {
+import org.w3c.dom.Text;
 
-    EditText searchText; //검색창
+public class SearchActivity extends AppCompatActivity {
+
+    EditText searchText;    //검색창
+    ImageView searchGoBack; //뒤로가기
     TabLayout tabLayout;
     ViewPager viewPager;
 
@@ -25,12 +35,9 @@ public class SearchActivity extends MainActivity {
         setContentView(R.layout.activity_search);
 
         searchText = findViewById(R.id.searchText);
+        searchGoBack = findViewById(R.id.searchGoBack);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
-
-        //탭 아이콘 설정
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_bus);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_sation_search);
 
         //프래그먼트 연결 & 어댑터 설정
         searchPagerAdapter = new SearchPagerAdapter(this, getSupportFragmentManager());
@@ -42,19 +49,29 @@ public class SearchActivity extends MainActivity {
 
         //뷰페이저, 탭 연동
         tabLayout.setupWithViewPager(viewPager);
+
+        //탭 아이콘 설정
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_bus);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_sation_search);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        //버스, 정류장 탭 클릭 시
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                //버스 클릭
                 if(tab.getPosition() == 0){
                     searchText.setHint(R.string.bus_search);
+                    searchText.setInputType(InputType.TYPE_CLASS_PHONE);
                 }
-                else {
+                // 정류장 클릭
+                else if(tab.getPosition() == 1){
                     searchText.setHint(R.string.station_search);
+                    searchText.setInputType(InputType.TYPE_CLASS_TEXT);
                 }
             }
 
@@ -71,6 +88,28 @@ public class SearchActivity extends MainActivity {
                 finish();
 
                 overridePendingTransition(R.anim.not_mov, R.anim.right_mov);
+            }
+        });
+
+        //test
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 0){
+                    Toast.makeText(getApplicationContext(), "끝", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
     }

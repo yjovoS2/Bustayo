@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:text="@string/login"
-        android:textColor="#aa777777"
+        android:textColor="#cc777777"
         android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +33,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#efefef"
+        android:background="#33777777"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 

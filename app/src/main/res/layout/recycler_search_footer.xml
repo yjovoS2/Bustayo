@@ -2,11 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="25dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchStationRecycle"
+    <TextView
+        android:id="@+id/searchHistory"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="버스 검색기록 삭제"
+        android:textColor="#cc777777"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
