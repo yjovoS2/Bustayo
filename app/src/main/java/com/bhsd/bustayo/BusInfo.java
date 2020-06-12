@@ -11,7 +11,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-public class BusInfo {
+public class BusInfo {  // bus의 정보를 담는 객체~!~
     private String[] b_tagNm = { "busRouteId", "busRouteNm", "edStationNm", "busType", "stStationNm", "term" };
     private String[] s_tagNm = { "beginTm", "lastTm" };
 
