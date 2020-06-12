@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     Fragment nMapFragment;
+    //수정
+    BookmarkFragment bmFragment;
 
     BottomNavigationView bottomNavigation;
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         nMapFragment = new NMapFragment();
+        //수정
+        bmFragment = new BookmarkFragment();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
 
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 switch(item.getItemId()){
                     case R.id.bottomNavi_bookmark:
                         //fragment 화면 전환 (즐겨찾기)
-                        fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
+                        fragmentManager.beginTransaction().replace(R.id.fragment, bmFragment).commit();
                         return true;
                     case R.id.bottomNavi_map:
                         //fragment 화면 전환 (지도)
