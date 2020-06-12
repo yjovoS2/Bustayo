@@ -1,5 +1,7 @@
 package com.bhsd.bustayo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +20,9 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.station_list, parent, false);
-        return new ItemViewHolder(view);
+        Context context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.station_list, parent, false);
+        return new ItemViewHolder(view, context);
     }
 
     @Override
@@ -38,20 +41,35 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView stop_name;
+        private TextView stationName;
         private ImageView previous;
         private ImageView next;
+        private String stationId;
 
-        ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView, final Context context) {
             super(itemView);
 
-            stop_name = itemView.findViewById(R.id.busstop_name);
+            stationName = itemView.findViewById(R.id.busstop_name);
             previous = itemView.findViewById(R.id.previous_busstop);
             next = itemView.findViewById(R.id.next_busstop);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION) {
+                        Intent intent = new Intent(context, StationActivity.class);
+                        intent.putExtra("stationNm", stationName.getText().toString());
+                        intent.putExtra("arsId", stationId);
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
 
         void onBind(StationListItem item) {
-            stop_name.setText(item.getStopName());
+            stationName.setText(item.getStationName());
+            stationId = item.getStationId();
             previous.setBackgroundColor(item.getPreviousColor());
             next.setBackgroundColor(item.getNextColor());
         }

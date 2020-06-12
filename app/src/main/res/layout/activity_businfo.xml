@@ -6,18 +6,12 @@
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/businfo_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
         android:background="@color/bus_green"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="버스번호" />
-
-    </androidx.appcompat.widget.Toolbar>
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 운행구간 -->
     <TextView
@@ -29,7 +23,7 @@
         android:text="운행구간"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/businfo_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
         android:id="@+id/bus_service_section_content"

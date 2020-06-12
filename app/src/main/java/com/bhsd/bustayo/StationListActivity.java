@@ -38,7 +38,7 @@ public class StationListActivity extends AppCompatActivity {
     String busId;
     int busType;
     RecyclerView stationListRCV;
-    StationListAdapter bus_adapter;
+    StationListAdapter stationListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class StationListActivity extends AppCompatActivity {
 
         stationListRCV = findViewById(R.id.station_list_recyclerview);
 
-        setBusAdapter();
+        setStationListAdapter();
 
         new Thread() {
             @Override
@@ -55,7 +55,7 @@ public class StationListActivity extends AppCompatActivity {
                 SimpleArrayMap<String,String> busInfo = getApiMap("busRouteInfo/getBusRouteList?serviceKey=", "&strSrch=", busNumber, new String[]{"busRouteId","routeType"});
                 busId = busInfo.get("busRouteId");
                 busType = Integer.parseInt(busInfo.get("routeType"));
-                ArrayList<SimpleArrayMap<String,String>> stationInfo = getApiArray("busRouteInfo/getStaionByRoute?serviceKey=", "&busRouteId=", busInfo.get("busRouteId"), new String[]{"station", "stationNm"});
+                ArrayList<SimpleArrayMap<String,String>> stationInfo = getApiArray("busRouteInfo/getStaionByRoute?serviceKey=", "&busRouteId=", busInfo.get("busRouteId"), new String[]{"arsId", "stationNm"});
 
                 setStationAdapter(stationInfo);
 
@@ -63,7 +63,7 @@ public class StationListActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         setToolbar(busNumber);
-                        bus_adapter.notifyDataSetChanged();
+                        stationListAdapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -84,8 +84,8 @@ public class StationListActivity extends AppCompatActivity {
             } else {
                 next = Color.DKGRAY;
             }
-            StationListItem it = new StationListItem(item.get(i).get("stationNm"), previous, next);
-            bus_adapter.addItem(it);
+            StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("arsId"), previous, next);
+            stationListAdapter.addItem(it);
         }
     }
 
@@ -168,13 +168,13 @@ public class StationListActivity extends AppCompatActivity {
         return null;
     }
 
-    void setBusAdapter() {
+    void setStationListAdapter() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         stationListRCV.setLayoutManager(linearLayoutManager);
 
-        bus_adapter = new StationListAdapter();
-        stationListRCV.setAdapter(bus_adapter);
+        stationListAdapter = new StationListAdapter();
+        stationListRCV.setAdapter(stationListAdapter);
     }
 
     void setToolbar(String title) {

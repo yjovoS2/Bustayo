@@ -1,21 +1,30 @@
 package com.bhsd.bustayo;
 
 public class StationListItem {
-    private String stop_name;
+    private String stationName, stationId;
     private int previous, next;
 
-    public StationListItem(String stop_name, int previous, int next) {
-        this.stop_name = stop_name;
+    public StationListItem(String stationName, String stationId, int previous, int next) {
+        this.stationName = stationName;
+        this.stationId = stationId;
         this.previous = previous;
         this.next = next;
     }
 
-    void setStopName(String stop_name) {
-        this.stop_name = stop_name;
+    void setStationName(String stationName) {
+        this.stationName = stationName;
     }
 
-    String getStopName() {
-        return stop_name;
+    String getStationName() {
+        return stationName;
+    }
+
+    void setStationId(String stationId) {
+        this.stationId = stationId;
+    }
+
+    String getStationId() {
+        return stationId;
     }
 
     void setPreviousColor(int colorID) {
