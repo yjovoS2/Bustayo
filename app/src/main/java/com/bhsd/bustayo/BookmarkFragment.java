@@ -28,7 +28,6 @@ public class BookmarkFragment extends Fragment {
     BookmarkRecyclerViewAdapter badapter;
     CurrentBusRecyclerViewAdpater cadapter;
     ImageView drawer;
-    int i;
 
 
     @Nullable
