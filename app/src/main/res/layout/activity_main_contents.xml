@@ -49,7 +49,7 @@
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:name="com.bhsd.bustayo.NMapFragment"
+        android:name="com.bhsd.bustayo.BookmarkFragment"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigation"/>
 

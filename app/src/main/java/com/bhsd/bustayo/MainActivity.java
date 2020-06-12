@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     //프래그먼트 관련
     Fragment nMapFragment;
+    BookmarkFragment bmFragment;
 
     //바텀네비게이션 관련
     BottomNavigationView bottomNavigation;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         drawerHandle = findViewById(R.id.drawerHandle);
 
         nMapFragment = new NMapFragment();
+        bmFragment = new BookmarkFragment();
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
     }
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 switch(item.getItemId()){
                     //즐겨찾기
                     case R.id.bottomNavBookmark:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, nMapFragment).addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, bmFragment).addToBackStack(null).commit();
                         return true;
                     //주변 정류장
                     case R.id.bottomNavMap:
