@@ -10,11 +10,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -29,9 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     //프래그먼트 관련
     Fragment nMapFragment;
-    //test
-    Fragment searchBusFragment;
-    Fragment searchStationFragment;
 
     //바텀네비게이션 관련
     BottomNavigationView bottomNavigation;
@@ -42,21 +37,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* 안해도 똑같은 이유
-        //툴바 설정, 이름 비활성화
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        */
-
         search = findViewById(R.id.search);
         drawerLayout = findViewById(R.id.drawerLayout);
         drawer = findViewById(R.id.drawer);
         drawerHandle = findViewById(R.id.drawerHandle);
 
         nMapFragment = new NMapFragment();
-        //test
-        searchBusFragment = new SearchBusFragment();
-        searchStationFragment = new SearchStationFragment();
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
     }
@@ -110,7 +96,12 @@ public class MainActivity extends AppCompatActivity {
                 switch(item.getItemId()){
                     //불편신고
                     case R.id.drawerComplaint:
-                        Toast.makeText(MainActivity.this, "drawerComplaint", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), ComplaintActivity.class);
+                        startActivity(intent);
+
+                        //애니메이션 설정 (왼쪽으로 슬라이딩)
+                        //overridePendingTransition(R.anim.left_mov, R.anim.not_mov);
+
                         return true;
                     //분실물 현황
                     case R.id.drawerLostList:
@@ -144,11 +135,11 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     //주변 정류장
                     case R.id.bottomNavMap:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchBusFragment).addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, nMapFragment).addToBackStack(null).commit();
                         return true;
                     //하차알림
                     case R.id.bottomNavAlarmOff:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchStationFragment).addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, nMapFragment).addToBackStack(null).commit();
                         return true;
                 }
                 return false;

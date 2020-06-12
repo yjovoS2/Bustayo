@@ -11,12 +11,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-
-import org.w3c.dom.Text;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -82,7 +79,8 @@ public class SearchActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) { }
         });
 
-        findViewById(R.id.searchGoBack).setOnClickListener(new View.OnClickListener() {
+        //뒤로가기 클릭 (검색 -> 메인)
+        searchGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -101,7 +99,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
