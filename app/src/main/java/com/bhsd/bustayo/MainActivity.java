@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /*
-         * 햄버거 버튼 -> 로그인 영역 클릭
+         * 햄버거 버튼 -> 로그인 영역
          * 로그인 화면 실행
          */
         drawer.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
