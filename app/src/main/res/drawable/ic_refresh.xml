@@ -4,27 +4,23 @@
     android:viewportWidth="512"
     android:viewportHeight="512">
     <path
-        android:fillColor="#999"
         android:name="타원 1"
-        android:pathData="m256 51c113.2 0 205 91.8 205 205c0 113.2 -91.8 205 -205 205c-113.2 0 -205 -91.8 -205 -205c0 -113.2 91.8 -205 205 -205z" />
-    <path
-        android:name="타원 1"
-        android:pathData="m389.4 269 -13.1 0h0c-6.5 60.7 -57.9 108 -120.3 108c-62.4 0 -113.8 -47.3 -120.3 -108h-0l-13.1 0c6.5 67.9 63.8 121 133.4 121c69.6 0 126.9 -53.1 133.4 -121z"
+        android:pathData="m460 275.8 -13.1 0h0c-9.9 96.7 -91.6 172.2 -191 172.2c-99.3 0 -181 -75.4 -191 -172.1h-0l-13.1 0c10 103.9 97.5 185.1 204 185.1c106.5 0 194.1 -81.3 204 -185.2z"
         android:fillColor="#fff" />
     <path
         android:name="타원 1 사본"
-        android:pathData="m256 122c-69.6 0 -126.8 53.1 -133.4 121l13.1 -0c6.5 -60.7 57.9 -108 120.3 -108c62.4 0 113.8 47.3 120.3 107.9l13.1 -0c-6.6 -67.9 -63.8 -120.9 -133.4 -120.9z"
+        android:pathData="m256 51c-106.5 0 -194 81.2 -204 185.1l13.1 -0c9.9 -96.7 91.7 -172.1 191 -172.1c99.3 0 181 75.4 191 172l13.1 -0c-10 -103.8 -97.6 -185 -204 -185z"
         android:fillColor="#fff" />
     <path
         android:strokeColor="#fff"
         android:strokeWidth="10"
         android:strokeMiterLimit="100"
         android:name="모양 1"
-        android:pathData="m380.3 263.3 -13 13 1.4 1.4 12.3 -12.3 12.3 12.3 1.4 -1.4 -13 -13 -0.7 0.7 -0.7 -0.7z" />
+        android:pathData="m446.1 267.2 -19.9 19.9 2.2 2.2 18.8 -18.8 18.8 18.8 2.2 -2.2 -19.9 -19.9 -1.1 1.1 -1.1 -1.1z" />
     <path
         android:strokeColor="#fff"
         android:strokeWidth="10"
         android:strokeMiterLimit="100"
         android:name="모양 1 사본"
-        android:pathData="m119.4 234 -1.4 1.4 12.8 12.6 0.7 -0.7 0.7 0.7 12.8 -12.6 -1.4 -1.4 -12.1 11.9 -12.1 -11.9z" />
+        android:pathData="m47 222.4 -2.1 2.1 19.6 19.3 1.1 -1 1.1 1 19.6 -19.3 -2.1 -2.1 -18.5 18.2 -18.5 -18.2z" />
 </vector>
