@@ -43,7 +43,7 @@ public class BookmarkFragment extends Fragment {
         busStopList.setHasFixedSize(true);
         busStopList.setLayoutManager(layoutManager);
         drawer = fView.findViewById(R.id.drawer_button);
-        busList = fView.findViewById(R.id.bus_bookmark);
+        busList = fView.findViewById(R.id.);
         busList.setHasFixedSize(true);
         busStopList.setLayoutManager(layoutManager);
 
