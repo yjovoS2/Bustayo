@@ -71,6 +71,8 @@ public class BookmarkFragment extends Fragment {
             }
         });
 
+        int i;
+
         return view;
     }
 }
