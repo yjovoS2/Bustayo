@@ -31,23 +31,26 @@ import java.util.ArrayList;
 
 public class StationListActivity extends AppCompatActivity {
 
-    String key = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
-    String url = "http://ws.bus.go.kr/api/rest/";
+    private String key = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
+    private String url = "http://ws.bus.go.kr/api/rest/";
 
-    String busNumber = "7612";
-    String busId;
-    int busType;
-    RecyclerView stationListRCV;
-    StationListAdapter stationListAdapter;
+    private String busNumber;
+    private String busId;
+    private int busType;
+    private RecyclerView stationListRCV;
+    private StationListAdapter stationListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        stationListRCV = findViewById(R.id.station_list_recyclerview);
+        // 선택된 Bus의 정보를 받아오기 위한 intent
+        Intent inIntent = getIntent();
+        busNumber = inIntent.getStringExtra("busRouteNm");
 
-        setStationListAdapter();
+        stationListRCV = findViewById(R.id.station_list_recyclerview);
+        setStationListAdapter();    // recyclerview에 대한 adapter설정
 
         new Thread() {
             @Override
@@ -70,25 +73,8 @@ public class StationListActivity extends AppCompatActivity {
         }.start();
     }
 
-    void setStationAdapter(ArrayList<SimpleArrayMap<String,String>> item) {
-        int previous, next;
-        for(int i = 0; i < item.size(); i++) {
-            if(i == 0) {
-                previous = getColor(R.color.invisible);
-            } else {
-                previous = Color.DKGRAY;
-            }
-
-            if(i == item.size() -1) {
-                next = getColor(R.color.invisible);
-            } else {
-                next = Color.DKGRAY;
-            }
-            StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("arsId"), previous, next);
-            stationListAdapter.addItem(it);
-        }
-    }
-
+    /* api 설정! */
+    // api 결과를 simple array map으로 return
     SimpleArrayMap<String, String> getApiMap(String search_url, String search_tag, String search_content, String[] tags) {
         String queryUrl = url + search_url + key + search_tag + search_content;
         SimpleArrayMap<String,String> return_value = new SimpleArrayMap<>();
@@ -123,7 +109,7 @@ public class StationListActivity extends AppCompatActivity {
         }
         return null;
     }
-
+    // api 결과를 simple array map으로 저장한 뒤 array list에 넣어서 return
     ArrayList<SimpleArrayMap<String,String>> getApiArray(String search_url, String search_tag, String search_content, String[] tags) {
         String queryUrl = url + search_url + key + search_tag + search_content;
         ArrayList<SimpleArrayMap<String,String>> return_value = new ArrayList<>();
@@ -168,6 +154,7 @@ public class StationListActivity extends AppCompatActivity {
         return null;
     }
 
+    /* adapter & item 설정! */
     void setStationListAdapter() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -176,7 +163,26 @@ public class StationListActivity extends AppCompatActivity {
         stationListAdapter = new StationListAdapter();
         stationListRCV.setAdapter(stationListAdapter);
     }
+    void setStationAdapter(ArrayList<SimpleArrayMap<String,String>> item) {
+        int previous, next;
+        for(int i = 0; i < item.size(); i++) {
+            if(i == 0) {
+                previous = getColor(R.color.invisible);
+            } else {
+                previous = Color.DKGRAY;
+            }
 
+            if(i == item.size() -1) {
+                next = getColor(R.color.invisible);
+            } else {
+                next = Color.DKGRAY;
+            }
+            StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("arsId"), previous, next);
+            stationListAdapter.addItem(it);
+        }
+    }
+
+    /* toolbar 설정! */
     void setToolbar(String title) {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
@@ -193,44 +199,42 @@ public class StationListActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
-
+    // busType에 따른 toolbar와 statusbar 색상 설정
     void actionBarColor(ActionBar actionBar, Window window) {
-        int color;
+        int color = 0;
         switch (busType) {
-            case 1:
-                color = Color.rgb(123, 82, 0);
+            case 1: // 공항
+                color = getColor(R.color.bus_skyblue);
                 break;
-            case 2:
-            case 4:
-                color = Color.GREEN;
+            case 2: // 마을
+            case 4: // 지선
+                color = getColor(R.color.bus_green);
                 break;
-            case 3:
-                color = Color.BLUE;
+            case 3: // 간선
+                color = getColor(R.color.bus_blue);
                 break;
-            case 5:
-                color = Color.YELLOW;
+            case 5: // 순환
+                getColor(R.color.bus_yellow);
                 break;
-            case 6:
-            case 0:
-                color = Color.RED;
+            case 6: // 광역
+            case 0: // 공용
+                color = getColor(R.color.bus_red);
                 break;
-            case 7:
-            case 8:
-            case 9:
+            case 7: // 인천
+            case 8: // 경기
+            case 9: // 폐지
             default:
-                color = Color.GRAY;
+                color = getColor(R.color.import_error);
         }
         actionBar.setBackgroundDrawable(new ColorDrawable(color));
         window.setStatusBarColor(color);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.station_list_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -240,7 +244,7 @@ public class StationListActivity extends AppCompatActivity {
                 return true;
             case R.id.bus_info:
                 Intent intent = new Intent(StationListActivity.this, BusInfoActivity.class);
-                intent.putExtra("stationNm", busNumber);
+                intent.putExtra("busRouteId", busId);
                 intent.putExtra("routeType", busType);
                 startActivity(intent);
                 return true;

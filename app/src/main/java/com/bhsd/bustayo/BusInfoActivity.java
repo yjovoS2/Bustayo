@@ -1,7 +1,6 @@
 package com.bhsd.bustayo;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 public class BusInfoActivity extends AppCompatActivity {
 
     BusInfo busInfo;
-    String busNumber;
+    String busId;
     int busType;
     TextView bus_service_section;
     TextView bus_service_time_weekday, bus_service_time_weekend;
@@ -32,13 +31,13 @@ public class BusInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_businfo);
 
         Intent inIntent = getIntent();
-        busNumber = inIntent.getStringExtra("stationNm");
+        busId = inIntent.getStringExtra("busRouteId");
         busType = inIntent.getIntExtra("routeType", 0);
 
         new Thread() {
             @Override
             public void run() {
-                busInfo = new BusInfo(busNumber);
+                busInfo = new BusInfo(busId);
                 bus_service_section = findViewById(R.id.bus_service_section_content);
                 bus_service_time_weekday = findViewById(R.id.weekday_time);
                 bus_service_time_weekend = findViewById(R.id.weekend_time);
@@ -51,7 +50,7 @@ public class BusInfoActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         setBusServiceTime(time, time);
-                        setToolbar(busNumber);
+                        setToolbar(busInfo.getBusInfoItem("busRouteNm"));
                     }
                 });
             }
@@ -89,30 +88,30 @@ public class BusInfoActivity extends AppCompatActivity {
     }
 
     void actionBarColor(ActionBar actionBar, Window window) {
-        int color;
+        int color = 0;
         switch (busType) {
-            case 1:
-                color = Color.rgb(123, 82, 0);
+            case 1: // 공항
+                color = getColor(R.color.bus_skyblue);
                 break;
-            case 2:
-            case 4:
-                color = Color.GREEN;
+            case 2: // 마을
+            case 4: // 지선
+                color = getColor(R.color.bus_green);
                 break;
-            case 3:
-                color = Color.BLUE;
+            case 3: // 간선
+                color = getColor(R.color.bus_blue);
                 break;
-            case 5:
-                color = Color.YELLOW;
+            case 5: // 순환
+                getColor(R.color.bus_yellow);
                 break;
-            case 6:
-            case 0:
-                color = Color.RED;
+            case 6: // 광역
+            case 0: // 공용
+                color = getColor(R.color.bus_red);
                 break;
-            case 7:
-            case 8:
-            case 9:
+            case 7: // 인천
+            case 8: // 경기
+            case 9: // 폐지
             default:
-                color = Color.GRAY;
+                color = getColor(R.color.import_error);
         }
         actionBar.setBackgroundDrawable(new ColorDrawable(color));
         window.setStatusBarColor(color);

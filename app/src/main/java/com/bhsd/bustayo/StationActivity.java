@@ -29,8 +29,8 @@ import java.util.ArrayList;
 
 public class StationActivity extends AppCompatActivity {
 
-    String key = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
-    String url = "http://ws.bus.go.kr/api/rest/";
+    private String key = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
+    private String url = "http://ws.bus.go.kr/api/rest/";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,12 +38,22 @@ public class StationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_station);
 
         Intent inIntent = getIntent();
-        String arsId = inIntent.getStringExtra("arsId");
+        final String arsId = inIntent.getStringExtra("arsId");
         String stationNm = inIntent.getStringExtra("stationNm");
 
-        ArrayList<SimpleArrayMap<String,String>> busList = getApiArray("stationinfo/getRouteByStation?ServiceKey=", "&arsId=", arsId, new String[]{"busRouteId","busRouteNm","busRouteType"});
+        new Thread() {
+            @Override
+            public void run() {
+                ArrayList<SimpleArrayMap<String,String>> busList = getApiArray("stationinfo/getRouteByStation?ServiceKey=", "&arsId=", arsId, new String[]{"busRouteId","busRouteNm","busRouteType"});
 
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //
+                    }
+                });
+            }
+        }.start();
 
         setToolbar(stationNm);
     }
@@ -97,12 +107,12 @@ public class StationActivity extends AppCompatActivity {
 
     }
 
-    void setToolbar(String bus_number_text) {
+    void setToolbar(String stationNm) {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(bus_number_text);
+        actionBar.setTitle(stationNm);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_launcher_foreground);
 
         Window window = StationActivity.this.getWindow();
