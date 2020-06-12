@@ -1,154 +1,48 @@
 package com.bhsd.bustayo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //툴바 관련
-    TextView search;
-    DrawerLayout drawerLayout;
-    NavigationView drawer;
-    ImageView drawerHandle;
-
-    //프래그먼트 관련
+    FragmentManager fragmentManager;
     Fragment nMapFragment;
-    //test
-    Fragment searchBusFragment;
-    Fragment searchStationFragment;
 
-    //바텀네비게이션 관련
     BottomNavigationView bottomNavigation;
 
-    //초기화 작업
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* 안해도 똑같은 이유
-        //툴바 설정, 이름 비활성화
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        */
-
-        search = findViewById(R.id.search);
-        drawerLayout = findViewById(R.id.drawerLayout);
-        drawer = findViewById(R.id.drawer);
-        drawerHandle = findViewById(R.id.drawerHandle);
-
+        fragmentManager = getSupportFragmentManager();
         nMapFragment = new NMapFragment();
-        //test
-        searchBusFragment = new SearchBusFragment();
-        searchStationFragment = new SearchStationFragment();
 
-        bottomNavigation = findViewById(R.id.bottomNavigation);
-    }
+        bottomNavigation = findViewById(R.id.bottom_navigation);
 
-    //리스너 연결
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        //햄버거 버튼
-        drawerHandle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(drawerLayout.isDrawerOpen(GravityCompat.START))
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                else
-                    drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        //검색 화면 실행
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-                startActivity(intent);
-
-                //애니메이션 설정 (왼쪽으로 슬라이딩)
-                overridePendingTransition(R.anim.left_mov, R.anim.not_mov);
-            }
-        });
-
-        /*
-         * 햄버거 버튼 -> 로그인 영역 클릭
-         * 로그인 화면 실행
-         */
-        drawer.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "로그인 화면 연동 필요", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        /*
-         * 햄버거 버튼 -> 아이템 선택
-         * 각각의 아이템에 해당하는 화면 실행
-         */
-        drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
-                    //불편신고
-                    case R.id.drawerComplaint:
-                        Toast.makeText(MainActivity.this, "drawerComplaint", Toast.LENGTH_SHORT).show();
-                        return true;
-                    //분실물 현황
-                    case R.id.drawerLostList:
-                        Toast.makeText(MainActivity.this, "drawerLostList", Toast.LENGTH_SHORT).show();
-                        return true;
-                    //지역설정 (2차)
-                    case R.id.drawerSetLocation:
-                        Toast.makeText(getApplicationContext(), "지역설정", Toast.LENGTH_SHORT).show();
-                        return true;
-                    //공지사항 (2차)
-                    case R.id.drawerNotice:
-                        Toast.makeText(getApplicationContext(), "공지사항", Toast.LENGTH_SHORT).show();
-                        return true;
-                    //설정 (2차)
-                    case R.id.drawerSetting:
-                        Toast.makeText(getApplicationContext(), "설정", Toast.LENGTH_SHORT).show();
-                        return true;
-                }
-                return false;
-            }
-        });
-
-        //바텀네비게이션 메뉴 선택
+        //BottomNavigationView 메뉴 클릭
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
-                    //즐겨찾기
-                    case R.id.bottomNavBookmark:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, nMapFragment).addToBackStack(null).commit();
+                    case R.id.bottomNavi_bookmark:
+                        //fragment 화면 전환 (즐겨찾기)
+                        fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
                         return true;
-                    //주변 정류장
-                    case R.id.bottomNavMap:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchBusFragment).addToBackStack(null).commit();
+                    case R.id.bottomNavi_map:
+                        //fragment 화면 전환 (지도)
+                        fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
                         return true;
-                    //하차알림
-                    case R.id.bottomNavAlarmOff:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchStationFragment).addToBackStack(null).commit();
+                    case R.id.bottomNavi_alarm_off:
+                        //하차알람 화면 연결 (하차알람)
+                        fragmentManager.beginTransaction().replace(R.id.fragment, nMapFragment).commit();
                         return true;
                 }
                 return false;
