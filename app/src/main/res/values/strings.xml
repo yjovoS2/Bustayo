@@ -2,10 +2,28 @@
     <!-- 앱 이름 -->
     <string name="app_name">버스타요</string>
 
-    <!-- 메뉴 관련 -->
-    <string name="bookmark">즐겨찾기</string>
-    <string name="bottomNavi_map">주변 정류장</string>
-    <string name="alarm_off">하차알람</string>
+    <!-- layout/activity_main_contents.xml -->
+    <string name="search">버스 또는 정류장 검색</string>
 
-    <!-- -->
+    <!-- layout/drawer_header.xml -->
+    <string name="login">로그인</string>
+
+    <!-- layout/activity_search.xml -->
+    <string name="bus">버스</string>
+    <string name="station">정류장</string>
+    <string name="bus_search">버스 검색</string>
+    <string name="station_search">정류장 검색</string>
+
+    <!-- menu/bottom_navigation.xml -->
+    <string name="bookmark">즐겨찾기</string>
+    <string name="map">주변 정류장</string>
+    <string name="alarm_off">하차알림</string>
+
+    <!-- menu/drawer.xml -->
+    <string name="complaint">불편신고</string>
+    <string name="lost_list">분실물 현황</string>
+    <string name="set_location">지역설정</string>
+    <string name="notice">공지사항</string>
+    <string name="setting">설정</string>
+
 </resources>

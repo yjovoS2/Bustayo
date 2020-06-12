@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- 즐겨찾기 -->
     <item
-        android:id="@+id/bottomNavi_bookmark"
+        android:id="@+id/bottomNavBookmark"
         android:icon="@drawable/ic_bookmark"
         android:title="@string/bookmark"/>
-
-    <!-- 주변 정류장 -->
     <item
-        android:id="@+id/bottomNavi_map"
-        android:icon="@drawable/ic_location"
-        android:title="@string/bottomNavi_map" />
-
-    <!-- 하차알림 이미지 수정 필요 -->
+        android:id="@+id/bottomNavMap"
+        android:icon="@drawable/ic_map"
+        android:title="@string/map" />
+    <!-- 이미지 수정 -->
     <item
-        android:id="@+id/bottomNavi_alarm_off"
+        android:id="@+id/bottomNavAlarmOff"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/alarm_off"/>
-
 </menu>
