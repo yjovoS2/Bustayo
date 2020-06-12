@@ -10,21 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bus_green"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="버스번호" />
-
-    </androidx.appcompat.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bus_list"
+        android:id="@+id/station_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/stop_list_toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/stop_list"/>
+        tools:listitem="@layout/station_list"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

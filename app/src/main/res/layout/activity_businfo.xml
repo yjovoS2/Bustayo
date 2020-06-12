@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/businfo_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bus_green"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="버스번호" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- 운행구간 -->
+    <TextView
+        android:id="@+id/bus_service_section_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="15dp"
+        android:text="운행구간"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/businfo_toolbar" />
+
+    <TextView
+        android:id="@+id/bus_service_section_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="운행구간 내용"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/bus_service_section_text" />
+
+    <!-- 운행시간 -->
+    <TextView
+        android:id="@+id/bus_service_time_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="15dp"
+        android:text="운행시간"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/bus_service_section_content"/>
+
+    <TableLayout
+        android:id="@+id/bus_service_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#888888"
+        app:layout_constraintTop_toBottomOf="@id/bus_service_time_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TableRow>
+            <TextView
+                android:id="@+id/weekday_time_text"
+                android:layout_width="100dp"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="#DDDDDD"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="평일" />
+            <TextView
+                android:id="@+id/weekday_time"
+                android:layout_width="280dp"
+                android:layout_margin="1dp"
+                android:background="#FFFFFF"
+                android:textSize="20sp"
+                android:text="평일시간"/>
+        </TableRow>
+
+
+        <TableRow>
+            <TextView
+                android:id="@+id/weekend_time_text"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:background="#DDDDDD"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="주말" />
+            <TextView
+                android:id="@+id/weekend_time"
+                android:layout_margin="1dp"
+                android:background="#FFFFFF"
+                android:textSize="20sp"
+                android:text="주말시간" />
+        </TableRow>
+
+    </TableLayout>
+
+    <!-- 배차간격 -->
+    <TextView
+        android:id="@+id/bus_interval_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="15dp"
+        android:text="배차간격"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/bus_service_time"/>
+
+    <TextView
+        android:id="@+id/bus_interval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="배차간격 내용"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/bus_interval_text" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

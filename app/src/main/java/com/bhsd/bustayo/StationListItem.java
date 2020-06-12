@@ -1,10 +1,10 @@
 package com.bhsd.bustayo;
 
-public class StopListItem {
+public class StationListItem {
     private String stop_name;
     private int previous, next;
 
-    public StopListItem(String stop_name, int previous, int next) {
+    public StationListItem(String stop_name, int previous, int next) {
         this.stop_name = stop_name;
         this.previous = previous;
         this.next = next;
