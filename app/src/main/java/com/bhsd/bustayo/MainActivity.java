@@ -1,5 +1,6 @@
 package com.bhsd.bustayo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -32,11 +34,15 @@ public class MainActivity extends AppCompatActivity {
     //바텀네비게이션 관련
     BottomNavigationView bottomNavigation;
 
+    //MainActivity의 context
+    public static Context context_main;
+
     //초기화 작업
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context_main = this;
 
         search = findViewById(R.id.search);
         drawerLayout = findViewById(R.id.drawerLayout);

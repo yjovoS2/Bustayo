@@ -1,18 +1,15 @@
 package com.bhsd.bustayo;
 
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.AdapterListUpdateCallback;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,56 +18,52 @@ import java.util.ArrayList;
 public class BookmarkFragment extends Fragment {
 
     MainActivity activity;
-    RecyclerView busStopList, busList;
-    RecyclerView.LayoutManager layoutManager;
-    ArrayList<CurrentBusInfo> currentBusInfos;
-    ArrayList<BookmarkInfo> bookmarkInfo;
-    BookmarkRecyclerViewAdapter badapter;
-    CurrentBusRecyclerViewAdpater cadapter;
-    ImageView drawer;
-    int i;
-
+    ArrayList<BookmarkInfo> bookmarkInfos;
+    RecyclerView currentBus;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
-        View fView = inflater.inflate(R.layout.recyclerview_bookmark, container, false);
 
         activity = (MainActivity)getActivity();
-        busStopList = view.findViewById(R.id.bookmark);
-        layoutManager = new LinearLayoutManager(activity);
-        busStopList.setHasFixedSize(true);
-        busStopList.setLayoutManager(layoutManager);
-        drawer = fView.findViewById(R.id.drawer_button);
-        busList = fView.findViewById(R.id.bus_bookmark);
-        busList.setHasFixedSize(true);
-        busStopList.setLayoutManager(layoutManager);
+        bookmarkInfos = new ArrayList<BookmarkInfo>();
 
-        currentBusInfos = new ArrayList<>();
-        bookmarkInfo = new ArrayList<>();
+        insertData();
+        RecyclerView bmRecyclerView = view.findViewById(R.id.bookmark);
 
-        busStopList.setAdapter(badapter);
-        busList.setAdapter(cadapter);
+        final BookmarkRecyclerViewAdapter bmAdapter = new BookmarkRecyclerViewAdapter(bookmarkInfos,activity.context_main);
+        bmRecyclerView.setHasFixedSize(true);
+        bmRecyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
+        bmRecyclerView.setAdapter(bmAdapter);
 
-        //하드코딩 - 테스트용
-        currentBusInfos.add(new CurrentBusInfo(Color.BLUE, 1, 601, "우리집", "곧도착", "나아중에 도착"));
-        bookmarkInfo.add(new BookmarkInfo("우리집앞", currentBusInfos));
-
-        badapter = new BookmarkRecyclerViewAdapter(bookmarkInfo);
-        cadapter = new CurrentBusRecyclerViewAdpater(currentBusInfos);
-
-
-        drawer.setOnClickListener(new View.OnClickListener() {
+        bmAdapter.setOnListItemSelected(new BookmarkRecyclerViewAdapter.OnListItemSelected() {
             @Override
-            public void onClick(View v) {
-                if(drawer.getImageAlpha()== R.drawable.ic_drawer_down)
-                    drawer.setImageResource(R.drawable.ic_drawer_up);
+            public void onItemSelected(View v, int position, RecyclerView selected) {
+                if(selected.getVisibility()!=View.VISIBLE)
+                    selected.setVisibility(View.VISIBLE);
                 else
-                    drawer.setImageResource(R.drawable.ic_drawer_down);
+                    selected.setVisibility(View.GONE);
             }
         });
 
         return view;
     }
+
+    //test용
+    public void insertData(){
+        ArrayList<CurrentBusInfo> currentBusInfos = new ArrayList<>();
+
+        currentBusInfos.add(new CurrentBusInfo(Color.BLUE,0,601,"우리집","곧 도착", "이따 도착"));
+        currentBusInfos.add(new CurrentBusInfo(Color.GREEN,1,6716,"등촌역", "곧도착","막차"));
+
+        bookmarkInfos.add(new BookmarkInfo("등촌역", currentBusInfos));
+
+        ArrayList<CurrentBusInfo> currentBusInfos1 = new ArrayList<>();
+
+        currentBusInfos1.add(new CurrentBusInfo(Color.GREEN,1,6716,"등촌역", "곧도착","막차"));
+
+        bookmarkInfos.add(new BookmarkInfo("목동역", currentBusInfos1));
+    }
+
 }
