@@ -1,11 +1,11 @@
 package com.bhsd.bustayo;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,13 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 public class BookmarkFragment extends Fragment {
 
     MainActivity activity;
     ArrayList<BookmarkInfo> bookmarkInfos;
-    RecyclerView currentBus;
+    FloatingActionButton refresh_btn;
 
     @Nullable
     @Override
@@ -28,22 +30,35 @@ public class BookmarkFragment extends Fragment {
 
         activity = (MainActivity)getActivity();
         bookmarkInfos = new ArrayList<BookmarkInfo>();
+        activity.fab = refresh_btn = view.findViewById(R.id.refresh_btn);
 
-        insertData();
-        RecyclerView bmRecyclerView = view.findViewById(R.id.bookmark);
+
+        insertData();       //하드코딩한 부분 - 메소드는 그대로 쓰면서 내용만 바꿀예정
+        final RecyclerView bmRecyclerView = view.findViewById(R.id.bookmark);
 
         final BookmarkRecyclerViewAdapter bmAdapter = new BookmarkRecyclerViewAdapter(bookmarkInfos,activity.context_main);
         bmRecyclerView.setHasFixedSize(true);
         bmRecyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
         bmRecyclerView.setAdapter(bmAdapter);
 
+        //recyclerView 클릭이벤트
         bmAdapter.setOnListItemSelected(new BookmarkRecyclerViewAdapter.OnListItemSelected() {
             @Override
             public void onItemSelected(View v, int position, RecyclerView selected) {
-                if(selected.getVisibility()!=View.VISIBLE)
-                    selected.setVisibility(View.VISIBLE);
-                else
-                    selected.setVisibility(View.GONE);
+                Intent intent = new Intent(activity, StationActivity.class);
+//                값을 넘겨주는 부분
+//                intent.putExtra("stationNm", stationName.getText().toString());
+//                intent.putExtra("arsId", stationId);
+                activity.startActivity(intent);
+            }
+        });
+
+        //floatingActionButton 클릭이벤트
+        refresh_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bmAdapter.notifyDataSetChanged();
+                bmRecyclerView.setAdapter(bmAdapter);
             }
         });
 

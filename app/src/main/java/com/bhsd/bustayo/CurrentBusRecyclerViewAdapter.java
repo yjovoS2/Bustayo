@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import static com.bhsd.bustayo.MainActivity.context_main;
 
 public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentBusRecyclerViewAdapter.CurrentBusViewHolder> {
 
@@ -21,12 +22,16 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
         void onItemSelected(View v, int position);
     }
 
+    public void setOnListItemSelected(OnListItemSelected listener){
+        this.listener = listener;
+    }
+
     public CurrentBusRecyclerViewAdapter(ArrayList<CurrentBusInfo> currentBusInfos) {
         this.currentBusInfos = currentBusInfos;
     }
 
     public class CurrentBusViewHolder extends RecyclerView.ViewHolder{
-        ImageView busColor;
+        ImageView busColor, alarm;
         public TextView busNum, busDestination, currentbus1, currentbus2;
 
         public CurrentBusViewHolder(@NonNull View itemView) {
@@ -36,6 +41,7 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
             busDestination = itemView.findViewById(R.id.bus_destination);
             currentbus1 = itemView.findViewById(R.id.bus_first);
             currentbus2 = itemView.findViewById(R.id.bus_second);
+            alarm = itemView.findViewById(R.id.bus_alarm);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -44,7 +50,6 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
                     if (position != RecyclerView.NO_POSITION) {
                         if (listener != null) {
                             listener.onItemSelected(v, position);
-
                         }
                     }
                 }
@@ -68,7 +73,18 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
         holder.busDestination.setText(currentBusInfos.get(position).getBusDestination());
         holder.currentbus1.setText(currentBusInfos.get(position).getCurrentLocation1());
         holder.currentbus2.setText(currentBusInfos.get(position).getCurrentLocation2());
+
+        holder.alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //몇 정류장전에서 알람을 받을지 설정
+                SetAlarmDialog alarmsetting = new SetAlarmDialog();
+                alarmsetting.Dialog(context_main);
+            }
+        });
     }
+
+    public CurrentBusInfo getItem(int position){ return currentBusInfos.get(position); }
 
     @Override
     public int getItemCount() {

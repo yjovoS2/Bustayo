@@ -1,6 +1,7 @@
 package com.bhsd.bustayo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import static com.bhsd.bustayo.MainActivity.context_main;
 
 public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRecyclerViewAdapter.BookmarkViewHolder> {
 
@@ -34,7 +37,7 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
 
     public class BookmarkViewHolder extends RecyclerView.ViewHolder{
         public TextView busStopName;
-        public ImageView drawer;
+        public ImageView drawer, bookmark_button;
         public RecyclerView currnetBusInfo;
 
         public BookmarkViewHolder(@NonNull View itemView) {
@@ -42,6 +45,7 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
             busStopName = itemView.findViewById(R.id.bustop_name);
             drawer = itemView.findViewById(R.id.drawer_button);
             currnetBusInfo = itemView.findViewById(R.id.bus_bookmark);
+            bookmark_button = itemView.findViewById(R.id.bookmark_button);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,14 +71,43 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookmarkRecyclerViewAdapter.BookmarkViewHolder holder, int position) {
-        CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo());
+    public void onBindViewHolder(@NonNull final BookmarkRecyclerViewAdapter.BookmarkViewHolder holder, final int position) {
+        final CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo());
         holder.currnetBusInfo.setHasFixedSize(true);
         holder.currnetBusInfo.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         holder.currnetBusInfo.setAdapter(adapter);
         holder.busStopName.setText(bookmarkInfos.get(position).getBusStopName());
         holder.drawer.setImageResource(R.drawable.ic_drawer_down);
+        //holder.bookmark_button.setColorFilter(currentBusInfos.get(position).getBusColor()); 로 색 바꿔줘야하는데 내용 바꿔여함
 
+        adapter.setOnListItemSelected(new CurrentBusRecyclerViewAdapter.OnListItemSelected() {
+            @Override
+            public void onItemSelected(View v, int pos) {
+                //이부분에 데이터넘겨주는 부분
+                Intent intent = new Intent(context_main, StationActivity.class);
+                intent.putExtra("stationNm", adapter.getItem(pos).getBusNum()+"");
+                context_main.startActivity(intent);
+            }
+        });
+
+        holder.drawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.currnetBusInfo.getVisibility()!=View.VISIBLE)
+                    holder.currnetBusInfo.setVisibility(View.VISIBLE);
+                else
+                    holder.currnetBusInfo.setVisibility(View.GONE);
+            }
+        });
+
+        holder.bookmark_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bookmarkInfos.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,bookmarkInfos.size());
+            }
+        });
     }
 
     @Override

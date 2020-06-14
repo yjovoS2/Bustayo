@@ -1,11 +1,11 @@
 package com.bhsd.bustayo;
 
-import android.location.Location;
 
 public class CurrentBusInfo {
 
     private int busColor, busCongestion, busNum;
     private String busDestination, currentLocation1, currentLocation2;
+
 
     public CurrentBusInfo(int busColor, int busCongestion, int busNum, String busDestination, String currentLocation1, String currentLocation2) {
         this.busColor = busColor;

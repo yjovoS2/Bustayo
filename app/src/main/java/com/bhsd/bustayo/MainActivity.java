@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,12 +31,16 @@ public class MainActivity extends AppCompatActivity {
     //프래그먼트 관련
     Fragment nMapFragment;
     BookmarkFragment bmFragment;
+    Fragment offAlarmFragment;
 
     //바텀네비게이션 관련
     BottomNavigationView bottomNavigation;
 
     //MainActivity의 context
     public static Context context_main;
+
+    //플로팅 액션 버튼
+    FloatingActionButton fab;
 
     //초기화 작업
     @Override
@@ -51,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         nMapFragment = new NMapFragment();
         bmFragment = new BookmarkFragment();
+        offAlarmFragment = new GetOffAlarmFragment();
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
     }
@@ -140,14 +146,17 @@ public class MainActivity extends AppCompatActivity {
                     //즐겨찾기
                     case R.id.bottomNavBookmark:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, bmFragment).addToBackStack(null).commit();
+                        //FloatingActionButton은 여기서만필요
                         return true;
                     //주변 정류장
                     case R.id.bottomNavMap:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, nMapFragment).addToBackStack(null).commit();
+                        fab.hide();
                         return true;
                     //하차알림
                     case R.id.bottomNavAlarmOff:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, nMapFragment).addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, offAlarmFragment).addToBackStack(null).commit();
+                        fab.hide();
                         return true;
                 }
                 return false;

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,15 @@ import java.util.ArrayList;
 public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.ItemViewHolder> {
 
     private ArrayList<StationListItem> list = new ArrayList<>();
+    private static OnListItemSelected listener = null;
+
+    public interface OnListItemSelected{
+        void onItemSelected(View v, int position);
+    }
+
+    public void setOnListItemSelected(OnListItemSelected listener){
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -58,10 +68,16 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(context, StationActivity.class);
-                        intent.putExtra("stationNm", stationName.getText().toString());
-                        intent.putExtra("arsId", stationId);
-                        context.startActivity(intent);
+                        if(context==MainActivity.context_main)
+                            //하차알림의 클릭과의 구분
+                            listener.onItemSelected(v,position);
+                        else
+                        {
+                            Intent intent = new Intent(context, StationActivity.class);
+                            intent.putExtra("stationNm", stationName.getText().toString());
+                            intent.putExtra("arsId", stationId);
+                            context.startActivity(intent);
+                        }
                     }
                 }
             });
