@@ -110,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
                 switch(item.getItemId()){
                     //불편신고
                     case R.id.drawerComplaint:
-                      //  Intent intent = new Intent(getApplicationContext(), ComplaintActivity.class);
-                      //  startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(), ComplaintActivity.class);
+                        startActivity(intent);
 
                         //애니메이션 설정 (왼쪽으로 슬라이딩)
                         //overridePendingTransition(R.anim.left_mov, R.anim.not_mov);
