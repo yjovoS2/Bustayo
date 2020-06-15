@@ -31,8 +31,11 @@
             android:name=".SearchActivity"
             android:windowSoftInputMode="stateAlwaysVisible"/>
 
-        <!-- 불편신고 화면 -->
+        <!-- 불편신고 리스트 화면 -->
         <activity android:name=".ComplaintActivity"/>
+
+        <!-- 불편신고 접수 화면 -->
+        <activity android:name=".AddComplaintActivity"/>
 
     </application>
 
