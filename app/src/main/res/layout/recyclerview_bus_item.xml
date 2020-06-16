@@ -7,15 +7,25 @@
     android:padding="8dp"
     android:layout_marginBottom="8dp"
     android:orientation="horizontal"
-    android:background="@color/button_gray">
+    android:background="@drawable/button_round">
 
     <ImageView
-        android:id="@+id/bus_state"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:id="@+id/bus_bookmark"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginLeft="5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_bookmark"/>
+
+    <ImageView
+        android:id="@+id/bus_state"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/bus_bookmark"
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/ic_bus" />
 
@@ -25,10 +35,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/bus_state"
         app:layout_constraintRight_toLeftOf="@+id/bus_time"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical">
+        android:layout_marginLeft="80dp">
 
     <TextView
         android:id="@+id/bus_num"
@@ -38,7 +47,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:ems="4"
         android:text="버스 번호"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:gravity="right"/>
 
     <TextView
@@ -72,8 +81,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bus_second"
             android:text="도착 시간1"
-            android:textSize="20dp"
-            android:ems="5"
+            android:textSize="12dp"
+            android:ems="14"
             android:gravity="right"/>
 
         <TextView
@@ -83,8 +92,8 @@
             app:layout_constraintRight_toRightOf="@id/bus_first"
             app:layout_constraintTop_toBottomOf="@id/bus_first"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="20dp"
-            android:ems="5"
+            android:textSize="12dp"
+            android:ems="14"
             android:text="도착 시간2"
             android:gravity="right"/>
 
@@ -92,8 +101,8 @@
 
     <ImageView
         android:id="@+id/bus_alarm"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginRight="5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"

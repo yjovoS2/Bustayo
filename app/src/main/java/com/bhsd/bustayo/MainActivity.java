@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
                 startActivity(intent);
-
                 //애니메이션 설정 (왼쪽으로 슬라이딩)
                 overridePendingTransition(R.anim.left_mov, R.anim.not_mov);
             }
@@ -96,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
         drawer.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "로그인 화면 연동 필요", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
 

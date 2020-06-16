@@ -69,16 +69,21 @@ public class BookmarkFragment extends Fragment {
     public void insertData(){
         ArrayList<CurrentBusInfo> currentBusInfos = new ArrayList<>();
 
-        currentBusInfos.add(new CurrentBusInfo(Color.BLUE,0,601,"우리집","곧 도착", "이따 도착"));
-        currentBusInfos.add(new CurrentBusInfo(Color.GREEN,1,6716,"등촌역", "곧도착","막차"));
+        currentBusInfos.add(new CurrentBusInfo(Color.BLUE,0,"601","우리집","곧 도착", "이따 도착",true));
+        currentBusInfos.add(new CurrentBusInfo(Color.GREEN,1,"6716","등촌역", "곧도착","막차",true));
 
         bookmarkInfos.add(new BookmarkInfo("등촌역", currentBusInfos));
 
         ArrayList<CurrentBusInfo> currentBusInfos1 = new ArrayList<>();
 
-        currentBusInfos1.add(new CurrentBusInfo(Color.GREEN,1,6716,"등촌역", "곧도착","막차"));
+        currentBusInfos1.add(new CurrentBusInfo(Color.GREEN,1,"6715","등촌역", "곧도착","막차", true));
 
         bookmarkInfos.add(new BookmarkInfo("목동역", currentBusInfos1));
-    }
 
+        ArrayList<CurrentBusInfo> currentBusInfos2 = new ArrayList<>();
+
+        currentBusInfos2.add(new CurrentBusInfo(Color.GREEN,1,"7734","옥수역", "곧도착","막차", true));
+
+        bookmarkInfos.add(new BookmarkInfo("옥수역", currentBusInfos2));
+    }
 }

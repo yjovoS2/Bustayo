@@ -78,23 +78,23 @@
         android:layout_marginLeft="40dp"
         app:layout_constraintTop_toBottomOf="@+id/editPASSWD"/>
 
-    <TextView
-        android:id="@+id/search_id_passwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="아이디 / 비밀번호 찾기"
-        android:textSize="10sp"
-        android:textColor="#aa777777"
-        android:layout_marginTop="20dp"
-        app:layout_constraintRight_toRightOf="@id/loginButton"
-        app:layout_constraintTop_toBottomOf="@id/loginButton"/>
+<!--    <TextView-->
+<!--        android:id="@+id/search_id_passwd"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="아이디 / 비밀번호 찾기"-->
+<!--        android:textSize="10sp"-->
+<!--        android:textColor="#aa777777"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        app:layout_constraintRight_toRightOf="@id/loginButton"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/loginButton"/>-->
 
     <View
         android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/background_gray"
-        app:layout_constraintTop_toBottomOf="@+id/search_id_passwd"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="20dp"/>
 

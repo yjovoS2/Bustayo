@@ -38,118 +38,304 @@
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <TextView
-        android:id="@+id/requiredInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="필수정보"
-        android:textSize="20sp"
-        android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/line"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* 아이디"
-        android:textSize="16sp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/requiredInfo"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-
-    <EditText
-        android:id="@+id/insertID"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="4 - 10자 소문자, 대문자, 숫자, '_' 를 사용"
-        android:textSize="16sp"
-        android:padding="12dp"
-        android:background="@drawable/edit_round"
-        android:layout_marginTop="7dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvID"/>
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/Completionjoin">
 
-    <TextView
-        android:id="@+id/tvPasswd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* 비밀번호"
-        android:textSize="16sp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/insertID"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
 
+            <TextView
+                android:id="@+id/requiredInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="필수정보"
+                android:textSize="20sp"
+                android:layout_margin="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <EditText
-        android:id="@+id/insertPW"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="6-12자 소문자, 대문자, 숫자, 특수분자를 사용"
-        android:textSize="16sp"
-        android:padding="12dp"
-        android:background="@drawable/edit_round"
-        android:layout_marginTop="7dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvPasswd"/>
-
-    <TextView
-        android:id="@+id/tvCheckPW"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* 비밀번호 확인"
-        android:textSize="16sp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/insertPW"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+            <TextView
+                android:id="@+id/tvID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="* 아이디"
+                android:textSize="16sp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/requiredInfo"
+                app:layout_constraintLeft_toLeftOf="parent"/>
 
 
-    <EditText
-        android:id="@+id/checkingPW"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:padding="12dp"
-        android:background="@drawable/edit_round"
-        android:layout_marginTop="7dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvCheckPW"/>
+            <EditText
+                android:id="@+id/insertID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="4 -10자 대소문자, 숫자, '_'사용"
+                android:ems="13"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:background="@drawable/edit_round"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="40dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvID"/>
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* 이름"
-        android:textSize="16sp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/checkingPW"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+            <Button
+                android:id="@+id/checkNewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_round"
+                android:text="중복 확인"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="3dp"
+                app:layout_constraintTop_toBottomOf="@id/tvID"
+                app:layout_constraintRight_toRightOf="parent"/>
 
 
-    <EditText
-        android:id="@+id/insertName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:padding="12dp"
-        android:background="@drawable/edit_round"
-        android:layout_marginTop="7dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvName"/>
+            <TextView
+                android:id="@+id/tvPasswd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="* 비밀번호"
+                android:textSize="16sp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/insertID"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+            <EditText
+                android:id="@+id/insertPW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="6-12자 대소문자, 숫자, 특수분자를 사용"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:background="@drawable/edit_round"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvPasswd"/>
+
+            <TextView
+                android:id="@+id/tvCheckPW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="* 비밀번호 확인"
+                android:textSize="16sp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/insertPW"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+            <EditText
+                android:id="@+id/checkingPW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:background="@drawable/edit_round"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvCheckPW"/>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="* 이름"
+                android:textSize="16sp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/checkingPW"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+            <EditText
+                android:id="@+id/insertName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:background="@drawable/edit_round"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvName"/>
+
+            <ImageView
+                android:id="@+id/drawerinfo"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_drawer_down"
+                android:layout_margin="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/insertName"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="선택 정보"
+                android:textSize="20sp"
+                android:layout_margin="17dp"
+                app:layout_constraintTop_toBottomOf="@+id/insertName"
+                app:layout_constraintLeft_toRightOf="@id/drawerinfo"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/optioninfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/option"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvBirthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="20dp"
+                    android:text="생일"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/insertBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/edit_round"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBirthday" />
+
+                <TextView
+                    android:id="@+id/tvPhoneNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="20dp"
+                    android:text="전화번호"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/insertBirthday" />
+
+                <EditText
+                    android:id="@+id/insertPhoneNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/edit_round"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPhoneNum" />
+
+                <TextView
+                    android:id="@+id/tvgender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="20dp"
+                    android:text="성별"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/insertPhoneNum" />
+
+                <RadioGroup
+                    android:id="@+id/userGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/tvgender">
+
+                    <RadioButton
+                        android:id="@+id/male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="100dp"
+                        android:text="남성" />
+
+                    <RadioButton
+                        android:id="@+id/female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="120dp"
+                        android:text="여성" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="20dp"
+                    android:text="이메일"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/userGender" />
+
+                <EditText
+                    android:id="@+id/insertEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/edit_round"
+                    android:ems="8"
+                    android:padding="8dp"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+
+                <TextView
+                    android:id="@+id/asSign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="13dp"
+                    android:text=" @ "
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toRightOf="@id/insertEmail"
+                    app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+
+                <Spinner
+                    android:id="@+id/emailForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toRightOf="@id/asSign"
+                    app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
 
     <Button
+        android:id="@+id/Completionjoin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="다음"
+        android:text="회원 가입"
         android:textSize="20sp"
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/colorPrimary"

@@ -3,17 +3,18 @@ package com.bhsd.bustayo;
 
 public class CurrentBusInfo {
 
-    private int busColor, busCongestion, busNum;
-    private String busDestination, currentLocation1, currentLocation2;
+    private int busColor, busCongestion;
+    private String busNum, busDestination, currentLocation1, currentLocation2;
+    boolean bookmark;
 
-
-    public CurrentBusInfo(int busColor, int busCongestion, int busNum, String busDestination, String currentLocation1, String currentLocation2) {
+    public CurrentBusInfo(int busColor, int busCongestion, String busNum, String busDestination, String currentLocation1, String currentLocation2, boolean bookmark) {
         this.busColor = busColor;
         this.busCongestion = busCongestion;
         this.busNum = busNum;
         this.busDestination = busDestination;
         this.currentLocation1 = currentLocation1;
         this.currentLocation2 = currentLocation2;
+        this.bookmark = bookmark;
     }
 
     public int getBusColor() {
@@ -32,11 +33,11 @@ public class CurrentBusInfo {
         this.busCongestion = busCongestion;
     }
 
-    public int getBusNum() {
+    public String getBusNum() {
         return busNum;
     }
 
-    public void setBusNum(int busNum) {
+    public void setBusNum(String busNum) {
         this.busNum = busNum;
     }
 
@@ -62,5 +63,13 @@ public class CurrentBusInfo {
 
     public void setCurrentLocation2(String currentLocation2) {
         this.currentLocation2 = currentLocation2;
+    }
+
+    public boolean isBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(boolean bookmark) {
+        this.bookmark = bookmark;
     }
 }

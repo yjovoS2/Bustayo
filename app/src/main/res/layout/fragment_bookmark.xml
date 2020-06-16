@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background_gray">
+    android:background="#ffffff">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookmark"
@@ -17,7 +17,7 @@
         android:id="@+id/refresh_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#AAAAAA"
+        android:backgroundTint="@color/colorAccent"
         android:layout_margin="20dp"
         android:src="@drawable/ic_refresh"
         app:layout_constraintBottom_toBottomOf="parent"

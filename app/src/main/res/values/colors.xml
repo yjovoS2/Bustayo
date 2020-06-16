@@ -22,7 +22,7 @@
     <color name="busy_full">#DF1616</color>
 
     <!--배경색 관련-->
-    <color name="button_gray">#e0e0e0</color>
+    <color name="button_gray">#f0f0f0</color>
     <color name="background_gray">#d0d0d0</color>
 
 </resources>

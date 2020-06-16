@@ -1,5 +1,6 @@
 package com.bhsd.bustayo;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import static com.bhsd.bustayo.MainActivity.context_main;
 
-public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentBusRecyclerViewAdapter.CurrentBusViewHolder> {
+public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentBusRecyclerViewAdapter.CurrentBusViewHolder>{
 
     ArrayList<CurrentBusInfo> currentBusInfos;
 
@@ -31,7 +32,7 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
     }
 
     public class CurrentBusViewHolder extends RecyclerView.ViewHolder{
-        ImageView busColor, alarm;
+        ImageView busColor, alarm, bookmark;
         public TextView busNum, busDestination, currentbus1, currentbus2;
 
         public CurrentBusViewHolder(@NonNull View itemView) {
@@ -42,6 +43,7 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
             currentbus1 = itemView.findViewById(R.id.bus_first);
             currentbus2 = itemView.findViewById(R.id.bus_second);
             alarm = itemView.findViewById(R.id.bus_alarm);
+            bookmark = itemView.findViewById(R.id.bus_bookmark);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,12 +69,15 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CurrentBusRecyclerViewAdapter.CurrentBusViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CurrentBusRecyclerViewAdapter.CurrentBusViewHolder holder, final int position) {
         holder.busColor.setColorFilter(currentBusInfos.get(position).getBusColor());   //이부분은 데이터를 받아와서 버스색이랑 혼잡도 색 다시 설정해줘야함
         holder.busNum.setText(currentBusInfos.get(position).getBusNum()+"");
         holder.busDestination.setText(currentBusInfos.get(position).getBusDestination());
         holder.currentbus1.setText(currentBusInfos.get(position).getCurrentLocation1());
         holder.currentbus2.setText(currentBusInfos.get(position).getCurrentLocation2());
+
+        if(currentBusInfos.get(position).isBookmark())
+            holder.bookmark.setColorFilter(Color.YELLOW);
 
         holder.alarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +85,15 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
                 //몇 정류장전에서 알람을 받을지 설정
                 SetAlarmDialog alarmsetting = new SetAlarmDialog();
                 alarmsetting.Dialog(context_main);
+            }
+        });
+
+        holder.bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentBusInfos.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,currentBusInfos.size());
             }
         });
     }
