@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,11 +68,15 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
-                        if(context==MainActivity.context_main)
+                        if(context == MainActivity.context_main)
                             //하차알림의 클릭과의 구분
-                            listener.onItemSelected(v,position);
+                            listener.onItemSelected(v, position);
                         else
                         {
+                            if(stationId.equals("0") || stationId.equals(" ")) {
+                                Toast.makeText(context, "정류장 정보를 받아올 수 없습니다.", Toast.LENGTH_LONG).show();
+                                return;
+                            }
                             Intent intent = new Intent(context, StationActivity.class);
                             intent.putExtra("stationNm", stationName.getText().toString());
                             intent.putExtra("arsId", stationId);

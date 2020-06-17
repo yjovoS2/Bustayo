@@ -84,8 +84,8 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
             @Override
             public void onItemSelected(View v, int pos) {
                 //이부분에 데이터넘겨주는 부분
-                Intent intent = new Intent(context_main, StationActivity.class);
-                intent.putExtra("stationNm", adapter.getItem(pos).getBusNum()+"");
+                Intent intent = new Intent(context_main, StationListActivity.class);
+                intent.putExtra("busRouteNm", adapter.getItem(pos).getBusNum());
                 context_main.startActivity(intent);
             }
         });

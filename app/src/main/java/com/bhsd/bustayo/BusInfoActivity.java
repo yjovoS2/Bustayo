@@ -1,7 +1,9 @@
 package com.bhsd.bustayo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -76,7 +78,9 @@ public class BusInfoActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(title);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_launcher_foreground);
+        Drawable back_icon = getDrawable(R.drawable.ic_go_back).mutate();
+        back_icon.setTint(Color.WHITE);
+        actionBar.setHomeAsUpIndicator(back_icon); // 홈버튼 아이콘
 
         Window window = BusInfoActivity.this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

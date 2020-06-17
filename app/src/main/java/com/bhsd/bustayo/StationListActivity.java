@@ -3,8 +3,10 @@ package com.bhsd.bustayo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,11 +45,12 @@ public class StationListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_station_list);
 
         // 선택된 Bus의 정보를 받아오기 위한 intent
         Intent inIntent = getIntent();
         busNumber = inIntent.getStringExtra("busRouteNm");
+        Log.e("busRouteNm", busNumber);
 
         stationListRCV = findViewById(R.id.station_list_recyclerview);
         setStationListAdapter();    // recyclerview에 대한 adapter설정
@@ -163,6 +166,7 @@ public class StationListActivity extends AppCompatActivity {
         stationListAdapter = new StationListAdapter();
         stationListRCV.setAdapter(stationListAdapter);
     }
+
     void setStationAdapter(ArrayList<SimpleArrayMap<String,String>> item) {
         int previous, next;
         for(int i = 0; i < item.size(); i++) {
@@ -178,6 +182,7 @@ public class StationListActivity extends AppCompatActivity {
                 next = Color.DKGRAY;
             }
             StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("arsId"), previous, next);
+            Log.d("stationid", item.get(i).get("arsId"));
             stationListAdapter.addItem(it);
         }
     }
@@ -189,7 +194,9 @@ public class StationListActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);    // 커스터마이징
         actionBar.setDisplayHomeAsUpEnabled(true);  // 홈버튼 보이게
         actionBar.setTitle(title);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_launcher_foreground); // 홈버튼 아이콘
+        Drawable back_icon = getDrawable(R.drawable.ic_go_back).mutate();
+        back_icon.setTint(Color.WHITE);
+        actionBar.setHomeAsUpIndicator(back_icon); // 홈버튼 아이콘
 
         Window window = StationListActivity.this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
