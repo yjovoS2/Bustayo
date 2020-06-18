@@ -8,9 +8,8 @@
         android:id="@+id/bottomNavMap"
         android:icon="@drawable/ic_map"
         android:title="@string/map" />
-    <!-- 이미지 수정 -->
     <item
         android:id="@+id/bottomNavAlarmOff"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_alarm"
         android:title="@string/alarm_off"/>
 </menu>

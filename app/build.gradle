@@ -41,5 +41,8 @@ dependencies {
     //RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
+    //FragmentContainerView
+    implementation 'androidx.navigation:navigation-fragment:2.2.2'
+
     implementation 'com.android.volley:volley:1.1.0'
 }

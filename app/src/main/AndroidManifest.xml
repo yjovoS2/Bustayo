@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <!-- android:networkSecurityConfig="@xml/network_security_config" -->
+
         <!-- 네이버 지도 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
@@ -26,11 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- 네이버 지도 -->
-        <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="14x4s7l2zd" />
 
         <!-- 검색 화면 -->
         <activity
@@ -53,7 +49,9 @@
         <activity android:name=".StationActivity" />
 
         <activity android:name=".JoinActivity" />
+
         <activity android:name=".LoginActivity" />
+
     </application>
 
 </manifest>

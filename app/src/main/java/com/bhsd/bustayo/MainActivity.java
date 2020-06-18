@@ -31,11 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     //프래그먼트 관련
     FragmentManager fragmentManager;
-    //Fragment nMapFragment; 즐겨찾기
-    Fragment nMapFragment;
     BookmarkFragment bmFragment;
+    Fragment nMapFragment;
     Fragment offAlarmFragment;
-    //Fragment nMapFragment; 하차알림
 
     //바텀네비게이션 관련
     BottomNavigationView bottomNavigation;
@@ -58,25 +56,22 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         drawer = findViewById(R.id.drawer);
         drawerHandle = findViewById(R.id.drawerHandle);
-
-        nMapFragment = new NMapFragment();
-        bmFragment = new BookmarkFragment();
-        offAlarmFragment = new GetOffAlarmFragment();
-
         bottomNavigation = findViewById(R.id.bottomNavigation);
 
-        //프래그먼트 생성 및 추가, 초기화면 설정
-        //nMapFragment = new NMapFragment(); 즐겨찾기
+        //프래그먼트 생성
+        bmFragment = new BookmarkFragment();
         nMapFragment = new NMapFragment();
-        //nMapFragment = new NMapFragment(); 하차알림
+        offAlarmFragment = new GetOffAlarmFragment();
+
+        //프래그먼트 추가 및 초기화면 설정
         fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().add(R.id.fragment, cameraFragment, "camera").commit(); 즐겨찾기
+        fragmentManager.beginTransaction().add(R.id.fragment, bmFragment, "bookmark").commit();
         fragmentManager.beginTransaction().add(R.id.fragment, nMapFragment, "nMap").commit();
-        //fragmentManager.beginTransaction().add(R.id.fragment, lockerFragment, "locker").commit(); 하차알림
-        showFragment(nMapFragment);
+        fragmentManager.beginTransaction().add(R.id.fragment, offAlarmFragment, "offAlarm").commit();
+        showFragment(bmFragment);
     }
 
-    //리스너 연결
+    //이벤트 처리
     @Override
     protected void onResume() {
         super.onResume();
@@ -124,9 +119,10 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     //불편신고 접수
-                    case R.id.drawerComplaint:{
-                        startActivity(new Intent(getApplicationContext(), ComplaintActivity.class));
-                        overridePendingTransition(R.anim.left_mov, R.anim.not_mov); //애니메이션 설정 (왼쪽으로 슬라이딩)
+                    case R.id.drawerComplaint: {
+                        Intent intent = new Intent(getApplicationContext(), ComplaintActivity.class);
+                        startActivity(intent);
+
                         return true;
                     }
                     //분실물 현황
@@ -150,9 +146,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
-                    case R.id.bottomNavBookmark: return showFragment(nMapFragment); //즐겨찾기
-                    case R.id.bottomNavMap: return showFragment(nMapFragment);      //주변 정류장
-                    case R.id.bottomNavAlarmOff: return showFragment(nMapFragment); //하차알림
+                    //즐겨찾기
+                    case R.id.bottomNavBookmark:
+                        //FloatingActionButton은 여기서만필요
+                        return showFragment(bmFragment);
+                    //주변 정류장
+                    case R.id.bottomNavMap:
+                        fab.hide();
+                        return showFragment(nMapFragment);
+                    //하차알림
+                    case R.id.bottomNavAlarmOff:
+                        fab.hide();
+                        return showFragment(offAlarmFragment);
                 }
                 return false;
             }
@@ -162,30 +167,11 @@ public class MainActivity extends AppCompatActivity {
     //특정 프래그먼트만 보이도록 하는 메서드
     private boolean showFragment(Fragment fragment){
         //프래그먼트 기존 데이터 저장하기 위해 show(), hide() 메서드 사용
+        fragmentManager.beginTransaction().hide(bmFragment).commit();
         fragmentManager.beginTransaction().hide(nMapFragment).commit();
-        fragmentManager.beginTransaction().hide(nMapFragment).commit();
-        fragmentManager.beginTransaction().hide(nMapFragment).commit();
+        fragmentManager.beginTransaction().hide(offAlarmFragment).commit();
         fragmentManager.beginTransaction().show(fragment).commit();
 
         return true;
-                    //즐겨찾기
-                    case R.id.bottomNavBookmark:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, bmFragment).addToBackStack(null).commit();
-                        //FloatingActionButton은 여기서만필요
-                        return true;
-                    //주변 정류장
-                    case R.id.bottomNavMap:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, nMapFragment).addToBackStack(null).commit();
-                        fab.hide();
-                        return true;
-                    //하차알림
-                    case R.id.bottomNavAlarmOff:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, offAlarmFragment).addToBackStack(null).commit();
-                        fab.hide();
-                        return true;
-                }
-                return false;
-            }
-        });
     }
 }

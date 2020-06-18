@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:openDrawer="start">
+    android:layout_height="match_parent">
 
         <!-- Closed -->
         <include layout="@layout/activity_main_contents"/>
@@ -20,6 +18,6 @@
             android:theme="@style/NavigationViewTheme"
             app:itemHorizontalPadding="30dp"
             app:headerLayout="@layout/drawer_header"
-            app:menu="@menu/drawer"/>
+            app:menu="@menu/drawer_item"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

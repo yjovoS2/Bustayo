@@ -14,16 +14,19 @@
     <string name="bus_search">버스 검색</string>
     <string name="station_search">정류장 검색</string>
 
-    <!-- menu/bottom_navigation.xml -->
+    <!-- menu/bottom_nav_item.xml -->
     <string name="bookmark">즐겨찾기</string>
     <string name="map">주변 정류장</string>
     <string name="alarm_off">하차알림</string>
 
-    <!-- menu/drawer.xml -->
+    <!-- menu/drawer_item.xml -->
     <string name="complaint">불편신고</string>
     <string name="lost_list">분실물 현황</string>
     <string name="set_location">지역설정</string>
     <string name="notice">공지사항</string>
     <string name="setting">설정</string>
+
+    <!-- layout/recycler_search_footer.xml -->
+    <string name="delete_bus_history">버스 검색기록 삭제</string>
 
 </resources>

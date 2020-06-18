@@ -8,6 +8,8 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#D8B4ED</color>
     <color name="colorAccent">#D8B4ED</color>
+    <color name="colorNormal">#aa777777</color>
+    <color name="colorNormalDark">#cc777777</color>
 
     <!-- 버스관련 -->
     <color name="bus_green">#23DA23</color>
