@@ -72,7 +72,8 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
 
     @Override
     public void onBindViewHolder(@NonNull final BookmarkRecyclerViewAdapter.BookmarkViewHolder holder, final int position) {
-        final CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo());
+
+        final CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo(), true);
         holder.currnetBusInfo.setHasFixedSize(true);
         holder.currnetBusInfo.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         holder.currnetBusInfo.setAdapter(adapter);
@@ -84,8 +85,9 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
             @Override
             public void onItemSelected(View v, int pos) {
                 //이부분에 데이터넘겨주는 부분
-                Intent intent = new Intent(context_main, StationListActivity.class);
-                intent.putExtra("busRouteNm", adapter.getItem(pos).getBusNum());
+                Intent intent = new Intent(context_main, StationActivity.class);
+                String busNum = adapter.getItem(pos).getBusNum()+"";
+                intent.putExtra("stationNm", busNum);
                 context_main.startActivity(intent);
             }
         });

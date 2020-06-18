@@ -9,12 +9,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONObject;
 
@@ -23,11 +25,14 @@ public class LoginActivity extends AppCompatActivity {
     EditText edID, edPasswd;
     Button loginButton, loginNaver, loginKakao, loginGoogle, loginGuest;
     String userID, userPasswd;
+    Intent login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        login = getIntent();
 
         edID = findViewById(R.id.editID);
         edPasswd = findViewById(R.id.editPASSWD);
@@ -75,7 +80,21 @@ public class LoginActivity extends AppCompatActivity {
 //                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
 //                queue.add(vRequest);
                 //서버 연동
-                Toast.makeText(LoginActivity.this, "id : "+ userID + " passwd : "+ userPasswd, Toast.LENGTH_SHORT).show();
+
+                //test용
+
+                if(userID.equals("test")&&userPasswd.equals("1111")){
+                    login.putExtra("userID",userID);
+                    login.putExtra("isLogin",true);
+                    setResult(RESULT_OK,login);
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(LoginActivity.this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -24,7 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
 
     //툴바 관련
-    TextView search;
+    TextView search, header;
     DrawerLayout drawerLayout;
     NavigationView drawer;
     ImageView drawerHandle;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     //플로팅 액션 버튼
     FloatingActionButton fab;
+    //로그인상태인지 확인하는 변수 - 테스트용 나중엔 디비에서 가지고오자
+    boolean islogin;
 
     //초기화 작업
     @Override
@@ -63,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         nMapFragment = new NMapFragment();
         offAlarmFragment = new GetOffAlarmFragment();
 
+        bottomNavigation = findViewById(R.id.bottomNavigation);
+        //로그인 테스트용
+        islogin = false;
         //프래그먼트 추가 및 초기화면 설정
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.fragment, bmFragment, "bookmark").commit();
@@ -105,13 +112,39 @@ public class MainActivity extends AppCompatActivity {
         drawer.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+                if(islogin){//이미 로그인된경우
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("로그아웃");
+                    builder.setMessage("로그아웃 하시겠습니까?");
+
+                    builder.setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            islogin = false;
+                            header.setText("로그인");
+                        }
+                    });
+
+                    builder.setNegativeButton("돌아가기", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //창 닫기
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+                else{//로그인 하지 않은 경우
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(intent,0);
+                }
+
             }
         });
 
         /*
-         * 햄버거 버튼 -> 특정 아이템 선택
+         * 햄버거 버튼 -> 아이템 선택
          * 각각의 아이템에 해당하는 화면 실행
          */
         drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -173,5 +206,16 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().show(fragment).commit();
 
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if(resultCode==RESULT_OK){
+                String userName = data.getStringExtra("userID");
+                islogin = data.getBooleanExtra("isLogin",false);
+                header.setText(userName);}
+        }
     }
 }
