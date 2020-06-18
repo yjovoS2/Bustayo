@@ -36,16 +36,17 @@ public class BusInfoActivity extends AppCompatActivity {
         busId = inIntent.getStringExtra("busRouteId");
         busType = inIntent.getIntExtra("routeType", 0);
 
+        bus_service_section = findViewById(R.id.bus_service_section_content);
+        bus_service_time_weekday = findViewById(R.id.weekday_time);
+        bus_service_time_weekend = findViewById(R.id.weekend_time);
+        bus_interval = findViewById(R.id.bus_interval);
+
         new Thread() {
             @Override
             public void run() {
                 busInfo = new BusInfo(busId);
-                bus_service_section = findViewById(R.id.bus_service_section_content);
-                bus_service_time_weekday = findViewById(R.id.weekday_time);
-                bus_service_time_weekend = findViewById(R.id.weekend_time);
-                bus_interval = findViewById(R.id.bus_interval);
-                final String time = busInfo.getBusInfoItem("beginTm") + " ~ " + busInfo.getBusInfoItem("lastTm");
 
+                final String time = busInfo.getBusInfoItem("beginTm") + " ~ " + busInfo.getBusInfoItem("lastTm");
                 setBusServiceSection(busInfo.getBusInfoItem("edStationNm") + " ~ " + busInfo.getBusInfoItem("stStationNm"));
                 setBusServiceInterval(busInfo.getBusInfoItem("term") + " 분");
                 runOnUiThread(new Runnable() {
