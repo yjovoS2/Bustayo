@@ -47,7 +47,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:src="@drawable/ic_bookmark"
-            android:tint="@color/busy_half"/>
+            android:tint="#C58CE6"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

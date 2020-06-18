@@ -20,7 +20,7 @@
         android:src="@drawable/ic_bookmark"/>
 
     <ImageView
-        android:id="@+id/bus_state"
+        android:id="@+id/busCongested"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
@@ -29,13 +29,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/ic_bus" />
 
+    <ImageView
+        android:id="@+id/bus_color"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/bus_bookmark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_bus_" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bus_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/bus_state"
+        app:layout_constraintLeft_toRightOf="@id/busCongested"
         app:layout_constraintRight_toLeftOf="@+id/bus_time"
         android:layout_marginLeft="80dp">
 

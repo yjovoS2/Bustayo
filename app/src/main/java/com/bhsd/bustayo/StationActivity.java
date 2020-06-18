@@ -142,7 +142,7 @@ public class StationActivity extends AppCompatActivity {
             CurrentBusInfo it = new CurrentBusInfo(busColor,busCongestion,busNum,busDestination,currentLocation1,currentLocation2,false);
             currentBusInfo.add(it);
         }
-        adapter = new CurrentBusRecyclerViewAdapter(currentBusInfo);
+        adapter = new CurrentBusRecyclerViewAdapter(currentBusInfo, true);
         recyclerView.setAdapter(adapter);
     }
 

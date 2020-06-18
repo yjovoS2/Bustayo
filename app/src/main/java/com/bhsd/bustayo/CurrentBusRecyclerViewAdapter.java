@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,12 +38,13 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
     }
 
     public class CurrentBusViewHolder extends RecyclerView.ViewHolder{
-        ImageView busColor, alarm, bookmark;
+        ImageView busColor, alarm, bookmark, busCongested;
         public TextView busNum, busDestination, currentbus1, currentbus2;
 
         public CurrentBusViewHolder(@NonNull View itemView) {
             super(itemView);
-            busColor = itemView.findViewById(R.id.bus_state);
+            busColor = itemView.findViewById(R.id.bus_color);
+            busCongested = itemView.findViewById(R.id.busCongested);
             busNum = itemView.findViewById(R.id.bus_num);
             busDestination = itemView.findViewById(R.id.bus_destination);
             currentbus1 = itemView.findViewById(R.id.bus_first);
@@ -75,11 +77,20 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
 
     @Override
     public void onBindViewHolder(@NonNull CurrentBusRecyclerViewAdapter.CurrentBusViewHolder holder, final int position) {
-        holder.busColor.setColorFilter(currentBusInfos.get(position).getBusColor());   //이부분은 데이터를 받아와서 버스색이랑 혼잡도 색 다시 설정해줘야함
+        holder.busColor.setColorFilter(currentBusInfos.get(position).getBusColor()); //버스 색
         holder.busNum.setText(currentBusInfos.get(position).getBusNum()+"");
         holder.busDestination.setText(currentBusInfos.get(position).getBusDestination());
         holder.currentbus1.setText(currentBusInfos.get(position).getCurrentLocation1());
         holder.currentbus2.setText(currentBusInfos.get(position).getCurrentLocation2());
+
+        int BusCongestion = currentBusInfos.get(position).getBusCongestion();
+        switch (BusCongestion){
+            case 0 : holder.busCongested.setColorFilter(Color.parseColor("#23DA23"));break;
+            case 10 : holder.busCongested.setColorFilter(Color.parseColor("#FFE600"));break;
+            case 20 : holder.busCongested.setColorFilter(Color.parseColor("#DF1616"));break;
+            default:;
+        }
+
         if(isInclude)
             holder.bookmark.setVisibility(View.GONE);
         else

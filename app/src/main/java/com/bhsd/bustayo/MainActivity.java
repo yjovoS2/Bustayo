@@ -1,6 +1,7 @@
 package com.bhsd.bustayo;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.fragment, bmFragment, "bookmark").commit();
         fragmentManager.beginTransaction().add(R.id.fragment, nMapFragment, "nMap").commit();
         fragmentManager.beginTransaction().add(R.id.fragment, offAlarmFragment, "offAlarm").commit();
+        header = drawer.getHeaderView(0).findViewById(R.id.drawerHeaderName);
         showFragment(bmFragment);
     }
 
