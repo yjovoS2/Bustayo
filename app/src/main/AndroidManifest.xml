@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bhsd.bustayo">
 
+    <!-- API 호출하기 위함 -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -25,6 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 네이버 지도 -->
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="14x4s7l2zd" />
 
         <!-- 검색 화면 -->
         <activity

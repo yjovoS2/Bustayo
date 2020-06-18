@@ -13,7 +13,7 @@ public class ComplaintActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint);
-//ㄹㄴㅇㄹㄴㅇㄹ
+
         findViewById(R.id.searchGoBack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
