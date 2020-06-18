@@ -2,6 +2,7 @@ package com.bhsd.bustayo;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,6 +17,9 @@ import static com.bhsd.bustayo.MainActivity.context_main;
 public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentBusRecyclerViewAdapter.CurrentBusViewHolder>{
 
     ArrayList<CurrentBusInfo> currentBusInfos;
+    BookmarkRecyclerViewAdapter bAdapter;
+    //중첩된것인지 확인
+    boolean isInclude = false;
 
     private OnListItemSelected listener = null;
 
@@ -27,8 +31,9 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
         this.listener = listener;
     }
 
-    public CurrentBusRecyclerViewAdapter(ArrayList<CurrentBusInfo> currentBusInfos) {
+    public CurrentBusRecyclerViewAdapter(ArrayList<CurrentBusInfo> currentBusInfos, boolean isInclude) {
         this.currentBusInfos = currentBusInfos;
+        this.isInclude = isInclude;
     }
 
     public class CurrentBusViewHolder extends RecyclerView.ViewHolder{
@@ -75,6 +80,10 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
         holder.busDestination.setText(currentBusInfos.get(position).getBusDestination());
         holder.currentbus1.setText(currentBusInfos.get(position).getCurrentLocation1());
         holder.currentbus2.setText(currentBusInfos.get(position).getCurrentLocation2());
+        if(isInclude)
+            holder.bookmark.setVisibility(View.GONE);
+        else
+            holder.bookmark.setVisibility(View.VISIBLE);
 
         if(currentBusInfos.get(position).isBookmark())
             holder.bookmark.setColorFilter(Color.YELLOW);
@@ -85,15 +94,6 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
                 //몇 정류장전에서 알람을 받을지 설정
                 SetAlarmDialog alarmsetting = new SetAlarmDialog();
                 alarmsetting.Dialog(context_main);
-            }
-        });
-
-        holder.bookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentBusInfos.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position,currentBusInfos.size());
             }
         });
     }
