@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.activity.AddComplaintActivity;
 
 public class ComplaintActivity extends AppCompatActivity {
 

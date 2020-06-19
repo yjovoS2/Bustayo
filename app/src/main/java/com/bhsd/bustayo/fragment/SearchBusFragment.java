@@ -1,7 +1,5 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.fragment;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +8,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.adapter.SearchRecyclerAdapter;
+import com.bhsd.bustayo.dto.SearchRecyclerItem;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.dto;
 
 ///////////////////////////////////////////////////
 //검색 화면에서 리사이클러뷰의 한 행에 사용되는 아이템 클래스

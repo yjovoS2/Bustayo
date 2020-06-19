@@ -34,14 +34,14 @@
 
         <!-- 검색 화면 -->
         <activity
-            android:name=".SearchActivity"
+            android:name=".activity.SearchActivity"
             android:windowSoftInputMode="stateAlwaysVisible"/>
 
         <!-- 불편신고 리스트 화면 -->
-        <activity android:name=".ComplaintActivity"/>
+        <activity android:name=".activity.ComplaintActivity"/>
 
         <!-- 불편신고 접수 화면 -->
-        <activity android:name=".AddComplaintActivity"/>
+        <activity android:name=".activity.AddComplaintActivity"/>
 
         <!-- 버스 화면 -->
         <activity android:name=".activity.StationListActivity" />

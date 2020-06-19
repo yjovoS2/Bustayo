@@ -1,7 +1,5 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.adapter;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.dto.SearchRecyclerItem;
 
 import java.util.ArrayList;
 
@@ -47,7 +48,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    SearchRecyclerAdapter(ArrayList<SearchRecyclerItem> list){
+    public SearchRecyclerAdapter(ArrayList<SearchRecyclerItem> list){
         //전달받은 데이터 리스트 저장
         data = list;
     }
