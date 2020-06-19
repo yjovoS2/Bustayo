@@ -45,4 +45,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
 
     implementation 'com.android.volley:volley:1.1.0'
+
+    //정밀한 현재 위치 받아오기 위한 라이브러리
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 }

@@ -9,6 +9,7 @@
     <color name="colorPrimaryDark">#D8B4ED</color>
     <color name="colorAccent">#D8B4ED</color>
     <color name="colorNormal">#aa777777</color>
+    <color name="colorNormalLight">#11777777</color>
     <color name="colorNormalDark">#cc777777</color>
 
     <!-- 버스관련 -->

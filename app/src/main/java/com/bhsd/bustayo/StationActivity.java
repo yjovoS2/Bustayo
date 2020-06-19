@@ -25,13 +25,15 @@ import androidx.collection.SimpleArrayMap;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhsd.bustayo.application.Common;
+
 import java.util.ArrayList;
 
 public class StationActivity extends AppCompatActivity {
 
     String key = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
     String url = "http://ws.bus.go.kr/api/rest/";
-    ApiManager apiManager = new ApiManager(key, url);
+    ApiManager apiManager = new ApiManager(Common.SERVICE_KEY, url);
     CurrentBusRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
 
@@ -44,6 +46,7 @@ public class StationActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station);
+        Log.d("ljh", "StationActivity onCreate");
 
         recyclerView = findViewById(R.id.bus_list_recyclerview);
 

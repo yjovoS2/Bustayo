@@ -22,13 +22,15 @@ import androidx.collection.SimpleArrayMap;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhsd.bustayo.application.Common;
+
 import java.util.ArrayList;
 
 public class StationListActivity extends AppCompatActivity {
 
     private String key = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
     private String url = "http://ws.bus.go.kr/api/rest/";
-    private ApiManager apiManager = new ApiManager(key, url);
+    private ApiManager apiManager = new ApiManager(Common.SERVICE_KEY, url);
 
     private String busNumber;
     private String busId;
@@ -40,6 +42,7 @@ public class StationListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_list);
+        Log.d("ljh", "Station List Activity onCreate");
 
         // 선택된 Bus의 정보를 받아오기 위한 intent
         Intent inIntent = getIntent();

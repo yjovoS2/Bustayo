@@ -3,6 +3,7 @@ package com.bhsd.bustayo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class BookmarkFragment extends Fragment {
         bmAdapter.setOnListItemSelected(new BookmarkRecyclerViewAdapter.OnListItemSelected() {
             @Override
             public void onItemSelected(View v, int position, RecyclerView selected) {
+                Log.e("ljh", "onItemSelected");
                 Intent intent = new Intent(activity, StationActivity.class);
 //                값을 넘겨주는 부분
 //                intent.putExtra("stationNm", stationName.getText().toString());

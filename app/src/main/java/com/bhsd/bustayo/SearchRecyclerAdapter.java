@@ -14,28 +14,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    ///////////////////////////////
+    //TYPE_ITEM : 일반 아이템
+    //TYPE_FOOTER : 히스토리 삭제 버튼
+    //data : 전달받은 데이터 리스트
     private final int TYPE_ITEM = 0;
     private final int TYPE_FOOTER = 1;
     private ArrayList<SearchRecyclerItem> data;
 
-    //아이템 뷰를 저장하는 뷰홀더 클래스
     class ItemViewHolder extends RecyclerView.ViewHolder{
+        //일반 아이템 뷰홀더
         TextView busNum, busArea, busType;
         CheckBox busMark;
 
         ItemViewHolder(View view){
             super(view);
-
+            //ViewHolder에 사용되는 뷰 인플레이션
             busNum = view.findViewById(R.id.searchBusNumR);
             busArea = view.findViewById(R.id.searchBusAreaR);
             busType = view.findViewById(R.id.searchBusTypeR);
             busMark = view.findViewById(R.id.searchBusMarkR);
-            //onclick 연결 필요
         }
     }
 
-    //아이템 뷰를 저장하는 뷰홀더 클래스
     class FooterViewHolder extends RecyclerView.ViewHolder{
+        //히스토리 삭제 버튼 뷰홀더
         TextView searchHistory;
 
         FooterViewHolder(View view) {
@@ -44,15 +47,18 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    //생성자에서 데이터 리스트 객체 전달받음
     SearchRecyclerAdapter(ArrayList<SearchRecyclerItem> list){
+        //전달받은 데이터 리스트 저장
         data = list;
     }
 
-    //아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ///////////////////////////////////////
+        //아이템 항목이 일반 아이템인지 푸터인지 확인
+        //일반 아이템인 경우 아이템 뷰홀더 객체 생성
+        //푸터인 경우 푸터 뷰홀더 객체 생성
         RecyclerView.ViewHolder holder;
         View view;
 
@@ -68,9 +74,11 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
-    //position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        //////////////////////////////////////
+        //현재 아이템이 일반 아이템인지 푸터인지 확인
+        //확인 후 각 데이터 연결
         if(getItemViewType(position) == TYPE_ITEM){
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             SearchRecyclerItem item = data.get(position);
@@ -83,14 +91,15 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    //전체 데이터 개수 리턴
     @Override
     public int getItemCount() {
+        //전체 데이터 개수 리턴 (푸터 때문에 +1)
         return data.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
+        //현재 아이템 위치가 일반 아이템인지 푸터인지 확인하는 메서드
         if(position == data.size())
             return TYPE_FOOTER;
 

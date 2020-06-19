@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class BusInfoActivity extends AppCompatActivity {
 
+    //TODO :: 접근지정자 설정.
     BusInfo busInfo;
     String busId;
     int busType;

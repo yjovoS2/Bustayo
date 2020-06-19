@@ -2,12 +2,12 @@ package com.bhsd.bustayo;
 
 import androidx.collection.SimpleArrayMap;
 
+import com.bhsd.bustayo.application.Common;
+
 class BusInfo {  // bus의 정보를 담는 객체~!~
     private SimpleArrayMap<String,String> bus;
-
-    private String key = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
     private String url = "http://ws.bus.go.kr/api/rest/";
-    private ApiManager apiManager = new ApiManager(key, url);
+    private ApiManager apiManager = new ApiManager(Common.SERVICE_KEY, url);
 
     BusInfo(String busId) {
         setBusInfoList(busId);
