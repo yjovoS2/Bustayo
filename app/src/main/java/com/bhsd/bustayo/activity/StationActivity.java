@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,15 +25,15 @@ import androidx.collection.SimpleArrayMap;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bhsd.bustayo.application.Common;
+import com.bhsd.bustayo.CurrentBusInfo;
+import com.bhsd.bustayo.CurrentBusRecyclerViewAdapter;
+import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.application.ApiManager;
 
 import java.util.ArrayList;
 
 public class StationActivity extends AppCompatActivity {
 
-    String key = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
-    String url = "http://ws.bus.go.kr/api/rest/";
-    ApiManager apiManager = new ApiManager(Common.SERVICE_KEY, url);
     CurrentBusRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
 
@@ -50,24 +50,27 @@ public class StationActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.bus_list_recyclerview);
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         Intent inIntent = getIntent();
         arsId = inIntent.getStringExtra("arsId");
         stationNm = inIntent.getStringExtra("stationNm");
 
         Log.e("stationnn", "arsId : " + arsId + "  stationNm : " + stationNm);
 
-
-
         t = new Thread() {
             @Override
             public void run() {
-                final ArrayList<SimpleArrayMap<String,String>> busList = apiManager.getApiArray("stationinfo/getStationByUid?serviceKey=", "&arsId=", arsId, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","staOrd","arrmsg1","arrmsg2"});
+                final ArrayList<SimpleArrayMap<String,String>> busList = ApiManager.getApiArray("stationinfo/getStationByUid?serviceKey=", "&arsId=", arsId, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","staOrd","arrmsg1","arrmsg2"});
                 setBusListAdapter(busList);
 
                 findViewById(R.id.refresh_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        final ArrayList<SimpleArrayMap<String,String>> busList = ApiManager.getApiArray("stationinfo/getStationByUid?serviceKey=", "&arsId=", arsId, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","staOrd","arrmsg1","arrmsg2"});
+                        setBusListAdapter(busList);
                     }
                 });
 
@@ -121,15 +124,7 @@ public class StationActivity extends AppCompatActivity {
         }
     }
 
-    public void refresh(View v) {
-        // TODO 질문
-    }
-
     void setBusListAdapter(ArrayList<SimpleArrayMap<String,String>> item) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
         ArrayList<CurrentBusInfo> currentBusInfo = new ArrayList<>();
         for(int i = 0; i < item.size(); i++) {
             int busColor = getTypeColor(Integer.parseInt(item.get(i).get("routeType")));
@@ -153,7 +148,7 @@ public class StationActivity extends AppCompatActivity {
         TextView time = v.getRootView().findViewById(R.id.bus_time).findViewById(R.id.bus_first);
         String s = time.getText().toString();
         Log.d(s, s);
-        if(s.equals("운행종료")) {  // TODO 질문 : 운행종료인거 누르면 Toast 뜨게!!
+        if(s.equals("운행종료")) {
             Toast.makeText(StationActivity.this, "해당 노선은 운행을 종료했습니다 ㅜㅜ!", Toast.LENGTH_LONG).show();
             return;
         }

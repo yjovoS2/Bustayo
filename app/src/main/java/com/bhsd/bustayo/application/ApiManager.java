@@ -1,6 +1,4 @@
-package com.bhsd.bustayo;
-
-import android.util.Log;
+package com.bhsd.bustayo.application;
 
 import androidx.collection.SimpleArrayMap;
 
@@ -14,16 +12,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class ApiManager {
-    private String key;
-    private String url;
-
-    ApiManager(String key, String url) {
-        this.key = key;
-        this.url = url;
-    }
+    private static final String key = Common.CJB_KEY;
+    private static final String url = Common.BUS_URL;
 
     // api 결과를 simple array map으로 return
-    SimpleArrayMap<String, String> getApiMap(String search_url, String search_tag, String search_content, String[] tags) {
+    public static SimpleArrayMap<String, String> getApiMap(String search_url, String search_tag, String search_content, String[] tags) {
         String queryUrl = url + search_url + key + search_tag + search_content;
         SimpleArrayMap<String,String> return_value = new SimpleArrayMap<>();
 
@@ -45,7 +38,6 @@ public class ApiManager {
                     for (String s : tags) {
                         if (tag.equals(s)) {
                             parser.next();
-                            Log.e("tagNm", tag);
                             return_value.put(s, parser.getText());
                         }
                     }
@@ -60,7 +52,7 @@ public class ApiManager {
     }
 
     // api 결과를 simple array map으로 저장한 뒤 array list에 넣어서 return
-    ArrayList<SimpleArrayMap<String,String>> getApiArray(String search_url, String search_tag, String search_content, String[] tags) {
+    public static ArrayList<SimpleArrayMap<String,String>> getApiArray(String search_url, String search_tag, String search_content, String[] tags) {
         String queryUrl = url + search_url + key + search_tag + search_content;
         ArrayList<SimpleArrayMap<String,String>> return_value = new ArrayList<>();
 

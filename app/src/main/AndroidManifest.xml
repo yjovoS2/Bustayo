@@ -44,13 +44,13 @@
         <activity android:name=".AddComplaintActivity"/>
 
         <!-- 버스 화면 -->
-        <activity android:name=".StationListActivity" />
+        <activity android:name=".activity.StationListActivity" />
 
         <!-- 버스정보 화면 -->
-        <activity android:name=".BusInfoActivity" />
+        <activity android:name=".activity.BusInfoActivity" />
 
         <!-- 정류장 화면 -->
-        <activity android:name=".StationActivity" />
+        <activity android:name=".activity.StationActivity" />
 
         <activity android:name=".JoinActivity" />
 

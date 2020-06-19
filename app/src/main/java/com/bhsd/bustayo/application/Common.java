@@ -5,4 +5,6 @@ public class Common {
     public static final String LYJ_KEY     = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
     //TODO :: 철주 키 추우가
     public static final String SERVICE_KEY = CJB_KEY;
+
+    public static final String BUS_URL = "http://ws.bus.go.kr/api/rest/";
 }

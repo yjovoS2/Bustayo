@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.dto.BusInfo;
+
+;
 
 public class BusInfoActivity extends AppCompatActivity {
 

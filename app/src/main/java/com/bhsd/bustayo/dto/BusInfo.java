@@ -1,15 +1,13 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.dto;
 
 import androidx.collection.SimpleArrayMap;
 
-import com.bhsd.bustayo.application.Common;
+import com.bhsd.bustayo.application.ApiManager;
 
-class BusInfo {  // bus의 정보를 담는 객체~!~
+public class BusInfo {  // bus의 정보를 담는 객체~!~
     private SimpleArrayMap<String,String> bus;
-    private String url = "http://ws.bus.go.kr/api/rest/";
-    private ApiManager apiManager = new ApiManager(Common.SERVICE_KEY, url);
 
-    BusInfo(String busId) {
+    public BusInfo(String busId) {
         setBusInfoList(busId);
     }
 
@@ -18,10 +16,10 @@ class BusInfo {  // bus의 정보를 담는 객체~!~
         String[][] tagNm = {{ "busRouteId", "busRouteNm", "edStationNm", "routeType", "stStationNm", "term" }, { "beginTm", "lastTm" }};
         String[] search_url ={ "busRouteInfo/getRouteInfo?serviceKey=", "busRouteInfo/getStaionByRoute?serviceKey=" };
 
-        bus = apiManager.getApiMap(search_url[0], search_tag, busId, tagNm[0]);
-        bus.putAll(apiManager.getApiMap(search_url[1], search_tag, busId, tagNm[1]));
+        bus = ApiManager.getApiMap(search_url[0], search_tag, busId, tagNm[0]);
+        bus.putAll(ApiManager.getApiMap(search_url[1], search_tag, busId, tagNm[1]));
     }
-    String getBusInfoItem(String key) {
+    public String getBusInfoItem(String key) {
         return bus.get(key);
     }
 }

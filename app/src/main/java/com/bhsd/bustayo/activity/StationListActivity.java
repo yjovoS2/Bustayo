@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,15 +21,14 @@ import androidx.collection.SimpleArrayMap;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bhsd.bustayo.application.Common;
+import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.adapter.StationListAdapter;
+import com.bhsd.bustayo.dto.StationListItem;
+import com.bhsd.bustayo.application.ApiManager;
 
 import java.util.ArrayList;
 
 public class StationListActivity extends AppCompatActivity {
-
-    private String key = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
-    private String url = "http://ws.bus.go.kr/api/rest/";
-    private ApiManager apiManager = new ApiManager(Common.SERVICE_KEY, url);
 
     private String busNumber;
     private String busId;
@@ -42,7 +40,7 @@ public class StationListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_list);
-        Log.d("ljh", "Station List Activity onCreate");
+        //Log.d("ljh", "Station List Activity onCreate");
 
         // 선택된 Bus의 정보를 받아오기 위한 intent
         Intent inIntent = getIntent();
@@ -54,10 +52,10 @@ public class StationListActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                SimpleArrayMap<String,String> busInfo = apiManager.getApiMap("busRouteInfo/getBusRouteList?serviceKey=", "&strSrch=", busNumber, new String[]{"busRouteId","routeType"});
+                SimpleArrayMap<String,String> busInfo = ApiManager.getApiMap("busRouteInfo/getBusRouteList?serviceKey=", "&strSrch=", busNumber, new String[]{"busRouteId","routeType"});
                 busId = busInfo.get("busRouteId");
                 busType = Integer.parseInt(busInfo.get("routeType"));
-                ArrayList<SimpleArrayMap<String,String>> stationInfo = apiManager.getApiArray("busRouteInfo/getStaionByRoute?serviceKey=", "&busRouteId=", busInfo.get("busRouteId"), new String[]{"arsId", "stationNm"});
+                ArrayList<SimpleArrayMap<String,String>> stationInfo = ApiManager.getApiArray("busRouteInfo/getStaionByRoute?serviceKey=", "&busRouteId=", busInfo.get("busRouteId"), new String[]{"station", "arsId", "stationNm"});
 
                 setStationAdapter(stationInfo);
 
@@ -96,8 +94,7 @@ public class StationListActivity extends AppCompatActivity {
             } else {
                 next = Color.DKGRAY;
             }
-            StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("arsId"), previous, next);
-            Log.d("stationid", item.get(i).get("arsId"));
+            StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("station"), item.get(i).get("arsId"), busId, previous, next);
             stationListAdapter.addItem(it);
         }
     }
