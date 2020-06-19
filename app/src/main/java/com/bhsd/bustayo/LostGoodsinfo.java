@@ -22,7 +22,7 @@ public class LostGoodsinfo extends AppCompatActivity {
     }
 
     public void insertEmail(){
-//        String[] categrize ={"naver.com", "daum.net", "empal.com", "nate.com", "dreamwiz.com", "hanmail.net"};
+        String[] categrize ={"naver.com", "daum.net", "empal.com", "nate.com", "dreamwiz.com", "hanmail.net"};
 //
 //
 //        ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categrize);
