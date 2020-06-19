@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.collection.SimpleArrayMap;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.MainActivity;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.StationActivity;
-import com.bhsd.bustayo.application.ApiManager;
+import com.bhsd.bustayo.application.APIManager;
 import com.bhsd.bustayo.dto.StationListItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.ItemViewHolder> {
 
@@ -114,16 +115,17 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
             new Thread() {
                 @Override
                 public void run() {
-                    final ArrayList<SimpleArrayMap<String, String>> bus = ApiManager.getApiArray("buspos/getBusPosByRtid?serviceKey=", "&busRouteId=", routeId, new String[]{"lastStnId", "congetion"});
+                    Log.d("lyj", "\nstationId : " + stationId);
+
+                    final ArrayList<HashMap<String, String>> bus = APIManager.getAPIArray(APIManager.GET_BUSPOS_BY_RT_ID, new String[]{routeId}, new String[]{"lastStnId", "congetion"});
                     for(int i = 0; i < bus.size(); i++) {
                         if(bus.get(i).get("lastStnId").equals(stationId)) {
-                            final int finalI = i;
+                            final int index = i;
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    while (true) {
-                                        addBusIcon(bus.get(finalI).get("congetion"));
-                                    }
+                                    Log.d("lyj", "\n[ congetion ]\n" + bus.get(index).get("congetion"));
+                                    addBusIcon(bus.get(index).get("congetion"), 4);
                                 }
                             });
                         }
@@ -131,7 +133,7 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
                 }
             }.start();
         }
-        void addBusIcon(String con) {
+        void addBusIcon(String congetion, int type) {
             ImageView busIcon = new ImageView(itemView.getContext());
             ConstraintLayout constraint = itemView.findViewById(R.id.station_list_item);
 
@@ -145,8 +147,8 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
             Drawable man = context.getDrawable(R.drawable.ic_man).mutate();
             LayerDrawable drawable = new LayerDrawable(new Drawable[]{man, bus});
 
-            drawable.getDrawable(0).setTint(getCongestionColor(Integer.parseInt(con)));
-            drawable.getDrawable(1).setTint(getTypeColor(0));
+            drawable.getDrawable(0).setTint(getCongestionColor(Integer.parseInt(congetion)));
+            drawable.getDrawable(1).setTint(getTypeColor(type));
 
             busIcon.setImageDrawable(drawable);
 

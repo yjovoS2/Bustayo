@@ -2,7 +2,6 @@ package com.bhsd.bustayo.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,26 +20,24 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.collection.SimpleArrayMap;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.CurrentBusInfo;
 import com.bhsd.bustayo.CurrentBusRecyclerViewAdapter;
 import com.bhsd.bustayo.R;
-import com.bhsd.bustayo.application.ApiManager;
+import com.bhsd.bustayo.application.APIManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StationActivity extends AppCompatActivity {
 
     CurrentBusRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
-
+    ArrayList<HashMap<String,String>> busList;
     String arsId;
     String stationNm;
-
-    Thread t;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,73 +55,85 @@ public class StationActivity extends AppCompatActivity {
         arsId = inIntent.getStringExtra("arsId");
         stationNm = inIntent.getStringExtra("stationNm");
 
-        Log.e("stationnn", "arsId : " + arsId + "  stationNm : " + stationNm);
+        Log.d("lyj", "\n [ stationNm ]\n arsId : " + arsId + "  stationNm : " + stationNm);
 
-        t = new Thread() {
+        new Thread() {
             @Override
             public void run() {
-                final ArrayList<SimpleArrayMap<String,String>> busList = ApiManager.getApiArray("stationinfo/getStationByUid?serviceKey=", "&arsId=", arsId, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","staOrd","arrmsg1","arrmsg2"});
-                setBusListAdapter(busList);
+                busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
 
                 findViewById(R.id.refresh_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ArrayList<SimpleArrayMap<String,String>> busList = ApiManager.getApiArray("stationinfo/getStationByUid?serviceKey=", "&arsId=", arsId, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","staOrd","arrmsg1","arrmsg2"});
-                        setBusListAdapter(busList);
+                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setBusListAdapter(busList);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
                     }
                 });
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        setBusListAdapter(busList);
+
                         setToolbar(stationNm);
                         adapter.notifyDataSetChanged();
                     }
                 });
             }
-        };
-
-        t.start();
-
+        }.start();
     }
 
     int getCongestionColor(int congestion) {
+        int color = getColor(R.color.import_error);
         switch(congestion) {
-            case 3: //
-                return Color.GREEN;
+            case 3: // 여유
+                color = getColor(R.color.busy_empty);
             case 4: // 보통
-                return Color.YELLOW;
-            case 5: //
+                color = getColor(R.color.busy_half);
+            case 5: // 혼잡
             case 6:
-                return Color.RED;
+                color = getColor(R.color.busy_full);
             case 0: // 데이터 없음
             default:
-                return getColor(R.color.import_error);
         }
-    }
-    int getTypeColor(int type) {
-        switch (type) {
-            case 1:
-                return Color.rgb(123, 82, 0);
-            case 2:
-            case 4:
-                return Color.GREEN;
-            case 3:
-                return Color.BLUE;
-            case 5:
-                return Color.YELLOW;
-            case 6:
-            case 0:
-                return Color.RED;
-            case 7:
-            case 8:
-            case 9:
-            default:
-                return Color.GRAY;
-        }
+        return color;
     }
 
-    void setBusListAdapter(ArrayList<SimpleArrayMap<String,String>> item) {
+    int getTypeColor(int type) {
+        int color = getColor(R.color.import_error);
+        switch (type) {
+            case 1: // 공항
+                color = getColor(R.color.bus_skyblue);
+                break;
+            case 2: // 마을
+            case 4: // 지선
+                color = getColor(R.color.bus_green);
+                break;
+            case 3: // 간선
+                color = getColor(R.color.bus_blue);
+                break;
+            case 5: // 순환
+                getColor(R.color.bus_yellow);
+                break;
+            case 6: // 광역
+            case 0: // 공용
+                color = getColor(R.color.bus_red);
+                break;
+            case 7: // 인천
+            case 8: // 경기
+            case 9: // 폐지
+            default:
+        }
+        return color;
+    }
+
+    void setBusListAdapter(ArrayList<HashMap<String,String>> item) {
         ArrayList<CurrentBusInfo> currentBusInfo = new ArrayList<>();
         for(int i = 0; i < item.size(); i++) {
             int busColor = getTypeColor(Integer.parseInt(item.get(i).get("routeType")));
@@ -140,7 +149,7 @@ public class StationActivity extends AppCompatActivity {
             CurrentBusInfo it = new CurrentBusInfo(busColor,busCongestion,busNum,busDestination,currentLocation1,currentLocation2,false);
             currentBusInfo.add(it);
         }
-        adapter = new CurrentBusRecyclerViewAdapter(currentBusInfo, true);
+        adapter = new CurrentBusRecyclerViewAdapter(currentBusInfo, false);
         recyclerView.setAdapter(adapter);
     }
 

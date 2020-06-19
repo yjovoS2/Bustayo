@@ -1,11 +1,12 @@
 package com.bhsd.bustayo.dto;
 
-import androidx.collection.SimpleArrayMap;
 
-import com.bhsd.bustayo.application.ApiManager;
+import com.bhsd.bustayo.application.APIManager;
 
-public class BusInfo {  // bus의 정보를 담는 객체~!~
-    private SimpleArrayMap<String,String> bus;
+import java.util.HashMap;
+
+public class BusInfo {
+    private HashMap<String,String> bus;
 
     public BusInfo(String busId) {
         setBusInfoList(busId);
@@ -16,8 +17,8 @@ public class BusInfo {  // bus의 정보를 담는 객체~!~
         String[][] tagNm = {{ "busRouteId", "busRouteNm", "edStationNm", "routeType", "stStationNm", "term" }, { "beginTm", "lastTm" }};
         String[] search_url ={ "busRouteInfo/getRouteInfo?serviceKey=", "busRouteInfo/getStaionByRoute?serviceKey=" };
 
-        bus = ApiManager.getApiMap(search_url[0], search_tag, busId, tagNm[0]);
-        bus.putAll(ApiManager.getApiMap(search_url[1], search_tag, busId, tagNm[1]));
+        bus = APIManager.getAPIMap(APIManager.GET_ROUTE_INFO, new String[]{busId}, tagNm[0]);
+        bus.putAll(APIManager.getAPIMap(APIManager.GET_STATION_BY_ROUTE, new String[]{busId}, tagNm[1]));
     }
     public String getBusInfoItem(String key) {
         return bus.get(key);

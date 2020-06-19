@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,16 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.collection.SimpleArrayMap;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.adapter.StationListAdapter;
+import com.bhsd.bustayo.application.APIManager;
 import com.bhsd.bustayo.dto.StationListItem;
-import com.bhsd.bustayo.application.ApiManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StationListActivity extends AppCompatActivity {
 
@@ -49,13 +50,19 @@ public class StationListActivity extends AppCompatActivity {
         stationListRCV = findViewById(R.id.station_list_recyclerview);
         setStationListAdapter();    // recyclerview에 대한 adapter설정
 
+        Log.d("lyj", "\nBusNumber : " + busNumber);
+
+
         new Thread() {
             @Override
             public void run() {
-                SimpleArrayMap<String,String> busInfo = ApiManager.getApiMap("busRouteInfo/getBusRouteList?serviceKey=", "&strSrch=", busNumber, new String[]{"busRouteId","routeType"});
+                HashMap<String,String> busInfo = APIManager.getAPIMap(APIManager.GET_BUS_ROUTE_LIST, new String[]{busNumber}, new String[]{"busRouteId","routeType"});
                 busId = busInfo.get("busRouteId");
+                Log.d("lyj", "\nBusId : " + busId);
+
                 busType = Integer.parseInt(busInfo.get("routeType"));
-                ArrayList<SimpleArrayMap<String,String>> stationInfo = ApiManager.getApiArray("busRouteInfo/getStaionByRoute?serviceKey=", "&busRouteId=", busInfo.get("busRouteId"), new String[]{"station", "arsId", "stationNm"});
+                ArrayList<HashMap<String,String>> stationInfo = APIManager.getAPIArray(APIManager.GET_STATION_BY_ROUTE, new String[]{busInfo.get("busRouteId")}, new String[]{"station", "arsId", "stationNm"});
+                Log.d("lyj", "\nStationNumber : " + stationInfo.get(0).get("stationNm"));
 
                 setStationAdapter(stationInfo);
 
@@ -80,7 +87,7 @@ public class StationListActivity extends AppCompatActivity {
         stationListRCV.setAdapter(stationListAdapter);
     }
 
-    void setStationAdapter(ArrayList<SimpleArrayMap<String,String>> item) {
+    void setStationAdapter(ArrayList<HashMap<String,String>> item) {
         int previous, next;
         for(int i = 0; i < item.size(); i++) {
             if(i == 0) {
@@ -113,15 +120,17 @@ public class StationListActivity extends AppCompatActivity {
         Window window = StationListActivity.this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        actionBarColor(actionBar, window);
+        int color = getTypeColor(busType);
+        actionBar.setBackgroundDrawable(new ColorDrawable(color));
+        window.setStatusBarColor(color);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
     // busType에 따른 toolbar와 statusbar 색상 설정
-    void actionBarColor(ActionBar actionBar, Window window) {
+    int getTypeColor(int type) {
         int color = 0;
-        switch (busType) {
+        switch (type) {
             case 1: // 공항
                 color = getColor(R.color.bus_skyblue);
                 break;
@@ -145,8 +154,7 @@ public class StationListActivity extends AppCompatActivity {
             default:
                 color = getColor(R.color.import_error);
         }
-        actionBar.setBackgroundDrawable(new ColorDrawable(color));
-        window.setStatusBarColor(color);
+        return color;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
