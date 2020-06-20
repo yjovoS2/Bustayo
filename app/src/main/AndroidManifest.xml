@@ -41,7 +41,7 @@
         <activity android:name=".activity.ComplaintActivity"/>
 
         <!-- 불편신고 접수 화면 -->
-        <activity android:name=".activity.AddComplaintActivity"/>
+        <activity android:name=".activity.ComplaintAddActivity"/>
 
         <!-- 버스 화면 -->
         <activity android:name=".activity.StationListActivity" />

@@ -32,4 +32,8 @@
     <!-- layout/fragment_nmap.xml -->
     <string name="around_station">주변 정류장 확인하기</string>
 
+    <!-- layout/complaint 관련 -->
+    <string name="complaint_add">불편신고 접수</string>
+    <string name="complaint_list">불편신고 접수 리스트</string>
+
 </resources>
