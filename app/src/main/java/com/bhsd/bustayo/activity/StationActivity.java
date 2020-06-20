@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StationActivity extends AppCompatActivity {
-
+//
     CurrentBusRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
     ArrayList<HashMap<String,String>> busList;
