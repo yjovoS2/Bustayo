@@ -12,6 +12,7 @@ public class BusInfo {
         setBusInfoList(busId);
     }
 
+    /* busInfoList */
     private void setBusInfoList(String busId) {
         String search_tag = "&busRouteId=";
         String[][] tagNm = {{ "busRouteId", "busRouteNm", "edStationNm", "routeType", "stStationNm", "term" }, { "beginTm", "lastTm" }};
