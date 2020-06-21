@@ -162,7 +162,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     //분실물 현황
                     case R.id.drawerLostList: {
-                        Toast.makeText(MainActivity.this, "drawerLostList", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), LostGoodsinfo.class);
+                        startActivity(intent);
+
                         return true;
                     }
                     //지역설정 (2차 개발)

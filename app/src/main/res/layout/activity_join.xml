@@ -83,7 +83,10 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginLeft="40dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvID"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvID"
+                android:maxLength="20"
+                android:ellipsize="start"
+                android:singleLine="true" />
 
             <Button
                 android:id="@+id/checkNewId"
@@ -120,7 +123,10 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvPasswd"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvPasswd"
+                android:maxLength="15"
+                android:ellipsize="start"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/tvCheckPW"
@@ -144,7 +150,10 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvCheckPW"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvCheckPW"
+                android:maxLength="15"
+                android:ellipsize="start"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/tvName"
@@ -168,7 +177,10 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvName"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvName"
+                android:maxLength="10"
+                android:ellipsize="start"
+                android:singleLine="true" />
 
             <ImageView
                 android:id="@+id/drawerinfo"
@@ -203,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45dp"
                     android:layout_marginTop="20dp"
-                    android:text="생일"
+                    android:text="생년월일"
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -218,7 +230,10 @@
                     android:background="@drawable/edit_round"
                     android:padding="10dp"
                     android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@+id/tvBirthday" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvBirthday"
+                    android:maxLength="25"
+                    android:ellipsize="start"
+                    android:singleLine="true"  />
 
                 <TextView
                     android:id="@+id/tvPhoneNum"
@@ -241,7 +256,10 @@
                     android:background="@drawable/edit_round"
                     android:padding="10dp"
                     android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@+id/tvPhoneNum" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvPhoneNum"
+                    android:maxLength="13"
+                    android:ellipsize="start"
+                    android:singleLine="true"  />
 
                 <TextView
                     android:id="@+id/tvgender"
@@ -303,7 +321,10 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvEmail"
+                    android:maxLength="15"
+                    android:ellipsize="start"
+                    android:singleLine="true"  />
 
                 <TextView
                     android:id="@+id/asSign"
