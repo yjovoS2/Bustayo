@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.bhsd.bustayo.R;
 
 //검색 화면(정류장)
 public class SearchStationFragment extends Fragment {

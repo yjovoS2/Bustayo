@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhsd.bustayo.adapter.StationListAdapter;
+import com.bhsd.bustayo.dto.StationListItem;
+
 import java.util.ArrayList;
 
 
@@ -73,7 +76,7 @@ public class GetOffAlarmFragment extends Fragment {
                 alarmsetting.Dialog(activity);
             }
         });
-
+/*
         //하드코딩
         slAdapter.addItem(new StationListItem("등촌","아이디",1,2));
         slAdapter.addItem(new StationListItem("등촌옆","아이디",2,3));
@@ -81,7 +84,7 @@ public class GetOffAlarmFragment extends Fragment {
         slAdapter.addItem(new StationListItem("등촌옆옆옆","아이디",3,4));
         slAdapter.addItem(new StationListItem("등촌옆옆옆옆","아이디",0,1));
         slAdapter.addItem(new StationListItem("등촌옆옆옆옆옆","아이디",5,6));
-
+*/
         return view;
     }
 }

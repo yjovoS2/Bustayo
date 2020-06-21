@@ -15,31 +15,20 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/searchGoBack"
+            android:id="@+id/goBack"
             android:layout_width="25dp"
             android:layout_height="30dp"
+            android:elevation="1dp"
             android:background="@drawable/ic_go_back"
             android:backgroundTint="@color/colorAccent"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="불편신고 접수"
-            android:textSize="18sp"
-            android:textColor="#aa777777"
-            android:paddingStart="15dp">
-            <requestFocus/>
-        </TextView>
+            android:text="@string/complaint_add"
+            style="@style/complaintTitle"/>
 
     </androidx.appcompat.widget.Toolbar>
-
-    <!-- 구분선 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#33777777"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -89,6 +78,7 @@
                 android:textColor="#cc777777"
                 android:textColorHint="#aa777777"
                 android:backgroundTint="#33777777"
+                android:maxLength="11"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/complaintName"
                 app:layout_constraintTop_toBottomOf="@id/complaintPerInfo"/>
@@ -200,7 +190,7 @@
                 app:layout_constraintTop_toBottomOf="@id/complaintNote"/>
 
             <Button
-                android:id="@+id/complaintRegBtn"
+                android:id="@+id/complaintAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"

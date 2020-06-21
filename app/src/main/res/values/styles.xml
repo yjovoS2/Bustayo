@@ -28,4 +28,11 @@
         <item name="android:layout_marginHorizontal">30dp</item>
     </style>
 
+    <!-- complaint title -->
+    <style name="complaintTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorNormal</item>
+        <item name="android:paddingStart">15dp</item>
+    </style>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.adapter;
 
 import android.content.Context;
 
@@ -10,16 +10,15 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-//뷰페이저 어댑터
 public class SearchPagerAdapter extends FragmentPagerAdapter {
 
-    private Context _context;
+    private Context context;
     private ArrayList<Fragment> tabFragments; //사용할 프래그먼트 리스트
-    private ArrayList<Integer> tabTitles; //탭 타이틀로 설정할 ID 리스트
+    private ArrayList<Integer> tabTitles;     //탭 타이틀 ID
 
     public SearchPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
-        _context = context;
+        this.context = context;
         tabFragments = new ArrayList<>();
         tabTitles = new ArrayList<>();
     }
@@ -37,7 +36,7 @@ public class SearchPagerAdapter extends FragmentPagerAdapter {
         return tabFragments.get(position);
     }
 
-    //탭 개수
+    //탭 개수 반환
     @Override
     public int getCount() {
         return 2;
@@ -47,6 +46,6 @@ public class SearchPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return _context.getString(tabTitles.get(position));
+        return context.getString(tabTitles.get(position));
     }
 }

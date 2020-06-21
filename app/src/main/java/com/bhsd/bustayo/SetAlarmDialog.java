@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class SetAlarmDialog {
 
     public void Dialog(final Context context){
-        //난이도 하드코딩한거 바꿔
         final String[] Difficulty = {"3 정류장 전 알림", "2 정류장 전 알림", "1 정류장 전 알림"};
         final Integer[] sec = {3,2,1};
         final ArrayList<Integer> selectedItem = new ArrayList<Integer>();
