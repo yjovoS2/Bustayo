@@ -18,7 +18,6 @@ import com.bhsd.bustayo.dto.BookmarkInfo;
 
 import java.util.ArrayList;
 
-import static com.bhsd.bustayo.activity.MainActivity.context_main;
 
 public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRecyclerViewAdapter.BookmarkViewHolder> {
 
@@ -89,10 +88,10 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
             @Override
             public void onItemSelected(View v, int pos) {
                 //이부분에 데이터넘겨주는 부분
-                Intent intent = new Intent(context_main, StationListActivity.class);
+                Intent intent = new Intent(context, StationListActivity.class);
                 String busNum = adapter.getItem(pos).getBusNum()+"";
                 intent.putExtra("busRouteNm", busNum);
-                context_main.startActivity(intent);
+                context.startActivity(intent);
             }
         });
 
