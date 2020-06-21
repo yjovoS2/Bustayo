@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.dto;
 
 import java.util.ArrayList;
 

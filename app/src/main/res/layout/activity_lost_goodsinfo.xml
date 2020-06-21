@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LostGoodsinfo">
+    tools:context=".dto.LostGoodsinfo">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -32,59 +32,62 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/background_gray"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+
+    <Spinner
+        android:id="@+id/lostGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
+    <EditText
+        android:id="@+id/userLostGoods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_round"
+        android:textSize="18sp"
+        android:hint="분실물명 검색"
+        android:padding="10dp"
+        android:ems="8"
+        app:layout_constraintTop_toTopOf="@+id/lostGroup"
+        app:layout_constraintLeft_toRightOf="@+id/lostGroup"
+        app:layout_constraintRight_toLeftOf="@+id/searchButton"/>
 
-<!--    <Spinner-->
-<!--        android:id="@+id/lostGroup"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="10dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"/>-->
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/userLostGoods"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="20dp"
+        android:text="검색"/>
 
-<!--    <EditText-->
-<!--        android:id="@+id/userLostGoods"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/button_round"-->
-<!--        android:textSize="18sp"-->
-<!--        android:hint="분실물명 검색"-->
-<!--        android:padding="10dp"-->
-<!--        android:ems="8"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/lostGroup"-->
-<!--        app:layout_constraintLeft_toRightOf="@+id/lostGroup"-->
-<!--        app:layout_constraintRight_toLeftOf="@+id/searchButton"-->
-<!--        android:maxLength="25"-->
-<!--        android:ellipsize="start"-->
-<!--        android:singleLine="true" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/searchButton"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="40dp"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/userLostGoods"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        android:layout_marginRight="10dp"-->
-<!--        android:background="@drawable/button_round"-->
-<!--        android:backgroundTint="@color/colorAccent"-->
-<!--        android:textColor="@color/colorPrimary"-->
-<!--        android:text="검색"/>-->
-
-    <WebView
-        android:id="@+id/webView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/line"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/searchButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="20dp">
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/LostList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/goUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_drawer_up"
+            android:tint="@color/button_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

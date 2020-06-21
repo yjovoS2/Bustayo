@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,6 +13,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bhsd.bustayo.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,7 +26,6 @@ public class JoinActivity extends AppCompatActivity {
     String id, passwd, name, birth, gender, phoneNum, email, check;
     ImageView drawerinfo;
     ConstraintLayout optioninfo;
-    ArrayList<String> emaillist;
     Spinner emailform;
 
     @Override
@@ -62,7 +63,6 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
-
         btncomplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +71,7 @@ public class JoinActivity extends AppCompatActivity {
                 name = insertName.getText().toString();
                 check = checkPasswd.getText().toString();
 
-                if(id != null&& passwd !=null &&name!=null) {
+                if(id == null || passwd == null || name == null ||check ==null) {
                     if (passwd.equals(check)) {
                         if (optioninfo.getVisibility() == View.VISIBLE) {
                             birth = birthday.getText().toString();
@@ -81,10 +81,10 @@ public class JoinActivity extends AppCompatActivity {
                                 gender = "여성";
                             else
                                 gender = "남성";
-                            email = checkemail.getText().toString() + "@" + emaillist.get((emailform.getSelectedItemPosition()));
+                            email = checkemail.getText().toString() + "@" + emailform.getSelectedItem().toString();
                         } else {
+
                         }
-                        //데이터 처리해주기
                     } else
                         Toast.makeText(JoinActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -94,13 +94,13 @@ public class JoinActivity extends AppCompatActivity {
         });
 
 
-    drawerinfo.setOnClickListener(new View.OnClickListener() {
+        drawerinfo.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(optioninfo.getVisibility()==View.VISIBLE)
-                optioninfo.setVisibility(View.GONE);
-            else
-                optioninfo.setVisibility(View.VISIBLE);
+              if(optioninfo.getVisibility()==View.VISIBLE)
+                 optioninfo.setVisibility(View.GONE);
+               else
+                  optioninfo.setVisibility(View.VISIBLE);
         }
     });
 

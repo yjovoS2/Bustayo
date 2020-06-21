@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.adapter;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -6,13 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.application.SetAlarmDialog;
+import com.bhsd.bustayo.dto.CurrentBusInfo;
+
 import java.util.ArrayList;
-import static com.bhsd.bustayo.MainActivity.context_main;
+import static com.bhsd.bustayo.activity.MainActivity.context_main;
 
 public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentBusRecyclerViewAdapter.CurrentBusViewHolder>{
 
@@ -76,6 +79,10 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
 
     @Override
     public void onBindViewHolder(@NonNull CurrentBusRecyclerViewAdapter.CurrentBusViewHolder holder, final int position) {
+        holder.bookmark.setImageResource(R.drawable.ic_bookmark_empty);
+        holder.busColor.setImageResource(R.drawable.ic_bus_);
+        holder.busCongested.setImageResource(R.drawable.ic_bus);
+        holder.alarm.setImageResource(R.drawable.ic_alarm);
         holder.busColor.setColorFilter(currentBusInfos.get(position).getBusColor()); //버스 색
         holder.busNum.setText(currentBusInfos.get(position).getBusNum()+"");
         holder.busDestination.setText(currentBusInfos.get(position).getBusDestination());
@@ -95,7 +102,6 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
         else
             holder.bookmark.setVisibility(View.VISIBLE);
 
-
         if(currentBusInfos.get(position).isBookmark())
             holder.bookmark.setColorFilter(Color.YELLOW);
 
@@ -105,16 +111,6 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
                 //몇 정류장전에서 알람을 받을지 설정
                 SetAlarmDialog alarmsetting = new SetAlarmDialog();
                 alarmsetting.Dialog(context_main);
-            }
-        });
-
-        holder.bookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentBusInfos.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position,currentBusInfos.size());
-                notifyDataSetChanged();
             }
         });
     }

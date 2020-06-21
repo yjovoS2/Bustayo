@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhsd.bustayo.dto.BookmarkInfo;
+import com.bhsd.bustayo.adapter.BookmarkRecyclerViewAdapter;
+import com.bhsd.bustayo.dto.CurrentBusInfo;
+import com.bhsd.bustayo.activity.MainActivity;
+import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.StationActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
