@@ -1,5 +1,6 @@
 package com.bhsd.bustayo.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.bhsd.bustayo.application.SetAlarmDialog;
 import com.bhsd.bustayo.dto.CurrentBusInfo;
 
 import java.util.ArrayList;
+
 import static com.bhsd.bustayo.activity.MainActivity.context_main;
 
 public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentBusRecyclerViewAdapter.CurrentBusViewHolder>{
