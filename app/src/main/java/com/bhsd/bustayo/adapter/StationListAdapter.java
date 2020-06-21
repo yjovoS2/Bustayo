@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bhsd.bustayo.MainActivity;
+import com.bhsd.bustayo.activity.MainActivity;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.StationActivity;
 import com.bhsd.bustayo.application.APIManager;

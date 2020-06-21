@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,8 +19,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.bhsd.bustayo.activity.ComplaintActivity;
-import com.bhsd.bustayo.activity.SearchActivity;
+import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.fragment.BookmarkFragment;
+import com.bhsd.bustayo.fragment.GetOffAlarmFragment;
 import com.bhsd.bustayo.fragment.NMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,6 +29,8 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    //플로팅 액션 버튼
+    public FloatingActionButton fab;
     //툴바 관련
     TextView search, header;
     DrawerLayout drawerLayout;
@@ -46,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
     //MainActivity의 context
     public static Context context_main;
 
-    //플로팅 액션 버튼
-    FloatingActionButton fab;
     //로그인상태인지 확인하는 변수 - 테스트용 나중엔 디비에서 가지고오자
     boolean islogin;
 
@@ -164,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     //분실물 현황
                     case R.id.drawerLostList: {
-                        Toast.makeText(MainActivity.this, "drawerLostList", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), LostGoodsActivity.class);
+                        startActivity(intent);
                         return true;
                     }
                     //지역설정 (2차 개발)

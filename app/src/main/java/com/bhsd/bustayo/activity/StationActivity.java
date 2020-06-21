@@ -23,8 +23,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bhsd.bustayo.CurrentBusInfo;
-import com.bhsd.bustayo.CurrentBusRecyclerViewAdapter;
+import com.bhsd.bustayo.dto.CurrentBusInfo;
+import com.bhsd.bustayo.adapter.CurrentBusRecyclerViewAdapter;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.application.APIManager;
 

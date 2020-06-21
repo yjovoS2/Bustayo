@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bhsd.bustayo">
-
     <!-- API 호출하기 위함 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <!-- 사용자 현재 위치 접근 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 사용자 현재 위치 접근 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -17,45 +14,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LostGoodsinfo"></activity>
-        <!-- android:networkSecurityConfig="@xml/network_security_config" -->
+        <activity android:name=".activity.LostGoodsActivity"></activity>
+        <activity android:name=".dto.LostGoodsinfo" /> <!-- android:networkSecurityConfig="@xml/network_security_config" -->
         <!-- 네이버 지도 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="14x4s7l2zd" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- 검색 화면 -->
+        </activity> <!-- 검색 화면 -->
         <activity
             android:name=".activity.SearchActivity"
-            android:windowSoftInputMode="stateAlwaysVisible"/>
-
-        <!-- 불편신고 리스트 화면 -->
-        <activity android:name=".activity.ComplaintActivity"/>
-
-        <!-- 불편신고 접수 화면 -->
-        <activity android:name=".activity.ComplaintAddActivity"/>
-
-        <!-- 버스 화면 -->
-        <activity android:name=".activity.StationListActivity" />
-
-        <!-- 버스정보 화면 -->
-        <activity android:name=".activity.BusInfoActivity" />
-
-        <!-- 정류장 화면 -->
+            android:windowSoftInputMode="stateAlwaysVisible" /> <!-- 불편신고 리스트 화면 -->
+        <activity android:name=".activity.ComplaintActivity" /> <!-- 불편신고 접수 화면 -->
+        <activity android:name=".activity.ComplaintAddActivity" /> <!-- 버스 화면 -->
+        <activity android:name=".activity.StationListActivity" /> <!-- 버스정보 화면 -->
+        <activity android:name=".activity.BusInfoActivity" /> <!-- 정류장 화면 -->
         <activity android:name=".activity.StationActivity" />
-
-        <activity android:name=".JoinActivity" />
-
-        <activity android:name=".LoginActivity" />
-
+        <activity android:name=".activity.JoinActivity" />
+        <activity android:name=".activity.LoginActivity" />
     </application>
 
 </manifest>

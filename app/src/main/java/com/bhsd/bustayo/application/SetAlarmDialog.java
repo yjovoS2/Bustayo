@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.application;
 
 import android.content.Context;
 import android.content.DialogInterface;

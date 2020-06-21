@@ -1,4 +1,4 @@
-package com.bhsd.bustayo;
+package com.bhsd.bustayo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.StationListActivity;
+import com.bhsd.bustayo.dto.BookmarkInfo;
 
 import java.util.ArrayList;
 
-import static com.bhsd.bustayo.MainActivity.context_main;
+import static com.bhsd.bustayo.activity.MainActivity.context_main;
 
 public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRecyclerViewAdapter.BookmarkViewHolder> {
 
