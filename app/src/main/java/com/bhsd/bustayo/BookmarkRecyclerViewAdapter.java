@@ -75,7 +75,7 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
     @Override
     public void onBindViewHolder(@NonNull final BookmarkRecyclerViewAdapter.BookmarkViewHolder holder, final int position) {
 
-        final CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo(), true);
+        final CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo(), false);
         holder.currnetBusInfo.setHasFixedSize(true);
         holder.currnetBusInfo.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         holder.currnetBusInfo.setAdapter(adapter);
@@ -110,6 +110,7 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
                 bookmarkInfos.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position,bookmarkInfos.size());
+
             }
         });
     }

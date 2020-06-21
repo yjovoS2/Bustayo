@@ -24,6 +24,7 @@ public class BookmarkFragment extends Fragment {
     MainActivity activity;
     ArrayList<BookmarkInfo> bookmarkInfos;
     FloatingActionButton refresh_btn;
+    public static BookmarkRecyclerViewAdapter bmAdapter;
 
     @Nullable
     @Override
@@ -38,7 +39,7 @@ public class BookmarkFragment extends Fragment {
         insertData();       //하드코딩한 부분 - 메소드는 그대로 쓰면서 내용만 바꿀예정
         final RecyclerView bmRecyclerView = view.findViewById(R.id.bookmark);
 
-        final BookmarkRecyclerViewAdapter bmAdapter = new BookmarkRecyclerViewAdapter(bookmarkInfos,activity.context_main);
+        bmAdapter = new BookmarkRecyclerViewAdapter(bookmarkInfos,activity.context_main);
         bmRecyclerView.setHasFixedSize(true);
         bmRecyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
         bmRecyclerView.setAdapter(bmAdapter);

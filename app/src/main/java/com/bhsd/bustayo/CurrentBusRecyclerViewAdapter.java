@@ -2,12 +2,11 @@ package com.bhsd.bustayo;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -96,6 +95,7 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
         else
             holder.bookmark.setVisibility(View.VISIBLE);
 
+
         if(currentBusInfos.get(position).isBookmark())
             holder.bookmark.setColorFilter(Color.YELLOW);
 
@@ -105,6 +105,16 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
                 //몇 정류장전에서 알람을 받을지 설정
                 SetAlarmDialog alarmsetting = new SetAlarmDialog();
                 alarmsetting.Dialog(context_main);
+            }
+        });
+
+        holder.bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentBusInfos.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,currentBusInfos.size());
+                notifyDataSetChanged();
             }
         });
     }
