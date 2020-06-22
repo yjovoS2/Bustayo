@@ -40,12 +40,12 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-/////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 // 바텀네비게이션 메뉴 -> 주변 정류장
 //   - 현재 내 위치 확인할 수 있음
 //   - 지도 상단에 있는 "주변 정류장 확인하기" 클릭하면 주변에 있는 정류장 위치를 보여줌
 //   - 네이버맵 사용
-/////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 public class NMapFragment extends Fragment implements OnMapReadyCallback {
 
     //사용자 위치 접근 관련 변수
@@ -125,7 +125,7 @@ public class NMapFragment extends Fragment implements OnMapReadyCallback {
             public void onClick(View v) {
                 initializeItem();
 
-                new stationXmlpares().execute();
+                new StationXmlparse().execute();
             }
         });
     }
@@ -243,7 +243,7 @@ public class NMapFragment extends Fragment implements OnMapReadyCallback {
     //   - API 호출을 통해 받아온 데이터를 저장
     //   - 저장된 데이터를 이용하여 마커 설정
     //////////////////////////////////////
-    private class stationXmlpares extends AsyncTask {
+    private class StationXmlparse extends AsyncTask {
         //API 요청 변수
         double lat, lng;
         int    radius;
@@ -319,11 +319,8 @@ public class NMapFragment extends Fragment implements OnMapReadyCallback {
                                 Marker marker = new Marker(new LatLng(Double.parseDouble(s_gpsY), Double.parseDouble(s_gpsX)));
                                 stationItems.add(new StationItem(marker, s_arsId, s_stationNm));
                             } break;
-                    }
-                    parser.next();
+                    } parser.next();
                 }
-                setMarker(); //마커 재설정
-
             } catch (MalformedURLException e){
                 e.printStackTrace();
             } catch (XmlPullParserException e) {
@@ -331,6 +328,8 @@ public class NMapFragment extends Fragment implements OnMapReadyCallback {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            setMarker(); //마커 재설정
 
             return null;
         }

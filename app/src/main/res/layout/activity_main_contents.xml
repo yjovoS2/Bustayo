@@ -41,8 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:itemTextColor="@drawable/highlight"
-        app:itemIconTint="@drawable/highlight"
+        app:itemTextColor="@drawable/highlight_item"
+        app:itemIconTint="@drawable/highlight_item"
         app:menu="@menu/bottom_nav_item"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
