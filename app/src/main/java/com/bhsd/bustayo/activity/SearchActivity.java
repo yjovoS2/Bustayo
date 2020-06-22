@@ -1,13 +1,21 @@
 package com.bhsd.bustayo.activity;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bhsd.bustayo.R;
@@ -108,5 +116,15 @@ public class SearchActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.not_mov, R.anim.right_mov);
             }
         });
+    }
+
+    ////////////////////////////////////////
+    // 프래그먼트에 변화가 생길 경우 호출하여 적용
+    ////////////////////////////////////////
+    public void refresh(String type){
+        if(type.equals("bus"))
+            getSupportFragmentManager().beginTransaction().detach(busFragment).attach(busFragment).commit();
+        else
+            getSupportFragmentManager().beginTransaction().detach(stationFragment).attach(stationFragment).commit();
     }
 }

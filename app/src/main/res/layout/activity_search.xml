@@ -29,7 +29,6 @@
             android:inputType="phone"
             style="@style/searchBox">
             <requestFocus/>
-
         </EditText>
 
     </androidx.appcompat.widget.Toolbar>

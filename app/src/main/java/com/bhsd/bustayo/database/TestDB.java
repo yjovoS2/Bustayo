@@ -23,7 +23,7 @@ public class TestDB extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE busHistoryTB(" +
                     "busRouteId VARCHAR(9) PRIMARY KEY ON CONFLICT REPLACE, " +
                     "busRouteNm VARCHAR(30), " +
-                    "routeType VARCHAR(4), " +
+                    "routeType VARCHAR(1), " +
                     "stStationNm VARCHAR(60), " +
                     "edStationNm VARCHAR(60), " +
                     "timestamp TIMESTAMP)"

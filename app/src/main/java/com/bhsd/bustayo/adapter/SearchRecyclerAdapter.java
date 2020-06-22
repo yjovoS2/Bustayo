@@ -1,6 +1,7 @@
 package com.bhsd.bustayo.adapter;
 
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -140,9 +141,25 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        char routeType;
+
+                        switch(item.getHistorySub1()) {
+                            case "공용버스": routeType = '0'; break;
+                            case "공항버스": routeType = '1'; break;
+                            case "마을버스": routeType = '2'; break;
+                            case "간선버스": routeType = '3'; break;
+                            case "지선버스": routeType = '4'; break;
+                            case "순환버스": routeType = '5'; break;
+                            case "광역버스": routeType = '6'; break;
+                            case "인천버스": routeType = '7'; break;
+                            case "경기버스": routeType = '8'; break;
+                            case "폐지버스": routeType = '9'; break;
+                            default: routeType = '?'; break;
+                        }
+
                         SQLiteDatabase dbSQL = DBHelper.getWritableDatabase();
                         dbSQL.execSQL("INSERT OR REPLACE INTO busHistoryTB VALUES(?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
-                                new Object[] {item.getHistoryId(), item.getHistoryTitle(), item.getHistorySub1(), item.getHistorySub2().split("→")[0], item.getHistorySub2().split("→")[1]});
+                                new Object[] {item.getHistoryId(), item.getHistoryTitle(), routeType, item.getHistorySub2().split("→")[0], item.getHistorySub2().split("→")[1]});
                         dbSQL.close();
 
                         Intent intent = new Intent(context, StationListActivity.class);
@@ -190,12 +207,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                 SQLiteDatabase dbSQL = DBHelper.getWritableDatabase();
                                 dbSQL.execSQL("DELETE FROM busHistoryTB");
                                 dbSQL.close();
-                                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        SearchRecyclerAdapter.this.notifyDataSetChanged();
-                                    }
-                                });
+
+                                //프래그먼트 화면 갱신
+                                ((SearchActivity)context).refresh("bus");
                             }
                         });
                     } else {
@@ -207,12 +221,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                 SQLiteDatabase dbSQL = DBHelper.getWritableDatabase();
                                 dbSQL.execSQL("DELETE FROM stationHistoryTB");
                                 dbSQL.close();
-                                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        SearchRecyclerAdapter.this.notifyDataSetChanged();
-                                    }
-                                });
+
+                                //프래그먼트 화면 갱신
+                                ((SearchActivity)context).refresh("station");
                             }
                         });
                     }

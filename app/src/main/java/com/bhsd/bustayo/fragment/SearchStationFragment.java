@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,19 +22,9 @@ import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.SearchActivity;
 import com.bhsd.bustayo.adapter.SearchRecyclerAdapter;
 import com.bhsd.bustayo.application.APIManager;
-import com.bhsd.bustayo.application.Common;
 import com.bhsd.bustayo.database.TestDB;
 import com.bhsd.bustayo.dto.SearchRecyclerItem;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
@@ -101,7 +90,7 @@ public class SearchStationFragment extends Fragment {
                             searchStr = s.toString();
                             new SearchStationXmlparse().execute();
                         }
-                    }, 1200);
+                    }, 1000);
                 } else
                     useInterDB();
             }
@@ -138,8 +127,14 @@ public class SearchStationFragment extends Fragment {
 
             ArrayList<HashMap<String, String>> list = APIManager.getAPIArray(APIManager.GET_STATION_BY_NAME, new String[]{searchStr}, new String[]{"arsId", "stId", "stNm"});
 
-            for (HashMap<String,String> map : list)
-                data.add(new SearchRecyclerItem(map.get("stId"), map.get("stNm"), map.get("arsId"), map.get("stId")));
+            for (HashMap<String,String> map : list) {
+                /*
+                 * 서울 지역이 아닌 경우 0을 반환하므로 체크
+                 */
+                if(!map.get("arsId").equals("0")){
+                    data.add(new SearchRecyclerItem(map.get("stId"), map.get("stNm"), map.get("arsId"), map.get("stId")));
+                }
+            }
 
             updateAdapter();
 
