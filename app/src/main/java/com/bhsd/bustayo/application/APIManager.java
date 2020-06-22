@@ -37,7 +37,7 @@ public class APIManager {
     private static final String[] GET_BUS_ROUTE_LIST_TAG = { "&strSrch=" };
     private static final String[] GET_STATION_BY_ROUTE_TAG = { "&busRouteId=" };
     private static final String[] GET_STATIONS_BY_POS_TAG = { "&tmX=", "&tmY=", "&radius=" };
-    private static final String[] GET_STATION_BY_NAME_TAG = { "&srSrch=" };
+    private static final String[] GET_STATION_BY_NAME_TAG = { "&stSrch=" };
     private static final String[] GET_STATION_BY_UID_ITEM_TAG = { "&arsId=" };
 
     // =================================================
@@ -71,6 +71,12 @@ public class APIManager {
                             parser.next();
                             return_value.put(s, parser.getText());
                         }
+                    }
+                }
+                if(eventType == XmlPullParser.END_TAG) {
+                    tag = parser.getName(); // get tag name
+                    if (tag.equals("itemList")) {
+                        return return_value;
                     }
                 }
                 eventType = parser.next();

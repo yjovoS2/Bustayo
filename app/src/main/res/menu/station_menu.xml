@@ -4,7 +4,6 @@
     <item
         app:showAsAction="always"
         android:id="@+id/bookmark"
-        android:iconTint="#CCCCCC"
         android:icon="@drawable/ic_bookmark"
         android:title="즐겨찾기" />
 </menu>

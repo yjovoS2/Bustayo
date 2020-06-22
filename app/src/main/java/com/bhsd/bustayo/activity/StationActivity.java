@@ -1,23 +1,18 @@
 package com.bhsd.bustayo.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -55,31 +50,15 @@ public class StationActivity extends AppCompatActivity {
         arsId = inIntent.getStringExtra("arsId");
         stationNm = inIntent.getStringExtra("stationNm");
 
-        Log.d("lyj", "\n [ stationNm ]\n arsId : " + arsId + "  stationNm : " + stationNm);
-
         new Thread() {
             @Override
             public void run() {
                 busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
 
-                findViewById(R.id.refresh_btn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                setBusListAdapter(busList);
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
-                    }
-                });
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        setBusListAdapter(busList);
+                        setAdapter(busList);
 
                         setToolbar(stationNm);
                         adapter.notifyDataSetChanged();
@@ -87,6 +66,84 @@ public class StationActivity extends AppCompatActivity {
                 });
             }
         }.start();
+
+        /* 새로고침 버튼 */
+        findViewById(R.id.refresh_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setAdapter(busList);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }.start();
+            }
+        });
+    }
+
+    void setAdapter(ArrayList<HashMap<String,String>> list) {
+        ArrayList<CurrentBusInfo> currentBusInfo = new ArrayList<>();
+        for(HashMap<String, String> item : list) {
+            int busColor = getTypeColor(Integer.parseInt(item.get("routeType")));
+            int busCongestion = getCongestionColor(Integer.parseInt(item.get("congestion")));
+            String busNum = item.get("rtNm");
+            String busDestination = item.get("adirection") + "방면";
+            String currentLocation1 = item.get("arrmsg1");
+            String currentLocation2 = item.get("arrmsg2");
+
+            // (int busColor, int busCongestion, int busNum,
+            // String busDestination, String currentLocation1, String currentLocation2)
+
+            CurrentBusInfo it = new CurrentBusInfo(busColor,busCongestion,busNum,busDestination,currentLocation1,currentLocation2,false);
+            currentBusInfo.add(it);
+        }
+        adapter = new CurrentBusRecyclerViewAdapter(currentBusInfo, false);
+
+        /* 아이템 클릭 이벤트 */
+        adapter.setOnListItemSelected(new CurrentBusRecyclerViewAdapter.OnListItemSelected() {
+            @Override
+            public void onItemSelected(View v, int position) {
+                Intent intent = new Intent(StationActivity.this, StationListActivity.class);
+                String busNum = adapter.getItem(position).getBusNum()+"";
+                intent.putExtra("busRouteNm", busNum);
+                StationActivity.this.startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    void setToolbar(String bus_number_text) {
+        setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(bus_number_text);
+        Drawable icon = getDrawable(R.drawable.ic_go_back).mutate();
+        icon.setTint(Color.WHITE);
+        actionBar.setHomeAsUpIndicator(icon);
+
+        Window window = StationActivity.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getColor(R.color.station));   // 상태바 색상
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch(id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     int getCongestionColor(int congestion) {
@@ -119,7 +176,7 @@ public class StationActivity extends AppCompatActivity {
                 color = getColor(R.color.bus_blue);
                 break;
             case 5: // 순환
-                getColor(R.color.bus_yellow);
+                color = getColor(R.color.bus_yellow);
                 break;
             case 6: // 광역
             case 0: // 공용
@@ -131,98 +188,5 @@ public class StationActivity extends AppCompatActivity {
             default:
         }
         return color;
-    }
-
-    void setBusListAdapter(ArrayList<HashMap<String,String>> item) {
-        ArrayList<CurrentBusInfo> currentBusInfo = new ArrayList<>();
-        for(int i = 0; i < item.size(); i++) {
-            int busColor = getTypeColor(Integer.parseInt(item.get(i).get("routeType")));
-            int busCongestion = getCongestionColor(Integer.parseInt(item.get(i).get("congestion")));
-            String busNum = item.get(i).get("rtNm");
-            String busDestination = item.get(i).get("adirection") + "방면";
-            String currentLocation1 = item.get(i).get("arrmsg1");
-            String currentLocation2 = item.get(i).get("arrmsg2");
-
-            // (int busColor, int busCongestion, int busNum,
-            // String busDestination, String currentLocation1, String currentLocation2)
-
-            CurrentBusInfo it = new CurrentBusInfo(busColor,busCongestion,busNum,busDestination,currentLocation1,currentLocation2,false);
-            currentBusInfo.add(it);
-        }
-        adapter = new CurrentBusRecyclerViewAdapter(currentBusInfo, false);
-        recyclerView.setAdapter(adapter);
-    }
-
-    public void clickAlarm(View v) {
-        TextView time = v.getRootView().findViewById(R.id.bus_time).findViewById(R.id.bus_first);
-        String s = time.getText().toString();
-        Log.d(s, s);
-        if(s.equals("운행종료")) {
-            Toast.makeText(StationActivity.this, "해당 노선은 운행을 종료했습니다 ㅜㅜ!", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        final String[] data = { "1 정거장", "2 정거장", "3 정거장" };
-        final StringBuilder msg = new StringBuilder();
-        AlertDialog.Builder dialog = new AlertDialog.Builder(StationActivity.this);
-
-        dialog.setTitle("승차알림");
-        dialog.setIcon(R.drawable.ic_alarm);
-
-        dialog.setSingleChoiceItems(data, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                msg.delete(0,msg.length());
-                msg.append(data[which]).append(" 뒤에 알람을 울립니다.");
-            }
-        });
-
-        dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // 아이콘 색상 변경ㅇ & 상단바에 뜨게!
-                Toast.makeText(StationActivity.this, msg, Toast.LENGTH_LONG).show();
-            }
-        });
-        dialog.setNegativeButton("취소", null);
-        dialog.show();
-    }
-
-    void setToolbar(String bus_number_text) {
-        setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(bus_number_text);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_go_back);
-
-        Window window = StationActivity.this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getColor(R.color.bus_blue));   // 상태바 색상
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.station_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch(id) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.bookmark:
-                Toast.makeText(this,"즐겨찾기눌림~!",Toast.LENGTH_LONG).show();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

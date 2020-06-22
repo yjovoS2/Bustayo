@@ -4,7 +4,7 @@ package com.bhsd.bustayo.dto;
 import com.bhsd.bustayo.application.APIManager;
 
 import java.util.HashMap;
-//
+
 public class BusInfo {
     private HashMap<String,String> bus;
 
