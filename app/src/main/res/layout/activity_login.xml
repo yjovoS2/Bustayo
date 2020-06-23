@@ -110,7 +110,7 @@
         app:layout_constraintTop_toBottomOf="@id/line2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/loginKakao"
-        android:backgroundTint="#4CAF50"/>
+        android:backgroundTint="@color/naver"/>
 
     <Button
         android:id="@id/loginKakao"
@@ -119,7 +119,7 @@
         android:background="@drawable/button_circle"
         android:text="K"
         android:textSize="25sp"
-        android:backgroundTint="@color/bus_yellow"
+        android:backgroundTint="@color/kakao"
         app:layout_constraintTop_toTopOf="@id/loginNaver"
         app:layout_constraintLeft_toRightOf="@+id/loginNaver"
         app:layout_constraintRight_toLeftOf="@+id/loginGoogle"/>
@@ -131,7 +131,7 @@
         android:background="@drawable/button_circle"
         android:text="G"
         android:textSize="25sp"
-        android:backgroundTint="@color/bus_red"
+        android:backgroundTint="@color/google"
         android:textColor="#ffffff"
         app:layout_constraintTop_toTopOf="@id/loginNaver"
         app:layout_constraintLeft_toRightOf="@+id/loginKakao"

@@ -16,7 +16,7 @@
     <color name="bus_green">#70BF70</color>
     <color name="bus_red">#D16969</color>
     <color name="bus_blue">#6C85C5</color>
-    <color name="bus_yellow">#D5CC7A</color>
+    <color name="bus_yellow">#F8E95F</color>
     <color name="bus_skyblue">#83C3D6</color>
 
     <!-- 혼잡도관련 -->
@@ -30,5 +30,10 @@
 
     <!-- 정류장 -->
     <color name="station">#303B51</color>
+
+    <!-- 000 아이디로 로그인 -->
+    <color name="naver">#4CAF50</color>
+    <color name="kakao">#FD0</color>
+    <color name="google">#D00</color>
 
 </resources>
