@@ -28,6 +28,7 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.util.MarkerIcons;
 import com.naver.maps.map.widget.LocationButtonView;
@@ -175,8 +176,7 @@ public class NMapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void run() {
                 for(final StationItem item : stationItems){
-                    item.marker.setIcon(MarkerIcons.BLACK);
-                    item.marker.setIconTintColor(getContext().getColor(R.color.colorAccent));
+                    item.marker.setIcon(OverlayImage.fromResource(R.drawable.ic_map_station));
                     item.marker.setMap(naverMap);
                     item.marker.setOnClickListener(new Overlay.OnClickListener() {
                         @Override
@@ -258,7 +258,8 @@ public class NMapFragment extends Fragment implements OnMapReadyCallback {
                 case 19: radius = 25;  break;
             }
 
-            ArrayList<HashMap<String, String>> list = APIManager.getAPIArray(APIManager.GET_STATION_BY_POS, new String[]{Double.toString(lng), Double.toString(lat), Integer.toString(radius)}, new String[]{"gpsY", "gpsX", "arsId", "stationNm"});
+            ArrayList<HashMap<String, String>> list = APIManager.getAPIArray(APIManager.GET_STATION_BY_POS, new String[]{
+                    Double.toString(lng), Double.toString(lat), Integer.toString(radius)}, new String[]{"gpsY", "gpsX", "arsId", "stationNm"});
 
             for (HashMap<String,String> map : list) {
                 Marker marker = new Marker(new LatLng(Double.parseDouble(map.get("gpsY")), Double.parseDouble(map.get("gpsX"))));

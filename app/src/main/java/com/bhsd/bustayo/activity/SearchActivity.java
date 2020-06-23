@@ -1,21 +1,13 @@
 package com.bhsd.bustayo.activity;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bhsd.bustayo.R;
@@ -68,7 +60,7 @@ public class SearchActivity extends AppCompatActivity {
         //뷰페이저-탭 연결, 탭 아이콘 설정
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_bus);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_sation_search);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_station_search);
     }
 
     /////////////

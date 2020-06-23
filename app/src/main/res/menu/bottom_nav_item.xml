@@ -10,6 +10,6 @@
         android:title="@string/map" />
     <item
         android:id="@+id/bottomNavAlarmOff"
-        android:icon="@drawable/ic_alarm"
+        android:icon="@drawable/ic_get_off"
         android:title="@string/alarm_off"/>
 </menu>
