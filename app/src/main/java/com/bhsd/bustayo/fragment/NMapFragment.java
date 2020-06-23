@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,9 @@ import androidx.fragment.app.Fragment;
 
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.StationActivity;
+import com.bhsd.bustayo.application.APIManager;
 import com.bhsd.bustayo.application.Common;
+import com.bhsd.bustayo.dto.SearchRecyclerItem;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapView;
@@ -39,6 +42,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 ///////////////////////////////////////////////////////////////////////////
 // 바텀네비게이션 메뉴 -> 주변 정류장
@@ -58,13 +62,6 @@ public class NMapFragment extends Fragment implements OnMapReadyCallback {
     private LocationButtonView     locationButtonView;
     private ArrayList<StationItem> stationItems;
     private Button                 aroundStation;
-
-    //XML 처리 관련
-    private URL                    url;
-    private boolean                b_arsId, b_gpsX, b_gpsY, b_stationId, b_stationNm;
-    private String                 s_arsId, s_gpsX, s_gpsY, s_stationId, s_stationNm;
-    private XmlPullParserFactory   parserCreator;
-    private XmlPullParser          parser;
 
     //UI 스레드
     private Handler                handler;
@@ -261,72 +258,11 @@ public class NMapFragment extends Fragment implements OnMapReadyCallback {
                 case 19: radius = 25;  break;
             }
 
-            try {
-                //API 호출 URL
-                url = new URL("http://ws.bus.go.kr/api/rest/stationinfo/getStationByPos?tmX=" + lng + "&tmY=" + lat + "&radius=" + radius + "&serviceKey=" + Common.SERVICE_KEY);
+            ArrayList<HashMap<String, String>> list = APIManager.getAPIArray(APIManager.GET_STATION_BY_POS, new String[]{Double.toString(lng), Double.toString(lat), Integer.toString(radius)}, new String[]{"gpsY", "gpsX", "arsId", "stationNm"});
 
-                //XML 파싱 변수
-                parserCreator = XmlPullParserFactory.newInstance();
-                parser        = parserCreator.newPullParser();
-                parser.setInput(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
-
-                //XML 파싱 시작
-                while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
-                    switch (parser.getEventType()) {
-                        //시작 태그
-                        case XmlPullParser.START_TAG:
-                            if (parser.getName().equals("arsId")) {
-                                b_arsId = true;
-                            }
-                            if (parser.getName().equals("gpsX")) {
-                                b_gpsX = true;
-                            }
-                            if (parser.getName().equals("gpsY")) {
-                                b_gpsY = true;
-                            }
-                            if (parser.getName().equals("stationId")) {
-                                b_stationId = true;
-                            }
-                            if (parser.getName().equals("stationNm")) {
-                                b_stationNm = true;
-                            } break;
-                        //내용
-                        case XmlPullParser.TEXT:
-                            if (b_arsId) {
-                                s_arsId = parser.getText();
-                                b_arsId = false;
-                            }
-                            if (b_gpsX) {
-                                s_gpsX = parser.getText();
-                                b_gpsX = false;
-                            }
-                            if (b_gpsY) {
-                                s_gpsY = parser.getText();
-                                b_gpsY = false;
-                            }
-                            if (b_stationId) {
-                                s_stationId = parser.getText();
-                                b_stationId = false;
-                            }
-                            if (b_stationNm) {
-                                s_stationNm = parser.getText();
-                                b_stationNm = false;
-                            } break;
-                        //종료 태그
-                        case XmlPullParser.END_TAG:
-                            if(parser.getName().equals("itemList")){
-                                //파싱된 데이터 저장
-                                Marker marker = new Marker(new LatLng(Double.parseDouble(s_gpsY), Double.parseDouble(s_gpsX)));
-                                stationItems.add(new StationItem(marker, s_arsId, s_stationNm));
-                            } break;
-                    } parser.next();
-                }
-            } catch (MalformedURLException e){
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            for (HashMap<String,String> map : list) {
+                Marker marker = new Marker(new LatLng(Double.parseDouble(map.get("gpsY")), Double.parseDouble(map.get("gpsX"))));
+                stationItems.add(new StationItem(marker, map.get("arsId"), map.get("stationNm")));
             }
 
             setMarker(); //마커 재설정
