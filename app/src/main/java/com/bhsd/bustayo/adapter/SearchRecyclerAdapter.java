@@ -174,7 +174,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     public void onClick(View v) {
                         SQLiteDatabase dbSQL = DBHelper.getWritableDatabase();
                         dbSQL.execSQL("INSERT OR REPLACE INTO stationHistoryTB VALUES(?, ?, ?, ?, CURRENT_TIMESTAMP)",
-                                new Object[] {item.getHistoryId(), item.getHistoryTitle(), item.getHistorySub1(), item.getHistorySub2()});
+                                new Object[] {item.getHistoryId(), item.getHistoryTitle(), item.getHistorySub1(), item.getHistorySub2().replace(" 방면", "")});
                         dbSQL.close();
 
                         Intent intent = new Intent(context, StationActivity.class);

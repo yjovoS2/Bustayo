@@ -92,7 +92,6 @@ public class SearchBusFragment extends Fragment {
                         public void run() {
                             searchStr = s.toString();
                             new SearchBusXmlparse().execute();
-                            Log.d("mytest", "test");
                         }
                     }, 1000);
                 } else

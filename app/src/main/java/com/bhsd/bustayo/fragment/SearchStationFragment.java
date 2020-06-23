@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.SearchActivity;
 import com.bhsd.bustayo.adapter.SearchRecyclerAdapter;
 import com.bhsd.bustayo.application.APIManager;
+import com.bhsd.bustayo.application.Common;
 import com.bhsd.bustayo.database.TestDB;
 import com.bhsd.bustayo.dto.SearchRecyclerItem;
 
@@ -39,6 +41,8 @@ public class SearchStationFragment extends Fragment {
     private RecyclerView                    searchStationRecycler; //정류장 리스트
     private SearchRecyclerAdapter           searchAdapter;         //정류장 리스트 출력 어댑터
     private ArrayList<SearchRecyclerItem>   data;                  //정류장 리스트 데이터
+    private HashMap<String, String>         stationData;           //1개의 정류장에 대한 정보
+    private int                             MAX_API = 5;
 
     private String                          searchStr;             //검색어
     private Timer                           searchTimer;           //API 과다 호출 방지
@@ -130,9 +134,16 @@ public class SearchStationFragment extends Fragment {
             for (HashMap<String,String> map : list) {
                 /*
                  * 서울 지역이 아닌 경우 0을 반환하므로 체크
+                 * API 호출을 통해 받아온 정류장명이 검색창에 있는 텍스트와 처음부터 일치하는지 확인
+                 * API를 통해 받아온 데이터 개수가 5개 이하면 다음 정류장을 보여줌 (API 제한 문제)
                  */
-                if(!map.get("arsId").equals("0")){
-                    data.add(new SearchRecyclerItem(map.get("stId"), map.get("stNm"), map.get("arsId"), map.get("stId")));
+                if(!map.get("arsId").equals("0") && map.get("stNm").startsWith(searchStr)){
+                   if(list.size() < MAX_API) {
+                       HashMap<String, String> nextStation = APIManager.getAPIMap(APIManager.GET_STATION_BY_UID_ITEM, new String[]{map.get("arsId")}, new String[]{"nxtStn"});
+                       data.add(new SearchRecyclerItem(map.get("stId"), map.get("stNm"), map.get("arsId"), nextStation.get("nxtStn") + " 방면"));
+                   }
+                   else
+                       data.add(new SearchRecyclerItem(map.get("stId"), map.get("stNm"), map.get("arsId"), map.get("stId")));
                 }
             }
 
@@ -151,11 +162,11 @@ public class SearchStationFragment extends Fragment {
     private void useInterDB(){
         data.clear();
 
-        SQLiteDatabase dbSQL  = DBHelper.getReadableDatabase();
-        Cursor         cursor = dbSQL.rawQuery("SELECT * FROM stationHistoryTB ORDER BY timestamp desc;", null);
+        SQLiteDatabase dbSQL       = DBHelper.getReadableDatabase();
+        Cursor         cursor      = dbSQL.rawQuery("SELECT * FROM stationHistoryTB ORDER BY timestamp desc;", null);
 
         while(cursor.moveToNext())
-            data.add(new SearchRecyclerItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(0)));
+            data.add(new SearchRecyclerItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3)+ " 방면"));
 
         cursor.close();
         dbSQL.close();
