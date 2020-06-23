@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bhsd.bustayo.activity.MainActivity;
+import com.bhsd.bustayo.MainActivity;
 import com.bhsd.bustayo.dto.BookmarkInfo;
 import com.bhsd.bustayo.adapter.BookmarkRecyclerViewAdapter;
 import com.bhsd.bustayo.dto.CurrentBusInfo;

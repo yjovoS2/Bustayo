@@ -1,6 +1,5 @@
 package com.bhsd.bustayo.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.bhsd.bustayo.dto.CurrentBusInfo;
 
 import java.util.ArrayList;
 
-import static com.bhsd.bustayo.activity.MainActivity.context_main;
 
 public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentBusRecyclerViewAdapter.CurrentBusViewHolder>{
 
@@ -112,7 +110,7 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
             public void onClick(View v) {
                 //몇 정류장전에서 알람을 받을지 설정
                 SetAlarmDialog alarmsetting = new SetAlarmDialog();
-                alarmsetting.Dialog(context_main);
+                alarmsetting.Dialog(v.getRootView().getContext());
             }
         });
     }

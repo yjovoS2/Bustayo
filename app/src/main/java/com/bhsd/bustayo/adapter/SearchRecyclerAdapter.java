@@ -18,7 +18,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bhsd.bustayo.MainActivity;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.SearchActivity;
 import com.bhsd.bustayo.activity.StationActivity;

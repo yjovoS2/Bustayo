@@ -16,8 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhsd.bustayo.MainActivity;
 import com.bhsd.bustayo.R;
-import com.bhsd.bustayo.activity.MainActivity;
 import com.bhsd.bustayo.application.SetAlarmDialog;
 import com.bhsd.bustayo.adapter.StationListAdapter;
 import com.bhsd.bustayo.application.APIManager;

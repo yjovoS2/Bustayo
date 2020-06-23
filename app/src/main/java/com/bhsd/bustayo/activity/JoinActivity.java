@@ -108,7 +108,6 @@ public class JoinActivity extends AppCompatActivity {
 
     public void insertEmail(){
         String[] email ={"naver.com", "daum.net", "empal.com", "nate.com", "dreamwiz.com", "hanmail.net"};
-        emaillist = new ArrayList<String>(Arrays.asList(email));
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, email);
         emailform.setAdapter(arrayAdapter);

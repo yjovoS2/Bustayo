@@ -82,7 +82,7 @@ public class LostGoodsActivity extends AppCompatActivity {
         goUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "위로 올라가기.", Toast.LENGTH_SHORT).show();
+                lgRecyclerView.smoothScrollToPosition(0);
             }
         });
     }
