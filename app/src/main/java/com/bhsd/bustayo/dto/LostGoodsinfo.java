@@ -9,12 +9,12 @@ import com.bhsd.bustayo.R;
 
 import java.util.ArrayList;
 
-public class LostGoodsInfo{
+public class LostGoodsinfo{
 
     int lgImage;
     String lgnNum, lgName, lgPlace, lgDate;
 
-    public LostGoodsInfo(int lgImage, String lgnNum, String lgName, String lgPlace, String lgDate) {
+    public LostGoodsinfo(int lgImage, String lgnNum, String lgName, String lgPlace, String lgDate) {
         this.lgImage = lgImage;
         this.lgnNum = lgnNum;
         this.lgName = lgName;
