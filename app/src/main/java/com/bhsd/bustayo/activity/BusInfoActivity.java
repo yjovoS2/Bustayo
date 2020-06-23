@@ -23,13 +23,12 @@ import com.bhsd.bustayo.dto.BusInfo;
 
 public class BusInfoActivity extends AppCompatActivity {
 
-    //TODO :: 접근지정자 설정.
-    BusInfo busInfo;
-    String busId;
-    int busType;
-    TextView bus_service_section;
-    TextView bus_service_time_weekday, bus_service_time_weekend;
-    TextView bus_interval;
+    private BusInfo busInfo;
+    private String busId;
+    private int busType;
+    private TextView bus_service_section;
+    private TextView bus_service_time_weekday, bus_service_time_weekend;
+    private TextView bus_interval;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
