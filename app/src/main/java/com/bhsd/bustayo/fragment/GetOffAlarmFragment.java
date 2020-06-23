@@ -1,6 +1,8 @@
 package com.bhsd.bustayo.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +20,29 @@ import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.MainActivity;
 import com.bhsd.bustayo.application.SetAlarmDialog;
 import com.bhsd.bustayo.adapter.StationListAdapter;
+import com.bhsd.bustayo.application.APIManager;
 import com.bhsd.bustayo.dto.StationListItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class GetOffAlarmFragment extends Fragment {
 
-    MainActivity activity;
-    ArrayList<StationListItem> stationListItems;
-    AutoCompleteTextView busAuto;
-    ArrayList<String> stationitem;
-    ImageView mapping;
-    RecyclerView busStation;
+    private MainActivity activity;
+    private ArrayList<StationListItem> stationListItems;
+    private AutoCompleteTextView busAuto;
+    private ArrayList<String> stationitem;
+    private ImageView mapping;
+    private RecyclerView busStation;
+    private StationListAdapter slAdapter = new StationListAdapter();
+
+    private ArrayList<HashMap<String, String>> busInfo;
+    private ArrayList<HashMap<String, String>> bus;
+    private ArrayList<HashMap<String, String>> stationInfo;
+
+    private String busRouteId;
+    private int routeType;
 
     @Nullable
     @Override
@@ -43,30 +55,60 @@ public class GetOffAlarmFragment extends Fragment {
         mapping = view.findViewById(R.id.search_bus_button);
         busStation = view.findViewById(R.id.station_list);
 
-        RecyclerView slRecyclerView = view.findViewById(R.id.station_list);
+        final RecyclerView slRecyclerView = view.findViewById(R.id.station_list);
 
-        final StationListAdapter slAdapter = new StationListAdapter();
         slRecyclerView.setHasFixedSize(true);
         slRecyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
-        slRecyclerView.setAdapter(slAdapter);
 
-        //하드코딩
-        stationitem = new ArrayList<>();
-        stationitem.add("버스이름 - 어디방면");
-        stationitem.add("버스이름 - 요기방면");
-        stationitem.add("버스이름2 - 어디방면");
-        stationitem.add("버스이름2 - 우리집");
-        stationitem.add("버스이름3 - 우리집");
-        stationitem.add("버스이름3 - 어디방면");
-        ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_dropdown_item_1line,stationitem);
-        busAuto.setAdapter(adapter);
+
+        new Thread() {
+            @Override
+            public void run() {
+                busInfo = APIManager.getAPIArray(APIManager.GET_BUS_ROUTE_LIST, new String[]{""}, new String[]{"busRouteId","routeType","busRouteNm","edStationNm"});
+
+                stationitem = new ArrayList<>();
+                for(HashMap<String,String> item : busInfo) {
+                    stationitem.add(item.get("busRouteNm") + "  " + item.get("edStationNm") + "방면");
+                }
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_dropdown_item_1line,stationitem);
+                        busAuto.setAdapter(adapter);
+                    }
+                });
+            }
+        }.start();
 
         mapping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //버스 번호에 해당하는 값이 있는 경우 리스트를 출력하고 아니면 출력하지 않고 메시지를 띄운다
-                    busStation.setVisibility(View.VISIBLE);
+                busStation.setVisibility(View.VISIBLE);
 
+                new Thread() {
+                    @Override
+                    public void run() {
+                        HashMap<String, String> busmap = APIManager.getAPIMap(APIManager.GET_BUS_ROUTE_LIST, new String[]{busAuto.getText().toString().split(" ")[0]}, new String[]{"busRouteId","routeType"});
+                        busRouteId = busmap.get("busRouteId");
+                        routeType = Integer.parseInt(busmap.get("routeType"));
+
+                        bus = APIManager.getAPIArray(APIManager.GET_BUSPOS_BY_RT_ID, new String[]{busRouteId}, new String[]{"lastStnId", "congetion"});
+                        stationInfo = APIManager.getAPIArray(APIManager.GET_STATION_BY_ROUTE, new String[]{busRouteId}, new String[]{"station", "arsId", "stationNm"});
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                slAdapter = new StationListAdapter();
+                                for(HashMap<String,String> map : stationInfo) {
+                                    slAdapter.addItem(new StationListItem(map.get("stationNm"), "station", "arsId", busRouteId, routeType, 4, 5, bus));
+                                }
+                                slRecyclerView.setAdapter(slAdapter);
+                                slAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }.start();
             }
         });
 
@@ -79,15 +121,6 @@ public class GetOffAlarmFragment extends Fragment {
                 alarmsetting.Dialog(activity);
             }
         });
-/*
-        //하드코딩
-        slAdapter.addItem(new StationListItem("등촌","아이디",1,2));
-        slAdapter.addItem(new StationListItem("등촌옆","아이디",2,3));
-        slAdapter.addItem(new StationListItem("등촌옆옆","아이디",4,5));
-        slAdapter.addItem(new StationListItem("등촌옆옆옆","아이디",3,4));
-        slAdapter.addItem(new StationListItem("등촌옆옆옆옆","아이디",0,1));
-        slAdapter.addItem(new StationListItem("등촌옆옆옆옆옆","아이디",5,6));
-*/
         return view;
     }
 }

@@ -39,7 +39,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingBottom="15dp">
 
             <TextView
@@ -57,13 +57,15 @@
                 android:id="@+id/complaintName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintHorizontal_weight="1"
                 android:layout_margin="15dp"
                 android:hint="이름"
-                android:textColor="#cc777777"
-                android:textColorHint="#aa777777"
-                android:backgroundTint="#33777777"
+                android:textColor="@color/colorNormalDark"
+                android:textColorHint="@color/colorNormal"
+                android:backgroundTint="@color/colorNormalLight"
                 android:maxLength="10"
+                android:singleLine="true"
+                android:nextFocusDown="@id/complaintBusNum"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/complaintPhone"
                 app:layout_constraintTop_toBottomOf="@id/complaintPerInfo"/>
@@ -75,10 +77,11 @@
                 app:layout_constraintHorizontal_weight="1"
                 android:layout_margin="15dp"
                 android:hint="연락처"
-                android:textColor="#cc777777"
-                android:textColorHint="#aa777777"
-                android:backgroundTint="#33777777"
+                android:textColor="@color/colorNormalDark"
+                android:textColorHint="@color/colorNormal"
+                android:backgroundTint="@color/colorNormalLight"
                 android:maxLength="11"
+                android:enabled="false"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/complaintName"
                 app:layout_constraintTop_toBottomOf="@id/complaintPerInfo"/>
@@ -95,19 +98,34 @@
                 app:layout_constraintTop_toBottomOf="@id/complaintPhone"/>
 
             <EditText
+                android:id="@+id/complaintBusNum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="버스번호"
+                android:singleLine="true"
+                android:nextFocusDown="@id/complaintDate"
+                android:textColor="@color/colorNormalDark"
+                android:textColorHint="@color/colorNormal"
+                android:backgroundTint="@color/colorNormalLight"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/complaintDate"
+                app:layout_constraintTop_toBottomOf="@id/complaintInfo"/>
+
+            <EditText
                 android:id="@+id/complaintDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:hint="날짜"
-                android:textColor="#cc777777"
-                android:textColorHint="#aa777777"
-                android:backgroundTint="#33777777"
+                android:textColor="@color/colorNormalDark"
+                android:textColorHint="@color/colorNormal"
+                android:backgroundTint="@color/colorNormalLight"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/complaintBusNum"
                 app:layout_constraintRight_toLeftOf="@id/complaintTime"
                 app:layout_constraintTop_toBottomOf="@id/complaintInfo"/>
-
 
             <EditText
                 android:id="@+id/complaintTime"
@@ -115,41 +133,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:hint="시간"
-                android:textColor="#cc777777"
-                android:textColorHint="#aa777777"
-                android:backgroundTint="#33777777"
+                android:textColor="@color/colorNormalDark"
+                android:textColorHint="@color/colorNormal"
+                android:backgroundTint="@color/colorNormalLight"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toRightOf="@id/complaintDate"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/complaintInfo"/>
-
-            <EditText
-                android:id="@+id/complaintTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:hint="제목"
-                android:textColor="#cc777777"
-                android:textColorHint="#aa777777"
-                android:backgroundTint="#33777777"
-                app:layout_constraintHorizontal_weight="2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/complaintBusNum"
-                app:layout_constraintTop_toBottomOf="@id/complaintDate"/>
-
-            <EditText
-                android:id="@+id/complaintBusNum"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:hint="버스번호"
-                android:textColor="#cc777777"
-                android:textColorHint="#aa777777"
-                android:backgroundTint="#33777777"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@id/complaintTitle"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/complaintTime"/>
 
             <EditText
                 android:id="@+id/complaintContent"
@@ -159,11 +149,12 @@
                 android:padding="15dp"
                 android:lines="10"
                 android:gravity="top"
-                android:hint="신고내용"
-                android:textColor="#cc777777"
-                android:textColorHint="#aa777777"
+                android:maxLength="50"
+                android:hint="신고내용 (최대 50자)"
+                android:textColor="@color/colorNormalDark"
+                android:textColorHint="@color/colorNormal"
                 android:background="@drawable/search_border"
-                app:layout_constraintTop_toBottomOf="@id/complaintTitle"/>
+                app:layout_constraintTop_toBottomOf="@id/complaintBusNum"/>
 
             <TextView
                 android:id="@+id/complaintNote"
@@ -182,10 +173,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="18dp"
                 android:padding="15dp"
-                android:lines="10"
-                android:gravity="top"
-                android:text="유의사항 내용"
-                android:textColor="#aa777777"
+                android:text="(불편신고 접수는 다산콜센터를 통해 이루어집니다.)\n버스 이용 시 불편사항은 두 가지 방법으로 접수가 가능합니다.\n\n\t\t1. 해당 운수회사를 담당하고 있는 담당공무원에게 불편하신 내용을 전달하여 버스 기사와 운수회사에 교육이나 시정조치 이루어지도록 합니다.\n\n\t\t2. 교통 불편신고 접수를 하여 기사에게 행정 처분이 이루어지도록 접수가 가능합니다.\n\n접수를 위해 신고하시는 분의 성함과 연락처 확인이 필요하고 내용에 따라 추가 문의 내용이 상이할 수 있는점 참고 부탁드리며 불편신고 처리 결과는 문자로 회신됩니다."
+                android:textColor="@color/colorNormalDark"
                 android:background="@drawable/search_border"
                 app:layout_constraintTop_toBottomOf="@id/complaintNote"/>
 

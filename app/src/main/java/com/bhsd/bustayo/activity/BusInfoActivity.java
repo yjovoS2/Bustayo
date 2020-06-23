@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -25,13 +23,12 @@ import com.bhsd.bustayo.dto.BusInfo;
 
 public class BusInfoActivity extends AppCompatActivity {
 
-    //TODO :: 접근지정자 설정.
-    BusInfo busInfo;
-    String busId;
-    int busType;
-    TextView bus_service_section;
-    TextView bus_service_time_weekday, bus_service_time_weekend;
-    TextView bus_interval;
+    private BusInfo busInfo;
+    private String busId;
+    private int busType;
+    private TextView bus_service_section;
+    private TextView bus_service_time_weekday, bus_service_time_weekend;
+    private TextView bus_interval;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,9 +90,6 @@ public class BusInfoActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         actionBarColor(actionBar, window);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     void actionBarColor(ActionBar actionBar, Window window) {

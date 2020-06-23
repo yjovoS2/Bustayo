@@ -13,19 +13,22 @@
     <color name="colorNormalDark">#cc777777</color>
 
     <!-- 버스관련 -->
-    <color name="bus_green">#23DA23</color>
-    <color name="bus_red">#DF1616</color>
-    <color name="bus_blue">#1717DC</color>
-    <color name="bus_yellow">#FFE600</color>
-    <color name="bus_skyblue">#5EC5E4</color>
+    <color name="bus_green">#70BF70</color>
+    <color name="bus_red">#D16969</color>
+    <color name="bus_blue">#6C85C5</color>
+    <color name="bus_yellow">#D5CC7A</color>
+    <color name="bus_skyblue">#83C3D6</color>
 
     <!-- 혼잡도관련 -->
-    <color name="busy_empty">#23DA23</color>
-    <color name="busy_half">#FFE600</color>
-    <color name="busy_full">#DF1616</color>
+    <color name="busy_empty">@color/bus_green</color>
+    <color name="busy_half">@color/bus_yellow</color>
+    <color name="busy_full">@color/bus_red</color>
 
     <!--배경색 관련-->
     <color name="button_gray">#f0f0f0</color>
     <color name="background_gray">#d0d0d0</color>
+
+    <!-- 정류장 -->
+    <color name="station">#303B51</color>
 
 </resources>

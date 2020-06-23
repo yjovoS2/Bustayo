@@ -26,8 +26,9 @@
     <string name="notice">공지사항</string>
     <string name="setting">설정</string>
 
-    <!-- layout/recycler_search_footer.xml -->
-    <string name="delete_bus_history">버스 검색기록 삭제</string>
+    <!-- layout/recycler_search_footer.xmll -->
+    <string name="bus_history">버스 검색기록 삭제</string>
+    <string name="station_history">정류장 검색기록 삭제</string>
 
     <!-- layout/fragment_nmap.xml -->
     <string name="around_station">주변 정류장 확인하기</string>

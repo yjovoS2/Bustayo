@@ -3,15 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="25dp"
     android:background="@color/colorPrimary">
 
     <TextView
-        android:id="@+id/searchHistory"
+        android:id="@+id/searchDelete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingVertical="25dp"
         android:gravity="center"
-        android:text="@string/delete_bus_history"
-        android:textColor="@color/colorNormal"/>
+        android:textColor="@color/colorNormalDark"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

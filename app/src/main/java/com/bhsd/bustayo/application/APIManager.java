@@ -1,5 +1,7 @@
 package com.bhsd.bustayo.application;
 
+import android.util.Log;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -27,7 +29,7 @@ public class APIManager {
     public static final String GET_ROUTE_INFO = ROUTE_INFO + "getRouteInfo?serviceKey=" + SERVICE_KEY;
     public static final String GET_BUS_ROUTE_LIST = ROUTE_INFO + "getBusRouteList?serviceKey=" + SERVICE_KEY;   // 검색어 사용
     public static final String GET_STATION_BY_ROUTE = ROUTE_INFO + "getStaionByRoute?serviceKey=" + SERVICE_KEY;
-    public static final String GET_STATIONS_BY_POS = STATION_INFO_URL + "getStaionsByPos?serviceKey=" + SERVICE_KEY;
+    public static final String GET_STATION_BY_POS = STATION_INFO_URL + "getStationByPos?serviceKey=" + SERVICE_KEY;
     public static final String GET_STATION_BY_NAME = STATION_INFO_URL + "getStationByName?serviceKey=" + SERVICE_KEY;   // 검색어사용
     public static final String GET_STATION_BY_UID_ITEM = STATION_INFO_URL + "getStationByUid?serviceKey=" + SERVICE_KEY;
 
@@ -36,8 +38,8 @@ public class APIManager {
     private static final String[] GET_ROUTE_INFO_TAG = { "&busRouteId=" };
     private static final String[] GET_BUS_ROUTE_LIST_TAG = { "&strSrch=" };
     private static final String[] GET_STATION_BY_ROUTE_TAG = { "&busRouteId=" };
-    private static final String[] GET_STATIONS_BY_POS_TAG = { "&tmX=", "&tmY=", "&radius=" };
-    private static final String[] GET_STATION_BY_NAME_TAG = { "&srSrch=" };
+    private static final String[] GET_STATION_BY_POS_TAG = { "&tmX=", "&tmY=", "&radius=" };
+    private static final String[] GET_STATION_BY_NAME_TAG = { "&stSrch=" };
     private static final String[] GET_STATION_BY_UID_ITEM_TAG = { "&arsId=" };
 
     // =================================================
@@ -71,6 +73,12 @@ public class APIManager {
                             parser.next();
                             return_value.put(s, parser.getText());
                         }
+                    }
+                }
+                if(eventType == XmlPullParser.END_TAG) {
+                    tag = parser.getName(); // get tag name
+                    if (tag.equals("itemList")) {
+                        return return_value;
                     }
                 }
                 eventType = parser.next();
@@ -126,6 +134,7 @@ public class APIManager {
                 }
                 eventType = parser.next();
             }
+
             return return_value;
         } catch (Exception e) {
             //e.toString();
@@ -147,8 +156,8 @@ public class APIManager {
             case GET_ROUTE_INFO:
                 search_tags = GET_ROUTE_INFO_TAG;
                 break;
-            case GET_STATIONS_BY_POS:
-                search_tags = GET_STATIONS_BY_POS_TAG;
+            case GET_STATION_BY_POS:
+                search_tags = GET_STATION_BY_POS_TAG;
                 break;
             case GET_STATION_BY_UID_ITEM:
                 search_tags = GET_STATION_BY_UID_ITEM_TAG;

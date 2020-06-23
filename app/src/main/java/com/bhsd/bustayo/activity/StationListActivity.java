@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,11 +29,14 @@ import java.util.HashMap;
 
 public class StationListActivity extends AppCompatActivity {
 
+    private  ArrayList<HashMap<String, String>> bus;
+
     private String busNumber;
     private String busId;
     private int busType;
     private RecyclerView stationListRCV;
     private StationListAdapter stationListAdapter;
+    private HashMap<String,String> busInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,47 +49,64 @@ public class StationListActivity extends AppCompatActivity {
         busNumber = inIntent.getStringExtra("busRouteNm");
 
         stationListRCV = findViewById(R.id.station_list_recyclerview);
-        setStationListAdapter();    // recyclerview에 대한 adapter설정
+        init();
 
-        Log.d("lyj", "\nBusNumber : " + busNumber);
 
 
         new Thread() {
             @Override
             public void run() {
-                HashMap<String,String> busInfo = APIManager.getAPIMap(APIManager.GET_BUS_ROUTE_LIST, new String[]{busNumber}, new String[]{"busRouteId","routeType"});
+                busInfo = APIManager.getAPIMap(APIManager.GET_BUS_ROUTE_LIST, new String[]{busNumber}, new String[]{"busRouteId","routeType"});
+                bus = APIManager.getAPIArray(APIManager.GET_BUSPOS_BY_RT_ID, new String[]{busInfo.get("busRouteId")}, new String[]{"lastStnId", "congetion"});
                 busId = busInfo.get("busRouteId");
-                Log.d("lyj", "\nBusId : " + busId);
-
                 busType = Integer.parseInt(busInfo.get("routeType"));
-                ArrayList<HashMap<String,String>> stationInfo = APIManager.getAPIArray(APIManager.GET_STATION_BY_ROUTE, new String[]{busInfo.get("busRouteId")}, new String[]{"station", "arsId", "stationNm"});
-                Log.d("lyj", "\nStationNumber : " + stationInfo.get(0).get("stationNm"));
-
-                setStationAdapter(stationInfo);
+                final ArrayList<HashMap<String,String>> stationInfo = APIManager.getAPIArray(APIManager.GET_STATION_BY_ROUTE, new String[]{busInfo.get("busRouteId")}, new String[]{"station", "arsId", "stationNm"});
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        setAdapter(stationInfo);
                         setToolbar(busNumber);
                         stationListAdapter.notifyDataSetChanged();
                     }
                 });
             }
         }.start();
+
+        /* 새로고침 버튼 */
+        findViewById(R.id.refresh_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        busInfo = APIManager.getAPIMap(APIManager.GET_BUS_ROUTE_LIST, new String[]{busNumber}, new String[]{"busRouteId","routeType"});
+                        bus = APIManager.getAPIArray(APIManager.GET_BUSPOS_BY_RT_ID, new String[]{busInfo.get("busRouteId")}, new String[]{"lastStnId", "congetion"});
+                        final ArrayList<HashMap<String,String>> stationInfo = APIManager.getAPIArray(APIManager.GET_STATION_BY_ROUTE, new String[]{busInfo.get("busRouteId")}, new String[]{"station", "arsId", "stationNm"});
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setAdapter(stationInfo);
+                                stationListAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }.start();
+            }
+        });
     }
 
     /* adapter & item 설정! */
-    void setStationListAdapter() {
+    void init() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         stationListRCV.setLayoutManager(linearLayoutManager);
-
-        stationListAdapter = new StationListAdapter();
-        stationListRCV.setAdapter(stationListAdapter);
     }
 
-    void setStationAdapter(ArrayList<HashMap<String,String>> item) {
+    void setAdapter(ArrayList<HashMap<String,String>> item) {
         int previous, next;
+        stationListAdapter = new StationListAdapter();
         for(int i = 0; i < item.size(); i++) {
             if(i == 0) {
                 previous = getColor(R.color.invisible);
@@ -101,21 +119,23 @@ public class StationListActivity extends AppCompatActivity {
             } else {
                 next = Color.DKGRAY;
             }
-            StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("station"), item.get(i).get("arsId"), busId, previous, next);
+
+            StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("station"), item.get(i).get("arsId"), busId, busType, previous, next, bus);
             stationListAdapter.addItem(it);
         }
+        stationListRCV.setAdapter(stationListAdapter);
     }
 
     /* toolbar 설정! */
     void setToolbar(String title) {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true);    // 커스터마이징
-        actionBar.setDisplayHomeAsUpEnabled(true);  // 홈버튼 보이게
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(title);
         Drawable back_icon = getDrawable(R.drawable.ic_go_back).mutate();
         back_icon.setTint(Color.WHITE);
-        actionBar.setHomeAsUpIndicator(back_icon); // 홈버튼 아이콘
+        actionBar.setHomeAsUpIndicator(back_icon);
 
         Window window = StationListActivity.this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -123,11 +143,8 @@ public class StationListActivity extends AppCompatActivity {
         int color = getTypeColor(busType);
         actionBar.setBackgroundDrawable(new ColorDrawable(color));
         window.setStatusBarColor(color);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
-    // busType에 따른 toolbar와 statusbar 색상 설정
+
     int getTypeColor(int type) {
         int color = 0;
         switch (type) {
@@ -142,7 +159,7 @@ public class StationListActivity extends AppCompatActivity {
                 color = getColor(R.color.bus_blue);
                 break;
             case 5: // 순환
-                getColor(R.color.bus_yellow);
+                color = getColor(R.color.bus_yellow);
                 break;
             case 6: // 광역
             case 0: // 공용

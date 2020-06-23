@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.MainActivity;
 import com.bhsd.bustayo.activity.StationActivity;
-import com.bhsd.bustayo.application.APIManager;
 import com.bhsd.bustayo.dto.StationListItem;
 
 import java.util.ArrayList;
@@ -68,6 +65,8 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
         private ImageView previous;
         private ImageView next;
         private String stationId, arsId, routeId;
+        private int busType;
+        ArrayList<HashMap<String, String>> bus;
 
         ItemViewHolder(View itemView, final Context context) {
             super(itemView);
@@ -108,32 +107,19 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
             arsId = item.getArsId();
             stationId = item.getStationId();
             routeId = item.getRouteId();
+            busType = item.getBusType();
+            bus = item.getBus();
             previous.setBackgroundColor(item.getPreviousColor());
             next.setBackgroundColor(item.getNextColor());
 
-            final Handler handler = new Handler();
-            new Thread() {
-                @Override
-                public void run() {
-                    Log.d("lyj", "\nstationId : " + stationId);
 
-                    final ArrayList<HashMap<String, String>> bus = APIManager.getAPIArray(APIManager.GET_BUSPOS_BY_RT_ID, new String[]{routeId}, new String[]{"lastStnId", "congetion"});
-                    for(int i = 0; i < bus.size(); i++) {
-                        if(bus.get(i).get("lastStnId").equals(stationId)) {
-                            final int index = i;
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Log.d("lyj", "\n[ congetion ]\n" + bus.get(index).get("congetion"));
-                                    addBusIcon(bus.get(index).get("congetion"), 4);
-                                }
-                            });
-                        }
-                    }
+            for(int i = 0; i < bus.size(); i++) {
+                if(bus.get(i).get("lastStnId").equals(stationId)) {
+                    addBusIcon(bus.get(i).get("congetion"), busType);
                 }
-            }.start();
+            }
         }
-        void addBusIcon(String congetion, int type) {
+        void addBusIcon(String congestion, int type) {
             ImageView busIcon = new ImageView(itemView.getContext());
             ConstraintLayout constraint = itemView.findViewById(R.id.station_list_item);
 
@@ -147,7 +133,7 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
             Drawable man = context.getDrawable(R.drawable.ic_man).mutate();
             LayerDrawable drawable = new LayerDrawable(new Drawable[]{man, bus});
 
-            drawable.getDrawable(0).setTint(getCongestionColor(Integer.parseInt(congetion)));
+            drawable.getDrawable(0).setTint(getCongestionColor(Integer.parseInt(congestion)));
             drawable.getDrawable(1).setTint(getTypeColor(type));
 
             busIcon.setImageDrawable(drawable);
@@ -160,11 +146,14 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
             switch(congestion) {
                 case 3: // 여유
                     color_id = R.color.busy_empty;
+                    break;
                 case 4: // 보통
                     color_id = R.color.busy_half;
-                case 5: //
+                    break;
+                case 5: // 혼잡
                 case 6:
                     color_id = R.color.busy_full;
+                    break;
                 case 0: // 데이터 없음
                 default:
                     color_id = R.color.import_error;
@@ -172,27 +161,32 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
             return context.getColor(color_id);
         }
         int getTypeColor(int type) {
-            int color_id;
+            int color = 0;
             switch (type) {
-                case 1:
-                    color_id = R.color.bus_skyblue;
-                case 2:
-                case 4:
-                    color_id = R.color.bus_green;
-                case 3:
-                    color_id = R.color.bus_blue;
-                case 5:
-                    color_id = R.color.bus_yellow;
-                case 6:
-                case 0:
-                    color_id = R.color.bus_red;
-                case 7:
-                case 8:
-                case 9:
+                case 1: // 공항
+                    color = context.getColor(R.color.bus_skyblue);
+                    break;
+                case 2: // 마을
+                case 4: // 지선
+                    color = context.getColor(R.color.bus_green);
+                    break;
+                case 3: // 간선
+                    color = context.getColor(R.color.bus_blue);
+                    break;
+                case 5: // 순환
+                    color = context.getColor(R.color.bus_yellow);
+                    break;
+                case 6: // 광역
+                case 0: // 공용
+                    color = context.getColor(R.color.bus_red);
+                    break;
+                case 7: // 인천
+                case 8: // 경기
+                case 9: // 폐지
                 default:
-                    color_id = R.color.import_error;
+                    color = context.getColor(R.color.import_error);
             }
-            return context.getColor(color_id);
+            return color;
         }
 
     }
