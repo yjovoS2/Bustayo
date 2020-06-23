@@ -1,18 +1,9 @@
 package com.bhsd.bustayo.dto;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-
-import com.bhsd.bustayo.R;
-
-import java.util.ArrayList;
-
 public class LostGoodsInfo{
 
-    int lgImage;
-    String lgnNum, lgName, lgPlace, lgDate;
+    private int lgImage;
+    private String lgnNum, lgName, lgPlace, lgDate;
 
     public LostGoodsInfo(int lgImage, String lgnNum, String lgName, String lgPlace, String lgDate) {
         this.lgImage = lgImage;
