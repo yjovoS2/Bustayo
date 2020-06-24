@@ -80,30 +80,37 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
     @Override
     public void onBindViewHolder(@NonNull CurrentBusRecyclerViewAdapter.CurrentBusViewHolder holder, final int position) {
         holder.bookmark.setImageResource(R.drawable.ic_bookmark_empty);
+        holder.bookmark.setColorFilter(Color.parseColor("#AAAAAA"));
         holder.busColor.setImageResource(R.drawable.ic_bus_);
-        holder.busCongested.setImageResource(R.drawable.ic_bus);
+        holder.busCongested.setImageResource(R.drawable.ic_man);
         holder.alarm.setImageResource(R.drawable.ic_alarm);
         holder.busColor.setColorFilter(currentBusInfos.get(position).getBusColor()); //버스 색
-        holder.busNum.setText(currentBusInfos.get(position).getBusNum()+"");
+        holder.busNum.setText(currentBusInfos.get(position).getBusNum());
         holder.busDestination.setText(currentBusInfos.get(position).getBusDestination());
         holder.currentbus1.setText(currentBusInfos.get(position).getCurrentLocation1());
         holder.currentbus2.setText(currentBusInfos.get(position).getCurrentLocation2());
 
         int BusCongestion = currentBusInfos.get(position).getBusCongestion();
+        String color = "#";
         switch (BusCongestion){
-            case 0 : holder.busCongested.setColorFilter(Color.parseColor("#23DA23"));break;
-            case 10 : holder.busCongested.setColorFilter(Color.parseColor("#FFE600"));break;
-            case 20 : holder.busCongested.setColorFilter(Color.parseColor("#DF1616"));break;
-            default:;
+            case 3 : color = "#70BF70"; break; // 여유
+            case 4 : color = "#F8E95F";break; // 보통
+            case 5 :    // 혼잡
+            case 6 : color = "#D16969";break;
+            case 0 :    // 데이터 없음
+            default: color = "#AAAAAA";
         }
+        holder.busCongested.setColorFilter(Color.parseColor(color));
 
         if(isInclude)
             holder.bookmark.setVisibility(View.GONE);
         else
             holder.bookmark.setVisibility(View.VISIBLE);
 
-        if(currentBusInfos.get(position).isBookmark())
-            holder.bookmark.setColorFilter(Color.YELLOW);
+        if(currentBusInfos.get(position).isBookmark()) {
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark);
+            holder.bookmark.setColorFilter(Color.parseColor("#F8E95F"));
+        }
 
         holder.alarm.setOnClickListener(new View.OnClickListener() {
             @Override

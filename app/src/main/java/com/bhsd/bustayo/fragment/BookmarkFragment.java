@@ -1,7 +1,6 @@
 package com.bhsd.bustayo.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,11 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.MainActivity;
-import com.bhsd.bustayo.dto.BookmarkInfo;
-import com.bhsd.bustayo.adapter.BookmarkRecyclerViewAdapter;
-import com.bhsd.bustayo.dto.CurrentBusInfo;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.StationActivity;
+import com.bhsd.bustayo.adapter.BookmarkRecyclerViewAdapter;
+import com.bhsd.bustayo.dto.BookmarkInfo;
+import com.bhsd.bustayo.dto.CurrentBusInfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -78,20 +77,20 @@ public class BookmarkFragment extends Fragment {
     public void insertData(){
         ArrayList<CurrentBusInfo> currentBusInfos = new ArrayList<>();
 
-        currentBusInfos.add(new CurrentBusInfo(Color.BLUE,0,"601","우리집","곧 도착", "이따 도착",true));
-        currentBusInfos.add(new CurrentBusInfo(Color.GREEN,10,"6716","등촌역", "곧도착","막차",true));
+        currentBusInfos.add(new CurrentBusInfo(getContext().getColor(R.color.bus_blue),3,"601","개화역광역환승센터방면","곧 도착", "10분36초후[8번째 전]",true));
+        currentBusInfos.add(new CurrentBusInfo(getContext().getColor(R.color.bus_green),5,"6716","양천공영차고지방면", "5분28초후[3번째 전]","15분46초후[11번째 전]",true));
 
-        bookmarkInfos.add(new BookmarkInfo("등촌역", currentBusInfos));
+        bookmarkInfos.add(new BookmarkInfo("등촌역.강서보건소", currentBusInfos));
 
         ArrayList<CurrentBusInfo> currentBusInfos1 = new ArrayList<>();
 
-        currentBusInfos1.add(new CurrentBusInfo(Color.GREEN,20,"6715","등촌역", "곧도착","막차", true));
+        currentBusInfos1.add(new CurrentBusInfo(getContext().getColor(R.color.bus_green),4,"6715","신월동우성상가방면", "곧 도착","7분51초후[5번째 전]", true));
 
         bookmarkInfos.add(new BookmarkInfo("목동역", currentBusInfos1));
 
         ArrayList<CurrentBusInfo> currentBusInfos2 = new ArrayList<>();
 
-        currentBusInfos2.add(new CurrentBusInfo(Color.GREEN,20,"7734","옥수역", "곧도착","막차", true));
+        currentBusInfos2.add(new CurrentBusInfo(getContext().getColor(R.color.bus_green),0,"7734","진관공영차고지방면", "1분43초후[1번째 전]","12분35초후[8번째 전]", true));
 
         bookmarkInfos.add(new BookmarkInfo("옥수역", currentBusInfos2));
     }
