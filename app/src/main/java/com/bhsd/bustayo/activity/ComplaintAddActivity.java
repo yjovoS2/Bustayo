@@ -56,8 +56,8 @@ public class ComplaintAddActivity extends AppCompatActivity {
     private EditText    complaintName, complaintPhone;
     private EditText    complaintDate, complaintTime;
 
-    private String      data1; //불편신고 정보
-    private String      data2; //불편신고 내용
+    private String      data1 = ""; //불편신고 정보
+    private String      data2 = ""; //불편신고 내용
 
     /////////////////
     // 초기화 작업
@@ -224,7 +224,7 @@ public class ComplaintAddActivity extends AppCompatActivity {
     private void sendMessage(){
         data1 += "이름:" + complaintName.getText() + "\n";
         data1 += "번호:" + complaintPhone.getText() + "\n";
-        data1 += "날짜:" + complaintDate.getText() + " " + complaintTime.getText() + "\n";
+        data1 += "날짜:" + complaintDate.getText() + " " + complaintTime.getText().toString().replace(" ", "") + "\n";
         data1 += "버스:" + complaintBusNum.getText();
         data2 += complaintContent.getText();
 
