@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -175,40 +176,45 @@ public class ComplaintAddActivity extends AppCompatActivity {
         complaintAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                //사용자 데이터 유효성 검사 (공백, 이름은 한글만, 버스번호는 영문,한글,숫자 내용은 다)
-/*
                 try {
-                    Pattern ps = Pattern.compile("^[ㄱ-ㅎ가-힣]+$");
-                    if (!ps.matcher(source).matches()) {
-                        return "";
-                    }
-                    return null;
+                    String name    = complaintName.getText().toString();
+                    String busNum  = complaintBusNum.getText().toString();
+                    String content = complaintContent.getText().toString();
+                    String setDate = complaintDate.getText().toString();
+                    String setTime = complaintTime.getText().toString();
 
+                    //값이 비어있는지 확인
+                    checkInputNull(new String[]{name, busNum, content, setDate, setTime});
 
-                } catch(Exception e){
+                    String year    = setDate.substring(0, 4);
+                    String month   = setDate.substring(5, 7);
+                    String date    = setDate.substring(8, 10);
+                    String hour    = setTime.substring(0, 2);
+                    String minute  = setTime.substring(4, 6);
 
+                    SQLiteDatabase dbSQL = DBHelper.getWritableDatabase();
+                    dbSQL.execSQL("INSERT INTO complaintsTB VALUES(null, ?, ?, ?, ?, ?, ?, ?)",
+                            new Object[] {busNum, content, year, month, date, hour, minute});
+                    dbSQL.close();
+
+                    //문자 메시지 전송
+                    sendMessage();
+
+                } catch(NullPointerException e){
+                    Toast.makeText(ComplaintAddActivity.this, "모든 정보를 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 }
-                */
-                String busNum  = complaintBusNum.getText().toString();
-                String content = complaintContent.getText().toString();
-                String setDate = complaintDate.getText().toString();
-                String setTime = complaintTime.getText().toString();
-                String year    = setDate.substring(0, 4);
-                String month   = setDate.substring(5, 7);
-                String date    = setDate.substring(8, 10);
-                String hour    = setTime.substring(0, 2);
-                String minute  = setTime.substring(4, 6);
-
-                SQLiteDatabase dbSQL = DBHelper.getWritableDatabase();
-                dbSQL.execSQL("INSERT INTO complaintsTB VALUES(null, ?, ?, ?, ?, ?, ?, ?)",
-                        new Object[] {busNum, content, year, month, date, hour, minute});
-                dbSQL.close();
-
-                sendMessage();
             }
         });
+    }
+
+    //////////////////////////////////////
+    // 입력된 정보 중 비어있는 값이 있는지 확인
+    //////////////////////////////////////
+    private void checkInputNull(String[] strList) throws NullPointerException {
+        for(String str : strList){
+            if(str.length() == 0)
+                throw new NullPointerException();
+        }
     }
 
     /*

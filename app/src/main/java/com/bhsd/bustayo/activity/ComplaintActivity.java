@@ -57,7 +57,6 @@ public class ComplaintActivity extends AppCompatActivity {
         complaintList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         complaintList.setAdapter(adapter);
 
-
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -71,7 +70,6 @@ public class ComplaintActivity extends AppCompatActivity {
                 adapter.notifyItemRemoved(position);
             }
         };
-
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(complaintList);
