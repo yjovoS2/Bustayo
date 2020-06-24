@@ -42,7 +42,7 @@ public class SearchStationFragment extends Fragment {
     private SearchRecyclerAdapter           searchAdapter;         //정류장 리스트 출력 어댑터
     private ArrayList<SearchRecyclerItem>   data;                  //정류장 리스트 데이터
     private HashMap<String, String>         stationData;           //1개의 정류장에 대한 정보
-    private int                             MAX_API = 5;
+    private int                             MAX_API = 10;
 
     private String                          searchStr;             //검색어
     private Timer                           searchTimer;           //API 과다 호출 방지
