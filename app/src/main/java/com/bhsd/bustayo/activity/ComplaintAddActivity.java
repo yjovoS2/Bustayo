@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.database.TestDB;
 import com.naver.maps.map.LocationTrackingMode;
 
 import java.util.ArrayList;
@@ -44,16 +45,18 @@ import java.util.regex.Pattern;
 //////////////////////////////////////////////////////
 public class ComplaintAddActivity extends AppCompatActivity {
 
-    //날짜 관련
-    private Calendar calendar;
+    private Calendar    calendar;      //날짜 관련 처리
+    private ImageView   goBack;        //뒤로가기 버튼
+    private Button      complaintAdd;  //접수 버튼
+    private TestDB      DBHelper;      //DB 연결 도구
 
     //사용자 입력 정보
-    private EditText complaintName, complaintPhone;
-    private EditText complaintDate, complaintTime;
-    private EditText complaintBusNum, complaintContent;
+    private EditText    complaintBusNum, complaintContent;
+    private EditText    complaintName, complaintPhone;
+    private EditText    complaintDate, complaintTime;
 
-    private ImageView goBack;    //뒤로가기 버튼
-    private Button complaintAdd; //접수 버튼
+    private String      data1; //불편신고 정보
+    private String      data2; //불편신고 내용
 
     /////////////////
     // 초기화 작업
@@ -74,8 +77,8 @@ public class ComplaintAddActivity extends AppCompatActivity {
         complaintBusNum  = findViewById(R.id.complaintBusNum);
         complaintContent = findViewById(R.id.complaintContent);
 
-        //날짜, 시간 설정 시 사용
         calendar         = Calendar.getInstance();
+        DBHelper         = new TestDB(getApplicationContext());
 
         //마쉬멜로우 이상일 경우에는 권한 요청
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -164,25 +167,17 @@ public class ComplaintAddActivity extends AppCompatActivity {
 
         ////////////////////////////////////////
         // 접수 버튼 클릭 시 불편신고 접수
+        //   - 데이터 유효성 검사
+        //   - 입력된 정보를 DB에 저장
         //   - 입력된 정보를 SMS를 통해 다산콜센터에 접수
         //   - SMS 길이제한으로 인해 나눠서 전송
         ////////////////////////////////////////
         complaintAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String data1 = "";
-                String data2 = "";
 
-                data1 += "이　　름 : " + complaintName.getText() + "\n"; // 8 + a 이름 최대 10자
-                data1 += "전화번호 : " + complaintPhone.getText() + "\n"; // 8 + 11 = 19
-                data1 += "날　　짜 : " + complaintDate.getText() + "\n"; // 8 + 10 = 18
-                data1 += "시　　간 : " + complaintTime.getText() + "\n"; // 8 + 7 = 15   =
 
-                data2 += "버스번호 : " + complaintBusNum.getText() + "\n"; // 8 + a
-                data2 += complaintContent.getText() + "\n"; //최대 50
-
-                //사용자 데이터 유효성 검사
-                //디비 연결하고 등록
+                //사용자 데이터 유효성 검사 (공백, 이름은 한글만, 버스번호는 영문,한글,숫자 내용은 다)
 /*
                 try {
                     Pattern ps = Pattern.compile("^[ㄱ-ㅎ가-힣]+$");
@@ -195,26 +190,38 @@ public class ComplaintAddActivity extends AppCompatActivity {
                 } catch(Exception e){
 
                 }
- */
+                */
+                String busNum  = complaintBusNum.getText().toString();
+                String content = complaintContent.getText().toString();
+                String setDate = complaintDate.getText().toString();
+                String setTime = complaintTime.getText().toString();
+                String year    = setDate.substring(0, 4);
+                String month   = setDate.substring(5, 7);
+                String date    = setDate.substring(8, 10);
+                String hour    = setTime.substring(0, 2);
+                String minute  = setTime.substring(4, 6);
 
-                send(data1, data2);
+                SQLiteDatabase dbSQL = DBHelper.getWritableDatabase();
+                dbSQL.execSQL("INSERT INTO complaintsTB VALUES(null, ?, ?, ?, ?, ?, ?, ?)",
+                        new Object[] {busNum, content, year, month, date, hour, minute});
+                dbSQL.close();
+
+                sendMessage();
             }
         });
-    }
-
-    //////////////////////////////
-    // SMS 전송 권한 확인
-    //////////////////////////////
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /*
      * 입력된 정보를 SMS를 이용하여 다산콜센터로 전송
      * SMS는 최대 70자 까지 전송할 수 있으므로 나눠서 전송
      */
-    private void send(final String data1, final String data2){
+    private void sendMessage(){
+        data1 += "이름:" + complaintName.getText() + "\n";
+        data1 += "번호:" + complaintPhone.getText() + "\n";
+        data1 += "날짜:" + complaintDate.getText() + " " + complaintTime.getText() + "\n";
+        data1 += "버스:" + complaintBusNum.getText();
+        data2 += complaintContent.getText();
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage("등록된 정보로 접수 하시겠습니까?");
         dialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
@@ -224,10 +231,19 @@ public class ComplaintAddActivity extends AppCompatActivity {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage("01042809120", null, data1, null, null);
                 smsManager.sendTextMessage("01042809120", null, data2, null, null);
+
                 Toast.makeText(getApplicationContext(), "불편신고가 접수 되었습니다.", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
         dialog.show();
+    }
+
+    //////////////////////////////
+    // SMS 전송 권한 확인
+    //////////////////////////////
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

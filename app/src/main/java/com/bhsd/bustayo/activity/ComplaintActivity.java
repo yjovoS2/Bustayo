@@ -1,16 +1,25 @@
 package com.bhsd.bustayo.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.adapter.ComplaintRecyclerAdapter;
+import com.bhsd.bustayo.database.TestDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 /////////////////////////////////////////////////////////////////
 // 햄버거 메뉴 -> 불편신고 접수 리스트
@@ -19,9 +28,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 /////////////////////////////////////////////////////////////////
 public class ComplaintActivity extends AppCompatActivity {
 
-    private RecyclerView         complaintList; //불편신고 접수 리스트
-    private FloatingActionButton complaintAdd;  //불편신고 등록 화면으로 연결
-    private ImageView            goBack;        //뒤로가기 버튼
+    private RecyclerView               complaintList; //불편신고 접수 리스트
+    private FloatingActionButton       complaintAdd;  //불편신고 등록 화면으로 연결
+    private ImageView                  goBack;        //뒤로가기 버튼
+    private TestDB                     DBHelper;      //DB 연결 도구
+    private ComplaintRecyclerAdapter   adapter;
+    private ArrayList<String[]>        data;
 
     /////////////////
     // 초기화 작업
@@ -36,7 +48,33 @@ public class ComplaintActivity extends AppCompatActivity {
         complaintAdd  = findViewById(R.id.complaintAdd);
         goBack        = findViewById(R.id.goBack);
 
-        //TODO :: 내부 디비 연결해서 접수 목록 뿌려주기
+        //DB 연결 및 어댑터 생성
+        DBHelper      = new TestDB(this);
+        data          = new ArrayList<>();
+        adapter       = new ComplaintRecyclerAdapter(data);
+
+        //어댑터 연결
+        complaintList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        complaintList.setAdapter(adapter);
+
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition();
+                data.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
+        };
+
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(complaintList);
     }
 
     /////////////
@@ -45,6 +83,11 @@ public class ComplaintActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        ////////////////////////////////////////////////
+        // 불편신고 테이블에서 신고 내역 리스트를 가져오는 메서드
+        ////////////////////////////////////////////////
+        useDB();
 
         ////////////////////////////////////
         // 불편신고를 접수할 수 있는 화면으로 이동
@@ -66,5 +109,23 @@ public class ComplaintActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    ////////////////////////////////////////////////
+    // 불편신고 테이블에서 신고 내역 리스트를 가져오는 메서드
+    ////////////////////////////////////////////////
+    private void useDB(){
+        data.clear();
+
+        SQLiteDatabase dbSQL   = DBHelper.getReadableDatabase();
+        Cursor cursor          = dbSQL.rawQuery("SELECT * FROM complaintsTB ORDER BY complaintId desc;", null);
+
+        while(cursor.moveToNext())
+            data.add(new String[]{cursor.getString(1), cursor.getString(2), cursor.getString(3) + "년 " + cursor.getString(4) + "월 " + cursor.getString(5) + "일 불편신고 접수"});
+
+        cursor.close();
+        dbSQL.close();
+
+        adapter.notifyDataSetChanged();
     }
 }

@@ -37,7 +37,6 @@ public class TestDB extends SQLiteOpenHelper {
              * arsId      : 정류장 고유번호
              * nxtStn     : 다음 정류장
              * timestamp  : 등록시간
-             * //방향을 넣어줘야 하는데 얻어오기가 힘들다..
              */
             db.execSQL("CREATE TABLE stationHistoryTB(" +
                     "stId VARCHAR(5) PRIMARY KEY ON CONFLICT REPLACE, " +
@@ -49,22 +48,25 @@ public class TestDB extends SQLiteOpenHelper {
 
             /*
              * 불편신고 접수 리스트 테이블
-             * stId       : 정류장 ID
-             * stNm       : 정류장명
-             * arsId      : 정류장 고유번호
-             * timestamp  : 등록시간
-             * //웹 서버에 저장되어서 사용자 아이디를 참조할 필요가 있음
+             * complaintId  : 접수 Id
+             * busNum       : 버스번호
+             * content      : 신고내용
+             * year         : 연
+             * month        : 월
+             * date         : 일
+             * hour         : 시
+             * minute       : 분
+             */
             db.execSQL("CREATE TABLE complaintsTB(" +
-                    "complaintName VARCHAR(5) PRIMARY KEY ON CONFLICT REPLACE, " +
-                    "complaintPhone VARCHAR(60), " +
-                    "complaintDate VARCHAR(5), " +
-                    "complaintTime VARCHAR(5), " +
-                    "complaintTitle VARCHAR(5), " +
-                    "complaintBusNum VARCHAR(5), " +
-                    "complaintContent VARCHAR(5), " +
-                    "complaintTitle TIMESTAMP)"
-            );             */
-
+                    "complaintId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "busNum VARCHAR(30), " +
+                    "content VARCHAR(140), " +
+                    "year VARCHAR(4), " +
+                    "month VARCHAR(2), " +
+                    "date VARCHAR(2), " +
+                    "hour VARCHAR(2), " +
+                    "minute VARCHAR(2))"
+            );
         }
 
         @Override

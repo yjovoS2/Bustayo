@@ -33,8 +33,20 @@
     <!-- layout/fragment_nmap.xml -->
     <string name="around_station">주변 정류장 확인하기</string>
 
-    <!-- layout/complaint 관련 -->
+    <!-- layout/activity_complaint 관련 -->
     <string name="complaint_add">불편신고 접수</string>
     <string name="complaint_list">불편신고 접수 리스트</string>
+
+    <!-- layout/activity_add_complaint 관련 -->
+    <string name="complaint_user_info">신고자 정보</string>
+    <string name="complaint_name">이름</string>
+    <string name="complaint_content_info">신고 정보</string>
+    <string name="complaint_bus_num">버스번호</string>
+    <string name="complaint_date">날짜</string>
+    <string name="complaint_time">시간</string>
+    <string name="complaint_content">신고내용 (최대 70자)</string>
+    <string name="complaint_notice">유의사항</string>
+    <string name="complaint_notice_content">(불편신고 접수는 다산콜센터를 통해 이루어집니다.)\n버스 이용 시 불편사항은 두 가지 방법으로 접수가 가능합니다.\n\n\t\t1. 해당 운수회사를 담당하고 있는 담당공무원에게 불편하신 내용을 전달하여 버스 기사와 운수회사에 교육이나 시정조치 이루어지도록 합니다.\n\n\t\t2. 교통 불편신고 접수를 하여 기사에게 행정 처분이 이루어지도록 접수가 가능합니다.\n\n접수를 위해 신고하시는 분의 성함과 연락처 확인이 필요하고 내용에 따라 추가 문의 내용이 상이할 수 있는점 참고 부탁드리며 불편신고 처리 결과는 문자로 회신됩니다.</string>
+    <string name="complaint_commit">전송</string>
 
 </resources>
