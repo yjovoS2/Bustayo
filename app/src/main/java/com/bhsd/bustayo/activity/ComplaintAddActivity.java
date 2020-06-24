@@ -224,7 +224,8 @@ public class ComplaintAddActivity extends AppCompatActivity {
     private void sendMessage(){
         data1 += "이름:" + complaintName.getText() + "\n";
         data1 += "번호:" + complaintPhone.getText() + "\n";
-        data1 += "날짜:" + complaintDate.getText() + " " + complaintTime.getText().toString().replace(" ", "") + "\n";
+        data1 += "날짜:" + complaintDate.getText() + "\n";
+        data1 += "시간:" + complaintTime.getText().toString().replace("시 ", ":").replace("분", "") + "\n";
         data1 += "버스:" + complaintBusNum.getText();
         data2 += complaintContent.getText();
 
