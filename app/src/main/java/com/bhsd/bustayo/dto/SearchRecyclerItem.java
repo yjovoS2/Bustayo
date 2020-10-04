@@ -12,7 +12,7 @@ public class SearchRecyclerItem {
     // 버스, 정류장 각각에 대한 변수명 대신 공용 변수명 사용
     // 공　용          historyId        historyTitle      historySub1      historySub2
     // 버　스         버스노선 아이디      버스 번호           버스 타입          버스 방향
-    // 정류장         정류장 아이디        정류장명         정류장 고유번호          ?
+    // 정류장         정류장 아이디        정류장명         정류장 고유번호       정류장 방면
     //////////////////////////////////////////////////////////////
     private String  historyId, historyTitle, historySub1, historySub2;
 

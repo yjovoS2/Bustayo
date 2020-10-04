@@ -46,16 +46,17 @@ public class ComplaintRecyclerAdapter extends RecyclerView.Adapter<ComplaintRecy
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        final String busNum  = data.get(position)[0];
-        final String content = data.get(position)[1];
-        String title         = data.get(position)[2];
+        final String busNum  = data.get(position)[1];
+        final String content = data.get(position)[2];
+        String title         = data.get(position)[3];
+        final String time    = data.get(position)[4] + "시 " + data.get(position)[5] + "분";
 
         holder.complaintListItem.setText(title);
         holder.complaintListBody.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                dialog.setMessage("버스번호 : " + busNum + "\n" + "접수내용 : " + content);
+                dialog.setMessage("버스번호 : " + busNum + "\n" + "접수내용 : " + content + "\n" + "시간 : " + time);
                 dialog.setNegativeButton("닫기", new DialogInterface.OnClickListener() {@Override public void onClick(DialogInterface dialog, int which) {}});
                 dialog.show();
             }
