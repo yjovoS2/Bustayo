@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -66,6 +67,12 @@ public class ComplaintActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 final int position = viewHolder.getAdapterPosition();
+                int complaintId = Integer.parseInt(data.get(position)[0]);
+
+                SQLiteDatabase dbSQL = DBHelper.getWritableDatabase();
+                dbSQL.execSQL("DELETE FROM complaintsTB WHERE complaintId = " + complaintId);
+                dbSQL.close();
+
                 data.remove(position);
                 adapter.notifyItemRemoved(position);
             }
@@ -119,7 +126,7 @@ public class ComplaintActivity extends AppCompatActivity {
         Cursor cursor          = dbSQL.rawQuery("SELECT * FROM complaintsTB ORDER BY complaintId desc;", null);
 
         while(cursor.moveToNext())
-            data.add(new String[]{cursor.getString(1), cursor.getString(2), cursor.getString(3) + "년 " + cursor.getString(4) + "월 " + cursor.getString(5) + "일 불편신고 접수"});
+            data.add(new String[]{cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3) + "년 " + cursor.getString(4) + "월 " + cursor.getString(5) + "일 접수내역", cursor.getString(6), cursor.getString(7)});
 
         cursor.close();
         dbSQL.close();

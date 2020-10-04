@@ -42,7 +42,7 @@ public class SearchStationFragment extends Fragment {
     private SearchRecyclerAdapter           searchAdapter;         //정류장 리스트 출력 어댑터
     private ArrayList<SearchRecyclerItem>   data;                  //정류장 리스트 데이터
     private HashMap<String, String>         stationData;           //1개의 정류장에 대한 정보
-    private int                             MAX_API = 10;
+    private int                             MAX_API = 20;
 
     private String                          searchStr;             //검색어
     private Timer                           searchTimer;           //API 과다 호출 방지
@@ -135,7 +135,7 @@ public class SearchStationFragment extends Fragment {
                 /*
                  * 서울 지역이 아닌 경우 0을 반환하므로 체크
                  * API 호출을 통해 받아온 정류장명이 검색창에 있는 텍스트와 처음부터 일치하는지 확인
-                 * API를 통해 받아온 데이터 개수가 5개 이하면 다음 정류장을 보여줌 (API 제한 문제)
+                 * API를 통해 받아온 데이터 개수가 20개 이하일때만 다음 정류장을 보여줌 (API 제한 문제)
                  */
                 if(!map.get("arsId").equals("0") && map.get("stNm").startsWith(searchStr)){
                    if(list.size() < MAX_API) {
