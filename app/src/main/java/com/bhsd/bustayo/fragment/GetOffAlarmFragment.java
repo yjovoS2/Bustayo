@@ -232,6 +232,7 @@ public class GetOffAlarmFragment extends Fragment {
         alarmAdapter.setOnListItemSelected(new StationListAdapter.OnListItemSelected() {
             @Override
             public void onItemSelected(View v, int position) {
+
                 //몇 정류장전에서 알람을 받을지 설정
                 SetAlarmDialog alarmsetting = new SetAlarmDialog();
                 alarmsetting.Dialog(activity);
