@@ -111,7 +111,6 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
                 bookmarkInfos.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position,bookmarkInfos.size());
-
             }
         });
     }

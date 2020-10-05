@@ -5,7 +5,7 @@ public class CurrentBusInfo {
 
     private int busColor, busCongestion;
     private String busNum, busDestination, currentLocation1, currentLocation2;
-    boolean bookmark;
+    boolean bookmark = false;
 
     public CurrentBusInfo(int busColor, int busCongestion, String busNum, String busDestination, String currentLocation1, String currentLocation2, boolean bookmark) {
         this.busColor = busColor;

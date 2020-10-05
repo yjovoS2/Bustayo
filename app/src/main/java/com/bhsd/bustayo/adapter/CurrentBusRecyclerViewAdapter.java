@@ -79,7 +79,10 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
 
     @Override
     public void onBindViewHolder(@NonNull CurrentBusRecyclerViewAdapter.CurrentBusViewHolder holder, final int position) {
-        holder.bookmark.setImageResource(R.drawable.ic_bookmark_empty);
+        if(currentBusInfos.get(position).isBookmark())
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark);
+        else
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark_empty);
         holder.bookmark.setColorFilter(Color.parseColor("#AAAAAA"));
         holder.busColor.setImageResource(R.drawable.ic_bus_);
         holder.busCongested.setImageResource(R.drawable.ic_man);
@@ -100,7 +103,6 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
             case 0 :    // 데이터 없음
             default: color = "#AAAAAA";
         }
-        holder.busCongested.setColorFilter(Color.parseColor(color));
 
         if(isInclude)
             holder.bookmark.setVisibility(View.GONE);
@@ -111,6 +113,15 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
             holder.bookmark.setImageResource(R.drawable.ic_bookmark);
             holder.bookmark.setColorFilter(Color.parseColor("#F8E95F"));
         }
+
+        holder.bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentBusInfos.get(position).setBookmark(!(currentBusInfos.get(position).isBookmark()));
+                notifyItemRangeChanged(position,currentBusInfos.size());
+
+            }
+        });
 
         holder.alarm.setOnClickListener(new View.OnClickListener() {
             @Override
