@@ -189,7 +189,6 @@ public class GetOffAlarmFragment extends Fragment {
 
                                             while(iter.hasNext()){
                                                 StationListItem stationItem = iter.next();
-                                                Log.d("ghkrdls", stationItem.getSectionId() +" / "+ mySectionId);
                                                 if (stationItem.getSectionId().equals(mySectionId)) {
                                                     alarmAdapter.addItem(stationItem);
                                                     while (iter.hasNext()){
