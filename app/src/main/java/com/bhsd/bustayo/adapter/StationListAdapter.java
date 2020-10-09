@@ -25,8 +25,16 @@ import java.util.HashMap;
 
 public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.ItemViewHolder> {
 
-    private ArrayList<StationListItem> list = new ArrayList<>();
+    private ArrayList<StationListItem> list;
     private static OnListItemSelected listener = null;
+
+    public StationListAdapter() {
+        list = new ArrayList<>();
+    }
+
+    public StationListAdapter(ArrayList<StationListItem> stationListItems) {
+        list = stationListItems;
+    }
 
     public interface OnListItemSelected{
         void onItemSelected(View v, int position);
@@ -54,8 +62,24 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
         return list.size();
     }
 
+    public void addAllItem(ArrayList<StationListItem> item) {
+        this.list = item;
+    }
+
     public void addItem(StationListItem item) {
         list.add(item);
+    }
+
+    public ArrayList<StationListItem> getList(){
+        return list;
+    }
+
+    public void clearList() {
+        this.list.clear();
+    }
+
+    public void removeItem(int position) {
+        list.remove(position);
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -188,6 +212,5 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
             }
             return color;
         }
-
     }
 }

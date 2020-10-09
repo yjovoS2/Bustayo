@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StationListItem {
-    private String stationName, stationId, arsId, routeId;
+    private String stationName, stationId, arsId, routeId, sectionId;
     private int previous, next, busType;
     private ArrayList<HashMap<String,String>> bus;
 
@@ -70,5 +70,13 @@ public class StationListItem {
 
     public ArrayList<HashMap<String,String>> getBus() {
         return bus;
+    }
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
     }
 }
