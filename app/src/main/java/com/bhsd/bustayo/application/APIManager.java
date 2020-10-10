@@ -1,7 +1,5 @@
 package com.bhsd.bustayo.application;
 
-import android.util.Log;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -27,10 +25,10 @@ public class APIManager {
     /* 사용할 API url */
     public static final String GET_BUSPOS_BY_RT_ID = BUS_POS_URL + "getBusPosByRtid?serviceKey=" + SERVICE_KEY;
     public static final String GET_ROUTE_INFO = ROUTE_INFO + "getRouteInfo?serviceKey=" + SERVICE_KEY;
-    public static final String GET_BUS_ROUTE_LIST = ROUTE_INFO + "getBusRouteList?serviceKey=" + SERVICE_KEY;   // 검색어 사용
+    public static final String GET_BUS_ROUTE_LIST = ROUTE_INFO + "getBusRouteList?serviceKey=" + SERVICE_KEY;
     public static final String GET_STATION_BY_ROUTE = ROUTE_INFO + "getStaionByRoute?serviceKey=" + SERVICE_KEY;
     public static final String GET_STATION_BY_POS = STATION_INFO_URL + "getStationByPos?serviceKey=" + SERVICE_KEY;
-    public static final String GET_STATION_BY_NAME = STATION_INFO_URL + "getStationByName?serviceKey=" + SERVICE_KEY;   // 검색어사용
+    public static final String GET_STATION_BY_NAME = STATION_INFO_URL + "getStationByName?serviceKey=" + SERVICE_KEY;
     public static final String GET_STATION_BY_UID_ITEM = STATION_INFO_URL + "getStationByUid?serviceKey=" + SERVICE_KEY;
 
     /* 사용할 API search tag */
@@ -67,7 +65,7 @@ public class APIManager {
             int eventType = parser.getEventType();
             while(eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
-                    tag = parser.getName(); // get tag name
+                    tag = parser.getName();
                     for (String s : tags) {
                         if (tag.equals(s)) {
                             parser.next();
@@ -76,7 +74,7 @@ public class APIManager {
                     }
                 }
                 if(eventType == XmlPullParser.END_TAG) {
-                    tag = parser.getName(); // get tag name
+                    tag = parser.getName();
                     if (tag.equals("itemList")) {
                         return return_value;
                     }

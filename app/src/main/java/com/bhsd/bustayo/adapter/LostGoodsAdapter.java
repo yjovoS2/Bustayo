@@ -22,7 +22,7 @@ public class LostGoodsAdapter extends RecyclerView.Adapter<LostGoodsAdapter.LGVi
     public LostGoodsAdapter(ArrayList<LostGoodsInfo> lostGoodsInfos) {
         this.lostGoodsInfos = lostGoodsInfos;
     }
-
+    // ↓ 리스트 아이템 선택 이벤트가 일어난경우 콜백 메서드를 커스텀 하기 위한 인터페이스
     public interface OnListItemSelected{
         void onItemSelected(View v, int position);
     }
@@ -30,7 +30,7 @@ public class LostGoodsAdapter extends RecyclerView.Adapter<LostGoodsAdapter.LGVi
     public void setOnListItemSelected(LostGoodsAdapter.OnListItemSelected listener){
         this.listener = listener;
     }
-
+    // ↓ 뷰 홀더 클래스를 정의한 부분
     public class LGViewHolder extends RecyclerView.ViewHolder {
         ImageView lgImage, space;
         public TextView lgName, lgNum, lgPlace, lgDate;
@@ -51,6 +51,7 @@ public class LostGoodsAdapter extends RecyclerView.Adapter<LostGoodsAdapter.LGVi
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         if (listener != null) {
+                            // ↓ 콜백 리스너 호출
                             listener.onItemSelected(v, position);
                         }
                     }
@@ -62,6 +63,7 @@ public class LostGoodsAdapter extends RecyclerView.Adapter<LostGoodsAdapter.LGVi
 
     @NonNull
     @Override
+    // 뷰홀더 객체 생성하는 메서드 - 아이템뷰를 위한 뷰 홀더 객체 생성하여 리턴 ↓
     public LostGoodsAdapter.LGViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_bus_item, parent, false);
@@ -70,6 +72,7 @@ public class LostGoodsAdapter extends RecyclerView.Adapter<LostGoodsAdapter.LGVi
     }
 
     @Override
+    // 뷰홀더가 필요한 위치에 할당될 때 호출되는 메서드 - position 에 해당하는 데이터를 뷰 홀더에 바인딩 ↓
     public void onBindViewHolder(@NonNull LostGoodsAdapter.LGViewHolder holder, int position) {
         holder.space.setVisibility(View.GONE);
         holder.lgDate.setText(lostGoodsInfos.get(position).getLgDate());
@@ -83,6 +86,7 @@ public class LostGoodsAdapter extends RecyclerView.Adapter<LostGoodsAdapter.LGVi
     }
 
     @Override
+    // 전체 아이템 개수 리턴 ↓
     public int getItemCount() {
         return lostGoodsInfos.size();
     }

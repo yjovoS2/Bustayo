@@ -56,7 +56,7 @@ public class BookmarkFragment extends Fragment {
                 Intent intent = new Intent(activity, StationActivity.class);
 //                값을 넘겨주는 부분
 //                intent.putExtra("stationNm", stationName.getText().toString());
-//                intent.putExtra("arsId", stationId);
+//                intent.putExtra("arsId", arsId);
                 activity.startActivity(intent);
             }
         });
