@@ -39,12 +39,15 @@ public class BookmarkFragment extends Fragment {
         bookmarkInfos = new ArrayList<BookmarkInfo>();
         activity.fab = refresh_btn = view.findViewById(R.id.refresh_btn);
 
+//                1. 데이터베이스에서 값을 불러옴
+//                2. api를 이용하여 해당하는 버스의 실시간 정보를 가지고옴
+//                3. recyclerView에 대입하고 새로고침
 
         insertData();       //하드코딩한 부분 - 메소드는 그대로 쓰면서 내용만 바꿀예정
         final RecyclerView bmRecyclerView = view.findViewById(R.id.bookmark);
+        bmRecyclerView.setHasFixedSize(false);
 
-        bmAdapter = new BookmarkRecyclerViewAdapter(bookmarkInfos,activity.context_main);
-        bmRecyclerView.setHasFixedSize(true);
+        bmAdapter = new BookmarkRecyclerViewAdapter(bookmarkInfos,activity.context_main, true);
         bmRecyclerView.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
         bmRecyclerView.setAdapter(bmAdapter);
 
@@ -66,7 +69,6 @@ public class BookmarkFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 bmAdapter.notifyDataSetChanged();
-                bmRecyclerView.setAdapter(bmAdapter);
             }
         });
 

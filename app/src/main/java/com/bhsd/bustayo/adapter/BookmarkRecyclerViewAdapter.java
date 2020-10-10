@@ -24,6 +24,7 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
     ArrayList<BookmarkInfo> bookmarkInfos;
     Context context;
     private OnListItemSelected listener = null;
+    boolean isInclude;
 
     public interface OnListItemSelected{
         void onItemSelected(View v, int position, RecyclerView selected);
@@ -33,9 +34,10 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
         this.listener = listener;
     }
 
-    public BookmarkRecyclerViewAdapter(ArrayList<BookmarkInfo> bookmarkInfos, Context context) {
+    public BookmarkRecyclerViewAdapter(ArrayList<BookmarkInfo> bookmarkInfos, Context context, boolean isInclude) {
         this.bookmarkInfos = bookmarkInfos;
         this.context = context;
+        this.isInclude = isInclude;
     }
 
     public class BookmarkViewHolder extends RecyclerView.ViewHolder{
@@ -76,7 +78,7 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
     @Override
     public void onBindViewHolder(@NonNull final BookmarkRecyclerViewAdapter.BookmarkViewHolder holder, final int position) {
 
-        final CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo(), false);
+        final CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo(), isInclude);
         holder.currnetBusInfo.setHasFixedSize(true);
         holder.currnetBusInfo.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         holder.currnetBusInfo.setAdapter(adapter);
@@ -111,6 +113,8 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
                 bookmarkInfos.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position,bookmarkInfos.size());
+                //디비에서 삭제
+
             }
         });
     }

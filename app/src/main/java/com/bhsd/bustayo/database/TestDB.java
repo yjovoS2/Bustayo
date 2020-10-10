@@ -12,6 +12,7 @@ public class TestDB extends SQLiteOpenHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
+
             /*
              * 버스 검색 히스토리 테이블
              * busRouteId   : 버스 노선 ID
@@ -67,6 +68,24 @@ public class TestDB extends SQLiteOpenHelper {
                     "hour VARCHAR(2), " +
                     "minute VARCHAR(2))"
             );
+
+            /*
+             * 버스 즐겨찾기 테이블
+             * busRouteId   : 버스 노선 ID
+             * busRouteNm   : 버스 노선 번호
+             * routeType    : 지선/간선 등 버스타입
+             * stStationNm  : 기점
+             * edStationNm  : 종점
+             * timestamp    : 등록시간
+             */
+//            db.execSQL("CREATE TABLE busHistoryTB(" +
+//                    "busRouteId VARCHAR(9) PRIMARY KEY ON CONFLICT REPLACE, " +
+//                    "busRouteNm VARCHAR(30), " +
+//                    "routeType VARCHAR(1), " +
+//                    "stStationNm VARCHAR(60), " +
+//                    "edStationNm VARCHAR(60), " +
+//                    "timestamp TIMESTAMP)"
+//            );
         }
 
         @Override

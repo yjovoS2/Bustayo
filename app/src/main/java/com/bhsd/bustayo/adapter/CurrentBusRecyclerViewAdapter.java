@@ -78,7 +78,7 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CurrentBusRecyclerViewAdapter.CurrentBusViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final CurrentBusRecyclerViewAdapter.CurrentBusViewHolder holder, final int position) {
         if(currentBusInfos.get(position).isBookmark())
             holder.bookmark.setImageResource(R.drawable.ic_bookmark);
         else
@@ -103,11 +103,7 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
             case 0 :    // 데이터 없음
             default: color = "#AAAAAA";
         }
-
-        if(isInclude)
-            holder.bookmark.setVisibility(View.GONE);
-        else
-            holder.bookmark.setVisibility(View.VISIBLE);
+        holder.busCongested.setColorFilter(Color.parseColor(color));
 
         if(currentBusInfos.get(position).isBookmark()) {
             holder.bookmark.setImageResource(R.drawable.ic_bookmark);
@@ -118,8 +114,16 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
             @Override
             public void onClick(View v) {
                 currentBusInfos.get(position).setBookmark(!(currentBusInfos.get(position).isBookmark()));
-                notifyItemRangeChanged(position,currentBusInfos.size());
+//                북마크가 false이면 데이터베이스에서 삭제 true면 삽입
+                if (isInclude)
+                    if (!(currentBusInfos.get(position).isBookmark())){}
+                        currentBusInfos.remove(position);
+                notifyDataSetChanged();
 
+//                if (currentBusInfos.get(position).isBookmark())
+//                    디비에 insert - 정류장테이블이 있으면
+//              else
+//                    디비에서 삭제
             }
         });
 
