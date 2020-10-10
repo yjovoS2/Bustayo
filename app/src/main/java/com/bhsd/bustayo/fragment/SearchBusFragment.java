@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +22,7 @@ import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.SearchActivity;
 import com.bhsd.bustayo.adapter.SearchRecyclerAdapter;
 import com.bhsd.bustayo.application.APIManager;
-import com.bhsd.bustayo.database.TestDB;
+import com.bhsd.bustayo.database.ApplicationDB;
 import com.bhsd.bustayo.dto.SearchRecyclerItem;
 
 import java.util.ArrayList;
@@ -46,7 +43,7 @@ public class SearchBusFragment extends Fragment {
     private String                        searchStr;         //검색어
     private Timer                         searchTimer;       //API 과다 호출 방지
 
-    private TestDB                        DBHelper;         //내부 디비 연결도구
+    private ApplicationDB DBHelper;         //내부 디비 연결도구
 
     @Nullable
     @Override
@@ -58,7 +55,7 @@ public class SearchBusFragment extends Fragment {
         searchBusRecycler = view.findViewById(R.id.searchBusRecycler);
 
         //필요한 객체 생성
-        DBHelper          = new TestDB(getContext());
+        DBHelper          = new ApplicationDB(getContext());
         data              = new ArrayList<>();
 
         /*
