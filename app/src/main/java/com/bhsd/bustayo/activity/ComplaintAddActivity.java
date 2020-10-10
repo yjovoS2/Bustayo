@@ -12,10 +12,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,16 +25,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.bhsd.bustayo.R;
-import com.bhsd.bustayo.database.TestDB;
-import com.naver.maps.map.LocationTrackingMode;
+import com.bhsd.bustayo.database.ApplicationDB;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.regex.Pattern;
 
 //////////////////////////////////////////////////////
 // 불편신고 접수 리스트 -> 불편신고 접수
@@ -49,7 +42,7 @@ public class ComplaintAddActivity extends AppCompatActivity {
     private Calendar    calendar;      //날짜 관련 처리
     private ImageView   goBack;        //뒤로가기 버튼
     private Button      complaintAdd;  //접수 버튼
-    private TestDB      DBHelper;      //DB 연결 도구
+    private ApplicationDB DBHelper;      //DB 연결 도구
 
     //사용자 입력 정보
     private EditText    complaintBusNum, complaintContent;
@@ -79,7 +72,7 @@ public class ComplaintAddActivity extends AppCompatActivity {
         complaintContent = findViewById(R.id.complaintContent);
 
         calendar         = Calendar.getInstance();
-        DBHelper         = new TestDB(getApplicationContext());
+        DBHelper         = new ApplicationDB(getApplicationContext());
 
         //마쉬멜로우 이상일 경우에는 권한 요청
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

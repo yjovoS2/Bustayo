@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.adapter.ComplaintRecyclerAdapter;
-import com.bhsd.bustayo.database.TestDB;
+import com.bhsd.bustayo.database.ApplicationDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class ComplaintActivity extends AppCompatActivity {
     private RecyclerView               complaintList; //불편신고 접수 리스트
     private FloatingActionButton       complaintAdd;  //불편신고 등록 화면으로 연결
     private ImageView                  goBack;        //뒤로가기 버튼
-    private TestDB                     DBHelper;      //DB 연결 도구
+    private ApplicationDB DBHelper;      //DB 연결 도구
     private ComplaintRecyclerAdapter   adapter;
     private ArrayList<String[]>        data;
 
@@ -50,7 +49,7 @@ public class ComplaintActivity extends AppCompatActivity {
         goBack        = findViewById(R.id.goBack);
 
         //DB 연결 및 어댑터 생성
-        DBHelper      = new TestDB(this);
+        DBHelper      = new ApplicationDB(this);
         data          = new ArrayList<>();
         adapter       = new ComplaintRecyclerAdapter(data);
 

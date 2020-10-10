@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.EditText;
 
-public class TestDB extends SQLiteOpenHelper {
-        public TestDB(Context context) {
+public class ApplicationDB extends SQLiteOpenHelper {
+        public ApplicationDB(Context context) {
             super(context, "BustayoDB", null, 1);
         }
 
