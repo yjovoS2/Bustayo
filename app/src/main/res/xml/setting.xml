@@ -1,36 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="기본설정" />
-    <ListPreference
-        android:key="auto_refresh"
-        android:title="자동 새로고침 간격"
-        android:defaultValue="30초" />
-    <ListPreference
-        android:key="set_sound"
-        android:title="알림음 설정"
-        android:defaultValue="0" />
+    <PreferenceCategory android:title="기본설정">
+        <ListPreference
+            android:key="auto_refresh"
+            android:title="자동 새로고침 간격"
+            android:summary="30초"
+            android:defaultValue="30"
+            android:entries="@array/refresh_time"
+            android:entryValues="@array/refresh_time_value" />
+        <ListPreference
+            android:key="set_sound"
+            android:title="알림음 설정"
+            android:summary="0"
+            android:defaultValue="0" />
+    </PreferenceCategory>
 
-    <PreferenceCategory android:title="개인정보" />
-    <Preference
-        android:title="계정정보" />
+    <PreferenceCategory android:title="개인정보">
+        <Preference
+            android:key="account_info"
+            android:title="계정정보"
+            android:summary="로그인 해주세요." />
+    </PreferenceCategory>
 
-    <PreferenceCategory android:title="약관 및 정책" />
-    <Preference
-        android:title="서비스 이용약관" />
-    <Preference
-        android:title="위치기반서비스 이용약관" />
-    <Preference
-        android:title="개인정보 처리방침" />
-    <Preference
-        android:title="정보 제공처" />
-    <Preference
-        android:title="오픈소스 정보" />
+    <PreferenceCategory android:title="약관 및 정책">
+        <Preference
+            android:key="service"
+            android:title="서비스 이용약관" />
+        <Preference
+            android:key="location"
+            android:title="위치기반서비스 이용약관" />
+        <Preference
+            android:key="user_info"
+            android:title="개인정보 처리방침" />
+        <Preference
+            android:key="information"
+            android:title="정보 제공처" />
+        <Preference
+            android:key="use_open_source"
+            android:title="오픈소스 정보" />
+    </PreferenceCategory>
 
-    <PreferenceCategory android:title="고객지원" />
-    <Preference
-        android:title="도움말" />
-    <Preference
-        android:title="문의하기" />
+    <PreferenceCategory android:title="고객지원">
+        <Preference
+            android:key="question"
+            android:title="도움말" />
+        <Preference
+            android:key="complaint"
+            android:title="문의하기" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
