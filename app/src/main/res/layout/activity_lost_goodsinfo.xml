@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dto.LostGoodsinfo">
+    tools:context=".dto.LostGoodsInfo">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -63,32 +63,24 @@
         android:layout_marginRight="20dp"
         android:text="검색"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lostList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/searchButton"
+        app:layout_constraintTop_toBottomOf="@id/searchButton"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/goUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_drawer_up"
+        android:tint="@color/button_gray"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="20dp">
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/LostList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/goUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_drawer_up"
-            android:tint="@color/button_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        app:layout_constraintRight_toRightOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

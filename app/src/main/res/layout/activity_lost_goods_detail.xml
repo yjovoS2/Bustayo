@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dto.LostGoodsInfo">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/searchGoBack"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_go_back"
+            android:backgroundTint="@color/colorAccent"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title"
+            android:textSize="18sp"
+            android:textColor="#aa777777"
+            android:paddingStart="15dp">
+            <requestFocus/>
+        </TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/lost_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_no_image"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <TextView
+        android:id="@+id/lost_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:layout_marginVertical="10dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/lost_image" />
+
+    <!-- 항목 -->
+    <TextView
+        android:id="@+id/item1"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:text="관리번호"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lost_title" />
+    <TextView
+        android:id="@+id/item2"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:text="분실일"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item1" />
+    <TextView
+        android:id="@+id/item3"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:text="분실장소"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item2" />
+    <TextView
+        android:id="@+id/item4"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:text="물품분류"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item3" />
+    <TextView
+        android:id="@+id/item5"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:text="분실상태"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item4" />
+    <TextView
+        android:id="@+id/item6"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:text="관할관서"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item5" />
+    <TextView
+        android:id="@+id/item7"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:text="연락처"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item6" />
+
+    <!-- 항목 내용 -->
+    <TextView
+        android:id="@+id/control_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="관리번호"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/item1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lost_title" />
+    <TextView
+        android:id="@+id/lost_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="2020-10-29 20시경"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/item2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/control_number" />
+    <TextView
+        android:id="@+id/lost_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="새절역 버스정류장"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/item3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lost_time" />
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="지갑 > 지갑"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/item4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lost_location" />
+    <TextView
+        android:id="@+id/lost_state"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="접수완료"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/item5"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category" />
+    <TextView
+        android:id="@+id/jurisdiction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="천안동남경찰서"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/item6"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lost_state" />
+    <TextView
+        android:id="@+id/contact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="02-123-1234"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/item7"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jurisdiction" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

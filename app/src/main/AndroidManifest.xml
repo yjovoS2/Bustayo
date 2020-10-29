@@ -64,6 +64,7 @@
 
         <!-- 분실물 화면-->
         <activity android:name=".activity.LostGoodsActivity"/>
+        <activity android:name=".activity.LostGoodsDetailActivity" />
 
         <!-- 설정 화면 -->
         <activity android:name=".activity.SettingActivity"/>

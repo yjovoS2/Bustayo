@@ -17,10 +17,12 @@ public class APIManager {
     private static final String SERVICE_KEY = LYJ_KEY;
 
     private static final String BUS_URL = "http://ws.bus.go.kr/api/rest/";
+    private static final String LOST_GOODS_URL = "http://apis.data.go.kr/1320000/LostGoodsInfoInqireService/";
 
     private static final String BUS_POS_URL = BUS_URL + "buspos/";
     private static final String ROUTE_INFO = BUS_URL + "busRouteInfo/";
     private static final String STATION_INFO_URL = BUS_URL + "stationinfo/";
+
 
     /* 사용할 API url */
     public static final String GET_BUSPOS_BY_RT_ID = BUS_POS_URL + "getBusPosByRtid?serviceKey=" + SERVICE_KEY;
@@ -30,6 +32,9 @@ public class APIManager {
     public static final String GET_STATION_BY_POS = STATION_INFO_URL + "getStationByPos?serviceKey=" + SERVICE_KEY;
     public static final String GET_STATION_BY_NAME = STATION_INFO_URL + "getStationByName?serviceKey=" + SERVICE_KEY;
     public static final String GET_STATION_BY_UID_ITEM = STATION_INFO_URL + "getStationByUid?serviceKey=" + SERVICE_KEY;
+    public static final String GET_LOST_GOODS = LOST_GOODS_URL + "getLostGoodsInfoAccTpNmCstdyPlace?serviceKey=" + SERVICE_KEY
+            + "&LST_PLACE=버스&numOfRows=10";
+    public static final String GET_LOST_GOODS_DETAIL = LOST_GOODS_URL + "getLostGoodsDetailInfo?serviceKey=" + SERVICE_KEY;
 
     /* 사용할 API search tag */
     private static final String[] GET_BUSPOS_BY_RT_ID_TAG = { "&busRouteId=" };
@@ -39,6 +44,8 @@ public class APIManager {
     private static final String[] GET_STATION_BY_POS_TAG = { "&tmX=", "&tmY=", "&radius=" };
     private static final String[] GET_STATION_BY_NAME_TAG = { "&stSrch=" };
     private static final String[] GET_STATION_BY_UID_ITEM_TAG = { "&arsId=" };
+    private static final String[] GET_LOST_GOODS_TAG = { "&LST_PRDT_NM", "&pageNo=" };
+    private static final String[] GET_LOST_GOODS_DETAIL_TAG = { "&ATC_ID=" };
 
     // =================================================
     // api 결과를 HashMap으로 return
@@ -75,7 +82,7 @@ public class APIManager {
                 }
                 if(eventType == XmlPullParser.END_TAG) {
                     tag = parser.getName();
-                    if (tag.equals("itemList")) {
+                    if (tag.equals("itemList") || tag.equals("item")) {
                         return return_value;
                     }
                 }
@@ -125,7 +132,7 @@ public class APIManager {
                 }
                 if(eventType == XmlPullParser.END_TAG) {
                     tag = parser.getName();
-                    if(tag.equals("itemList")) {
+                    if(tag.equals("itemList") || tag.equals("item")) {
                         return_value.add(item);
                         item = new HashMap<>();
                     }
@@ -165,6 +172,12 @@ public class APIManager {
                 break;
             case GET_STATION_BY_ROUTE:
                 search_tags = GET_STATION_BY_ROUTE_TAG;
+                break;
+            case GET_LOST_GOODS:
+                search_tags = GET_LOST_GOODS_TAG;
+                break;
+            case GET_LOST_GOODS_DETAIL:
+                search_tags = GET_LOST_GOODS_DETAIL_TAG;
                 break;
             default:
                 return null;
