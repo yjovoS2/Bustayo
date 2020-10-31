@@ -2,22 +2,21 @@ package com.bhsd.bustayo.dto;
 
 public class LostGoodsInfo{
 
-    private int lgImage;
-    private String lgnNum, lgName, lgPlace, lgDate;
+    private String lgImage, lgnNum, lgTitle, lgPlace, lgDate;
 
-    public LostGoodsInfo(int lgImage, String lgnNum, String lgName, String lgPlace, String lgDate) {
+    public LostGoodsInfo(String lgImage, String lgnNum, String lgTitle, String lgPlace, String lgDate) {
         this.lgImage = lgImage;
         this.lgnNum = lgnNum;
-        this.lgName = lgName;
+        this.lgTitle = lgTitle;
         this.lgPlace = lgPlace;
         this.lgDate = lgDate;
     }
 
-    public int getLgImage() {
+    public String getLgImage() {
         return lgImage;
     }
 
-    public void setLgImage(int lgImage) {
+    public void setLgImage(String lgImage) {
         this.lgImage = lgImage;
     }
 
@@ -29,12 +28,12 @@ public class LostGoodsInfo{
         this.lgnNum = lgnNml;
     }
 
-    public String getLgName() {
-        return lgName;
+    public String getLgTitle() {
+        return lgTitle;
     }
 
-    public void setLgName(String lgName) {
-        this.lgName = lgName;
+    public void setLgTitle(String lgTitle) {
+        this.lgTitle = lgTitle;
     }
 
     public String getLgPlace() {

@@ -90,8 +90,15 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
         holder.busColor.setColorFilter(currentBusInfos.get(position).getBusColor()); //버스 색
         holder.busNum.setText(currentBusInfos.get(position).getBusNum());
         holder.busDestination.setText(currentBusInfos.get(position).getBusDestination());
+        /*
         holder.currentbus1.setText(currentBusInfos.get(position).getCurrentLocation1());
         holder.currentbus2.setText(currentBusInfos.get(position).getCurrentLocation2());
+        */
+
+        // ---------------------------------------------------------------------
+        holder.currentbus1.setText(getBusMsg(currentBusInfos.get(position).getCurrentLocation1()));
+        holder.currentbus2.setText(getBusMsg(currentBusInfos.get(position).getCurrentLocation2()));
+        // ---------------------------------------------------------------------
 
         int BusCongestion = currentBusInfos.get(position).getBusCongestion();
         String color = "#";
@@ -135,6 +142,21 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
                 alarmsetting.Dialog(v.getRootView().getContext());
             }
         });
+    }
+
+    /* 버스 도착시간 메시지 정리 */
+    private String getBusMsg(String msg) {
+        String[] split_text = msg.split("후");
+        // "곧 도착", "운행종료", "출발대기"  →  0분0초 이외 상태들
+        String time = split_text[0], count = "";
+
+        if(split_text.length > 1) {
+            String[] temp = time.split("분");
+            count = split_text[1];
+            time = temp[0] + "분";
+        }
+
+        return time + count;
     }
 
     public CurrentBusInfo getItem(int position){ return currentBusInfos.get(position); }

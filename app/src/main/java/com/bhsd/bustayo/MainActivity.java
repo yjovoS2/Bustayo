@@ -23,6 +23,7 @@ import com.bhsd.bustayo.activity.ComplaintActivity;
 import com.bhsd.bustayo.activity.LoginActivity;
 import com.bhsd.bustayo.activity.LostGoodsActivity;
 import com.bhsd.bustayo.activity.SearchActivity;
+import com.bhsd.bustayo.activity.SettingActivity;
 import com.bhsd.bustayo.fragment.BookmarkFragment;
 import com.bhsd.bustayo.fragment.GetOffAlarmFragment;
 import com.bhsd.bustayo.fragment.NMapFragment;
@@ -177,7 +178,11 @@ public class MainActivity extends AppCompatActivity {
                     //공지사항 (2차 개발)
                     case R.id.drawerNotice: Toast.makeText(getApplicationContext(), "공지사항", Toast.LENGTH_SHORT).show(); return true;
                     //설정 (2차 개발)
-                    case R.id.drawerSetting: Toast.makeText(getApplicationContext(), "설정", Toast.LENGTH_SHORT).show(); return true;
+                    case R.id.drawerSetting: {
+                        Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                        startActivity(intent);
+                        return true;
+                    }
                 }
                 return false;
             }
