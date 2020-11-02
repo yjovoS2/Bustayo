@@ -71,21 +71,15 @@ public class ApplicationDB extends SQLiteOpenHelper {
 
             /*
              * 버스 즐겨찾기 테이블
+             * arsId      : 정류장 고유번호
              * busRouteId   : 버스 노선 ID
-             * busRouteNm   : 버스 노선 번호
-             * routeType    : 지선/간선 등 버스타입
-             * stStationNm  : 기점
-             * edStationNm  : 종점
-             * timestamp    : 등록시간
              */
-//            db.execSQL("CREATE TABLE busHistoryTB(" +
-//                    "busRouteId VARCHAR(9) PRIMARY KEY ON CONFLICT REPLACE, " +
-//                    "busRouteNm VARCHAR(30), " +
-//                    "routeType VARCHAR(1), " +
-//                    "stStationNm VARCHAR(60), " +
-//                    "edStationNm VARCHAR(60), " +
-//                    "timestamp TIMESTAMP)"
-//            );
+            db.execSQL("CREATE TABLE bookmarkTB(" +
+                    "busRouteId VARCHAR(9), " +
+                    "arsId VARCHAR(5) ,"+
+                    "PRIMARY KEY (busRouteId, arsId))"
+
+            );
         }
 
         @Override

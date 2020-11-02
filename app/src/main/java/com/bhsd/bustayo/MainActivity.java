@@ -18,6 +18,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bhsd.bustayo.activity.ComplaintActivity;
 import com.bhsd.bustayo.activity.LoginActivity;
@@ -196,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     //즐겨찾기
                     case R.id.bottomNavBookmark:
                         //FloatingActionButton은 여기서만필요
+                        fab.show();
                         return showFragment(bmFragment);
                     //주변 정류장
                     case R.id.bottomNavMap:

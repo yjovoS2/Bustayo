@@ -3,11 +3,11 @@ package com.bhsd.bustayo.dto;
 
 public class CurrentBusInfo {
 
-    private int busColor, busCongestion;
-    private String busNum, busDestination, currentLocation1, currentLocation2;
+    private String busRouteId, busNum, busDestination, currentLocation1, currentLocation2,busColor, busCongestion, arsId;
     boolean bookmark = false;
 
-    public CurrentBusInfo(int busColor, int busCongestion, String busNum, String busDestination, String currentLocation1, String currentLocation2, boolean bookmark) {
+    public CurrentBusInfo(String busRouteId, String busColor, String busCongestion, String busNum, String busDestination, String currentLocation1, String currentLocation2, boolean bookmark, String arsId) {
+        this.busRouteId = busRouteId;
         this.busColor = busColor;
         this.busCongestion = busCongestion;
         this.busNum = busNum;
@@ -15,21 +15,38 @@ public class CurrentBusInfo {
         this.currentLocation1 = currentLocation1;
         this.currentLocation2 = currentLocation2;
         this.bookmark = bookmark;
+        this.arsId = arsId;
     }
 
-    public int getBusColor() {
+    public String getArsId() {
+        return arsId;
+    }
+
+    public void setArsId(String arsId) {
+        this.arsId = arsId;
+    }
+
+    public String getBusRouteId() {
+        return busRouteId;
+    }
+
+    public void setBusRouteId(String busRouteId) {
+        this.busRouteId = busRouteId;
+    }
+
+    public String getBusColor() {
         return busColor;
     }
 
-    public void setBusColor(int busColor) {
+    public void setBusColor(String busColor) {
         this.busColor = busColor;
     }
 
-    public int getBusCongestion() {
+    public String getBusCongestion() {
         return busCongestion;
     }
 
-    public void setBusCongestion(int busCongestion) {
+    public void setBusCongestion(String busCongestion) {
         this.busCongestion = busCongestion;
     }
 

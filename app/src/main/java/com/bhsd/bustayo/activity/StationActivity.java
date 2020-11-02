@@ -1,9 +1,14 @@
 package com.bhsd.bustayo.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +23,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhsd.bustayo.MainActivity;
+import com.bhsd.bustayo.database.ApplicationDB;
 import com.bhsd.bustayo.dto.CurrentBusInfo;
 import com.bhsd.bustayo.adapter.CurrentBusRecyclerViewAdapter;
 import com.bhsd.bustayo.R;
@@ -33,6 +40,7 @@ public class StationActivity extends AppCompatActivity {
     ArrayList<HashMap<String,String>> busList;
     String arsId;
     String stationNm;
+    Activity activity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,11 +57,12 @@ public class StationActivity extends AppCompatActivity {
         Intent inIntent = getIntent();
         arsId = inIntent.getStringExtra("arsId");
         stationNm = inIntent.getStringExtra("stationNm");
+        activity = StationActivity.this;
 
         new Thread() {
             @Override
             public void run() {
-                busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
+                busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion1","routeType","arrmsg1","arrmsg2"});
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -74,7 +83,7 @@ public class StationActivity extends AppCompatActivity {
                 new Thread() {
                     @Override
                     public void run() {
-                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
+                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion1","routeType","arrmsg1","arrmsg2"});
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -91,8 +100,10 @@ public class StationActivity extends AppCompatActivity {
     void setAdapter(ArrayList<HashMap<String,String>> list) {
         ArrayList<CurrentBusInfo> currentBusInfo = new ArrayList<>();
         for(HashMap<String, String> item : list) {
-            int busColor = getTypeColor(Integer.parseInt(item.get("routeType")));
-            int busCongestion = getCongestionColor(Integer.parseInt(item.get("congestion")));
+
+            String busRouteId = item.get("busRouteId");
+            String busColor = item.get("routeType");
+            String busCongestion = item.get("congestion");
             String busNum = item.get("rtNm");
             String busDestination = item.get("adirection") + "방면";
             String currentLocation1 = item.get("arrmsg1");
@@ -101,10 +112,11 @@ public class StationActivity extends AppCompatActivity {
             // (int busColor, int busCongestion, int busNum,
             // String busDestination, String currentLocation1, String currentLocation2)
 
-            CurrentBusInfo it = new CurrentBusInfo(busColor,busCongestion,busNum,busDestination,currentLocation1,currentLocation2,false);
+            CurrentBusInfo it = new CurrentBusInfo(busRouteId, busColor,busCongestion,busNum,busDestination,currentLocation1,currentLocation2,false,arsId);
             currentBusInfo.add(it);
         }
-        adapter = new CurrentBusRecyclerViewAdapter(currentBusInfo, false);
+        adapter = new CurrentBusRecyclerViewAdapter(currentBusInfo, false, activity);
+        adapter.setArsId(arsId);
 
         /* 아이템 클릭 이벤트 */
         adapter.setOnListItemSelected(new CurrentBusRecyclerViewAdapter.OnListItemSelected() {

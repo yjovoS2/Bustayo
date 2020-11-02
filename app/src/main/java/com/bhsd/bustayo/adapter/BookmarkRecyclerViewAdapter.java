@@ -1,5 +1,6 @@
 package com.bhsd.bustayo.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
     Context context;
     private OnListItemSelected listener = null;
     boolean isInclude;
+    Activity activity;
 
     public interface OnListItemSelected{
         void onItemSelected(View v, int position, RecyclerView selected);
@@ -37,6 +39,12 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
     public BookmarkRecyclerViewAdapter(ArrayList<BookmarkInfo> bookmarkInfos, Context context, boolean isInclude) {
         this.bookmarkInfos = bookmarkInfos;
         this.context = context;
+        this.isInclude = isInclude;
+    }
+
+    public BookmarkRecyclerViewAdapter(ArrayList<BookmarkInfo> bookmarkInfos, Activity activity, boolean isInclude) {
+        this.bookmarkInfos = bookmarkInfos;
+        this.activity = activity;
         this.isInclude = isInclude;
     }
 
@@ -78,7 +86,8 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
     @Override
     public void onBindViewHolder(@NonNull final BookmarkRecyclerViewAdapter.BookmarkViewHolder holder, final int position) {
 
-        final CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo(), isInclude);
+        final CurrentBusRecyclerViewAdapter adapter = new CurrentBusRecyclerViewAdapter(bookmarkInfos.get(position).getCurrentBusInfo(), isInclude,activity);
+        adapter.setArsId(bookmarkInfos.get(position).getArsId());
         holder.currnetBusInfo.setHasFixedSize(true);
         holder.currnetBusInfo.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         holder.currnetBusInfo.setAdapter(adapter);
@@ -90,10 +99,10 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
             @Override
             public void onItemSelected(View v, int pos) {
                 //이부분에 데이터넘겨주는 부분
-                Intent intent = new Intent(context, StationListActivity.class);
+                Intent intent = new Intent(activity, StationListActivity.class);
                 String busNum = adapter.getItem(pos).getBusNum()+"";
                 intent.putExtra("busRouteNm", busNum);
-                context.startActivity(intent);
+                activity.startActivity(intent);
             }
         });
 
