@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     //초기화 작업
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context_main = this;

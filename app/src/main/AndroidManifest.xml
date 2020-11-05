@@ -28,12 +28,17 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="14x4s7l2zd" />
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity">
         </activity>
 
         <!-- 검색 화면 -->

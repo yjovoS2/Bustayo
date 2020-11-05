@@ -11,9 +11,9 @@
         android:layout_height="30dp"
         android:scaleType="fitXY"
         android:layout_marginStart="30dp"
-        android:src="@drawable/square"
         app:layout_constraintBottom_toTopOf="@+id/center"
         app:layout_constraintLeft_toLeftOf="parent" />
+<!--    android:src="@drawable/square"-->
 
     <ImageView
         android:id="@+id/next_busstop"
@@ -21,9 +21,10 @@
         android:layout_height="30dp"
         android:scaleType="fitXY"
         android:layout_marginStart="30dp"
-        android:src="@drawable/square"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/center" />
+    <!--    android:src="@drawable/square"-->
+
 
     <TextView
         android:id="@+id/busstop_name"
