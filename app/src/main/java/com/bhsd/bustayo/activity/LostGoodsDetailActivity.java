@@ -9,9 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.dto.LostGoodsDetailInfo;
@@ -56,15 +54,13 @@ public class LostGoodsDetailActivity extends AppCompatActivity {
             }
         });
 
-        setTitle(info.getLgTitle());
         setViews(info);
+        setToolbar(info.getLgTitle());
     }
 
     void setToolbar(String title) {
-        setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setTitle(title);
+        TextView titleView = findViewById(R.id.toolbar).findViewById(R.id.title);
+        titleView.setText(cutString(title));
     }
 
     void setViews(LostGoodsDetailInfo info) {
@@ -115,5 +111,13 @@ public class LostGoodsDetailActivity extends AppCompatActivity {
             // doInBackground 에서 받아온 total 값 사용 장소
             image.setImageBitmap(result);
         }
+    }
+
+    String cutString(String str) {
+        if(str.length() > 20) { // 글자가 20글자가 넘어가면
+            str = str.substring(0, 19);  // 20글자로 줄이고
+            str += "...";                // ... 붙이기!
+        }
+        return str;
     }
 }

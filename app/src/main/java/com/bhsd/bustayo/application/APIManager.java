@@ -44,7 +44,7 @@ public class APIManager {
     private static final String[] GET_STATION_BY_POS_TAG = { "&tmX=", "&tmY=", "&radius=" };
     private static final String[] GET_STATION_BY_NAME_TAG = { "&stSrch=" };
     private static final String[] GET_STATION_BY_UID_ITEM_TAG = { "&arsId=" };
-    private static final String[] GET_LOST_GOODS_TAG = { "&LST_PRDT_NM", "&pageNo=" };
+    private static final String[] GET_LOST_GOODS_TAG = { "&LST_PRDT_NM=", "&pageNo=" };
     private static final String[] GET_LOST_GOODS_DETAIL_TAG = { "&ATC_ID=" };
 
     // =================================================
