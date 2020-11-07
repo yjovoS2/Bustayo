@@ -75,7 +75,9 @@ public class LostGoodsActivity extends AppCompatActivity {
                     }.start();
                 }
             }
-        });                 // TODO data 불러오고 현재 스크롤 되어있는 위치로 다시 이동???? 어떻게?????
+        });
+        // TODO data 불러오고 현재 스크롤 되어있는 위치로 다시 이동???? 어떻게?????
+        //      api 받아올 때까지 기다리는동안 대기중인걸 나타내게
 
         // 검색버튼 클릭
         searchButton.setOnClickListener(new View.OnClickListener() {

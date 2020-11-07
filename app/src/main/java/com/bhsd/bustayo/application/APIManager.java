@@ -12,8 +12,8 @@ import java.util.HashMap;
 
 public class APIManager {
     private static final String CJB_KEY     = "mwvEaAXw6zA%2BTnM5a7W%2F24dpurVReU2rdiVACF8v3oQrY%2Becbbv018iPqZnXId0oqx4cSkUBbQxU1vFjPn62kw%3D%3D";
-    public static final String LYJ_KEY     = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
-    public static final String PCJ_KEY     = "m0Oa7AbIFizhCq03rya2SapvO0bHMctYwrKZls8BAUgoHdvVWVuU%2BVhh%2BEiYxtXXVYuJCOPP3DYvFywUzb%2F3Ow%3D%3D";
+    private static final String LYJ_KEY     = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
+    private static final String PCJ_KEY     = "m0Oa7AbIFizhCq03rya2SapvO0bHMctYwrKZls8BAUgoHdvVWVuU%2BVhh%2BEiYxtXXVYuJCOPP3DYvFywUzb%2F3Ow%3D%3D";
     private static final String SERVICE_KEY = LYJ_KEY;
 
     private static final String BUS_URL = "http://ws.bus.go.kr/api/rest/";
@@ -23,6 +23,8 @@ public class APIManager {
     private static final String ROUTE_INFO = BUS_URL + "busRouteInfo/";
     private static final String STATION_INFO_URL = BUS_URL + "stationinfo/";
 
+    /* 서버주소 */
+    public static final String SERVER_URL = "http://118.67.134.138:3000/";
 
     /* 사용할 API url */
     public static final String GET_BUSPOS_BY_RT_ID = BUS_POS_URL + "getBusPosByRtid?serviceKey=" + SERVICE_KEY;
