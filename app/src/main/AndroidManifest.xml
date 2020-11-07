@@ -74,6 +74,9 @@
         <!-- 설정 화면 -->
         <activity android:name=".activity.SettingActivity"/>
 
+        <!-- 공지 화면 -->
+        <activity android:name=".activity.NoticeActivity" />
+
     </application>
 
 </manifest>

@@ -62,10 +62,6 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
         return list.size();
     }
 
-    public void addAllItem(ArrayList<StationListItem> item) {
-        this.list = item;
-    }
-
     public void addItem(StationListItem item) {
         list.add(item);
     }
@@ -76,10 +72,6 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
 
     public void clearList() {
         this.list.clear();
-    }
-
-    public void removeItem(int position) {
-        list.remove(position);
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {

@@ -18,11 +18,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.bhsd.bustayo.activity.ComplaintActivity;
 import com.bhsd.bustayo.activity.LoginActivity;
 import com.bhsd.bustayo.activity.LostGoodsActivity;
+import com.bhsd.bustayo.activity.NoticeActivity;
 import com.bhsd.bustayo.activity.SearchActivity;
 import com.bhsd.bustayo.activity.SettingActivity;
 import com.bhsd.bustayo.fragment.BookmarkFragment;
@@ -178,7 +178,12 @@ public class MainActivity extends AppCompatActivity {
                     //지역설정 (2차 개발)
                     case R.id.drawerSetLocation: Toast.makeText(getApplicationContext(), "지역설정", Toast.LENGTH_SHORT).show(); return true;
                     //공지사항 (2차 개발)
-                    case R.id.drawerNotice: Toast.makeText(getApplicationContext(), "공지사항", Toast.LENGTH_SHORT).show(); return true;
+                    case R.id.drawerNotice: {
+                        //Toast.makeText(getApplicationContext(), "공지사항", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+                        startActivity(intent);
+                        return true;
+                    }
                     //설정 (2차 개발)
                     case R.id.drawerSetting: {
                         Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
