@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/goBack"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_go_back"
+            android:backgroundTint="@color/colorAccent"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/privacy_policy_title"
+            android:textSize="18sp"
+            android:textColor="#aa777777"
+            android:paddingStart="15dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp">
+            <TextView
+                android:id="@+id/privacy_policy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 개인정보 수집 -->
+            <TextView
+                android:id="@+id/collection_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_collection_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/privacy_policy" />
+
+            <TextView
+                android:id="@+id/collection_content1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_collection_content1"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/collection_title" />
+            <TextView
+                android:id="@+id/collection_content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_collection_content2"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/collection_content1" />
+            <TextView
+                android:id="@+id/collection_content3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_collection_content3"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/collection_content2" />
+            <TextView
+                android:id="@+id/collection_content4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_collection_content4"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/collection_content3" />
+
+            <!-- 개인정보 이용 -->
+            <TextView
+                android:id="@+id/use_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_use_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/collection_content4" />
+
+            <TextView
+                android:id="@+id/use_content1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_use_content1"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/use_title" />
+            <TextView
+                android:id="@+id/use_content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_use_content2"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/use_content1" />
+
+            <!-- 개인정보 파기 -->
+            <TextView
+                android:id="@+id/destruction_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_destruction_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/use_content2" />
+
+            <TextView
+                android:id="@+id/destruction_content1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_destruction_content1"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/destruction_title" />
+            <TextView
+                android:id="@+id/destruction_content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_destruction_content2"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/destruction_content1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

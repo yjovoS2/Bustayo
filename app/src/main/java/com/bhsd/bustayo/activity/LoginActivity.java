@@ -1,13 +1,14 @@
 package com.bhsd.bustayo.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bhsd.bustayo.R;
 
@@ -74,10 +75,17 @@ public class LoginActivity extends AppCompatActivity {
 
                 //test용
 
-                if(userID.equals("test")&&userPasswd.equals("1111")){
+                if(userID.equals("test")&&userPasswd.equals("1111")) {
                     login.putExtra("userID",userID);
-                    login.putExtra("isLogin",true);
-                    setResult(RESULT_OK,login);
+
+                    /* 성공한 로그인 정보를 SharedPreferences에 저장 */
+                    SharedPreferences loginInfo = getSharedPreferences("setting", 0);
+                    SharedPreferences.Editor editor = loginInfo.edit();
+                    editor.putString("id", userID);
+                    editor.putString("password", userPasswd);
+                    editor.apply();
+
+                    setResult(RESULT_OK, login);
                     finish();
                 }
                 else

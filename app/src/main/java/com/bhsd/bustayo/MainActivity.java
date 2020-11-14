@@ -3,6 +3,7 @@ package com.bhsd.bustayo;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
         offAlarmFragment = new GetOffAlarmFragment();
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
-        //로그인 테스트용
-        islogin = false;
+
         //프래그먼트 추가 및 초기화면 설정
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.fragment, bmFragment, "bookmark").commit();
@@ -87,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.fragment, offAlarmFragment, "offAlarm").commit();
         header = drawer.getHeaderView(0).findViewById(R.id.drawerHeaderName);
         showFragment(bmFragment);
+
+        //로그인 테스트용
+        islogin = getLoginState();
     }
 
     //이벤트 처리
@@ -131,8 +134,13 @@ public class MainActivity extends AppCompatActivity {
                     builder.setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            islogin = false;
-                            header.setText("로그인");
+                            SharedPreferences loginInfo = getSharedPreferences("setting", 0);
+                            SharedPreferences.Editor editor = loginInfo.edit();
+                            editor.putString("id", "");
+                            editor.putString("password", "");
+                            editor.apply();
+
+                            islogin = getLoginState();
                         }
                     });
 
@@ -145,8 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
-                }
-                else{//로그인 하지 않은 경우
+                } else { //로그인 하지 않은 경우
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivityForResult(intent,0);
                 }
@@ -231,13 +238,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        islogin = getLoginState();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
-            if(resultCode==RESULT_OK){
+            if(resultCode == RESULT_OK){
                 String userName = data.getStringExtra("userID");
-                islogin = data.getBooleanExtra("isLogin",false);
+                islogin = getLoginState();
                 header.setText(userName);}
+        }
+    }
+
+    /* 로그인 상태 받아오기! */
+    boolean getLoginState() {
+        SharedPreferences loginInfo = getSharedPreferences("setting", 0);
+        String loginId = loginInfo.getString("id", "");
+        if(loginId.equals("")) {
+            header.setText("로그인");
+            return false;
+        } else {
+            header.setText(loginId);
+            return true;
         }
     }
 }

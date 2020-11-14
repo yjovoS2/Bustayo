@@ -1,6 +1,8 @@
 package com.bhsd.bustayo.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -8,16 +10,20 @@ import android.preference.PreferenceFragment;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.activity.InformationProvider;
 import com.bhsd.bustayo.activity.LoginActivity;
+import com.bhsd.bustayo.activity.PrivacyPolicy;
 
 public class SettingFragment extends PreferenceFragment {
 
     ListPreference auto_refresh, set_sound;
     Preference account_info;
-    Preference service, location, user_info, information, use_open_source;
+    Preference privacy_policy, information_provider, open_source;
     Preference question, complaint;
+    boolean login_state;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,20 +42,52 @@ public class SettingFragment extends PreferenceFragment {
             }
         });
         set_sound = (ListPreference) findPreference("set_sound");
+        set_sound.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                return true;
+            }
+        });
 
 
         /* 개인정보 */
         account_info = findPreference("account_info");
+        login_state = getAccountInfo();
         account_info.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 String summary = preference.getSummary().toString();
 
-                if(summary.equals("로그인 해주세요.")) {
-                     Intent intent = new Intent(getContext(), LoginActivity.class);
-                     startActivity(intent);
+                if(login_state) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("로그아웃");
+                    builder.setMessage("로그아웃 하시겠습니까?");
+
+                    builder.setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SharedPreferences loginInfo = getActivity().getSharedPreferences("setting", 0);
+                            SharedPreferences.Editor editor = loginInfo.edit();
+                            editor.putString("id", "");
+                            editor.putString("password", "");
+                            editor.apply();
+
+                            login_state = getAccountInfo();
+                        }
+                    });
+
+                    builder.setNegativeButton("돌아가기", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //창 닫기
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 } else {
-                    // 로그인 상태일때 처리
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivityForResult(intent,0);
                 }
 
                 return true;
@@ -58,43 +96,29 @@ public class SettingFragment extends PreferenceFragment {
 
 
         /* 약관 및 정책 */
-        service = findPreference("service");
-        service.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        privacy_policy = findPreference("privacy_policy");
+        privacy_policy.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), service.getTitle(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getContext(), PrivacyPolicy.class);
+                startActivity(intent);
                 return true;
             }
         });
-        location = findPreference("location");
-        location.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        information_provider = findPreference("information_provider");
+        information_provider.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), location.getTitle(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getContext(), InformationProvider.class);
+                startActivity(intent);
                 return true;
             }
         });
-        user_info = findPreference("user_info");
-        user_info.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        open_source = findPreference("open_source");
+        open_source.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), user_info.getTitle(), Toast.LENGTH_LONG).show();
-                return true;
-            }
-        });
-        information = findPreference("information");
-        information.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), information.getTitle(), Toast.LENGTH_LONG).show();
-                return true;
-            }
-        });
-        use_open_source = findPreference("use_open_source");
-        use_open_source.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), use_open_source.getTitle(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), preference.getTitle(), Toast.LENGTH_LONG).show();
                 return true;
             }
         });
@@ -105,7 +129,7 @@ public class SettingFragment extends PreferenceFragment {
         question.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), question.getTitle(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), preference.getTitle(), Toast.LENGTH_LONG).show();
                 return true;
             }
         });
@@ -113,11 +137,32 @@ public class SettingFragment extends PreferenceFragment {
         complaint.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), complaint.getTitle(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), preference.getTitle(), Toast.LENGTH_LONG).show();
                 return true;
             }
         });
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if(resultCode == getActivity().RESULT_OK){
+                login_state = getAccountInfo();
+            }
+        }
+    }
 
+    /* 회원정보를 받아온다! */
+    boolean getAccountInfo() {
+        SharedPreferences loginInfo = getActivity().getSharedPreferences("setting", 0);
+        String loginId = loginInfo.getString("id", "");
+        if(loginId.equals("")) {
+            account_info.setSummary("로그인 해주세요.");
+            return false;
+        } else {
+            account_info.setSummary(loginId);
+            return true;
+        }
     }
 }

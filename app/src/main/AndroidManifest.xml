@@ -72,7 +72,9 @@
         <activity android:name=".activity.LostGoodsDetailActivity" />
 
         <!-- 설정 화면 -->
-        <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.InformationProvider" />
+        <activity android:name=".activity.PrivacyPolicy" />
 
         <!-- 공지 화면 -->
         <activity android:name=".activity.NoticeActivity" />

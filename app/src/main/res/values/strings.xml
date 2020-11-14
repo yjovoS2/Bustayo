@@ -49,4 +49,24 @@
     <string name="complaint_notice_content">(불편신고 접수는 다산콜센터를 통해 이루어집니다.)\n버스 이용 시 불편사항은 두 가지 방법으로 접수가 가능합니다.\n\n\t\t1. 해당 운수회사를 담당하고 있는 담당공무원에게 불편하신 내용을 전달하여 버스 기사와 운수회사에 교육이나 시정조치 이루어지도록 합니다.\n\n\t\t2. 교통 불편신고 접수를 하여 기사에게 행정 처분이 이루어지도록 접수가 가능합니다.\n\n접수를 위해 신고하시는 분의 성함과 연락처 확인이 필요하고 내용에 따라 추가 문의 내용이 상이할 수 있는점 참고 부탁드리며 불편신고 처리 결과는 문자로 회신됩니다.</string>
     <string name="complaint_commit">전송</string>
 
+    <!-- layout/activity_information_provider 관련 -->
+    <string name="information_provider_title">서비스 제공지역</string>
+    <string name="information_provider_description">버스타요의 실시간 버스 도착정보, 위치정보는 아래 지역 제공처에서 받아온 데이터로 서비스를 제공하고 있습니다. 각 지자체 버스정보시스템 사정 혹은 교통상황으로 인해 오차가 발생하거나 실시간 정보가 표시되지 않을 수 있으니 이용에 참고 부탁드립니다.</string>
+    <string name="information_provider_content">서울시</string>
+
+    <!-- layout/activity_privacy_policy 관련 -->
+    <string name="privacy_policy_title">개인정보 처리방침</string>
+    <string name="privacy_policy">복학생들(이하 "회사")은 이용자의 동의를 기반으로 \'개인정보를 수집·이용 및 제공\'하고 있으며, \'이용자의 권리 (개인정보 자기결정권)를 적극적으로 보장\'합니다.\n\n회사는 정보통신서비스제공자가 준수하여야 하는 대한민국의 관계 법령 및 개인정보보호 규정, 가이드라인을 준수하고 있습니다.\n\n"개인정보처리방침"이란 이용자의 소중한 개인정보를 보호함으로써 이용자가 안심하고 서비스를 이용할 수 있도록 회사가 준수해야 할 지침을 의미합니다.</string>
+    <string name="privacy_policy_collection_title">1. 개인정보 수집</string>
+    <string name="privacy_policy_collection_content1">서비스 제공을 위한 필요한 최소한의 개인정보를 수집하고 있습니다.\n회원 가입 시 또는 서비스 이용 과정에서 홈페이지 또는 개별 어플리케이션이나 프로그램 등을 통해 서비스 제공을 위한 아래와 같은 필요한 최소한의 개인정보를 수집하고 있습니다.</string>
+    <string name="privacy_policy_collection_content2">- 필수\n  아이디, 비밀번호, 이름\n- 선택\n  생년월일, 전화번호, 성별, 이메일</string>
+    <string name="privacy_policy_collection_content3">개인정보를 수집하는 방법은 다음과 같습니다.</string>
+    <string name="privacy_policy_collection_content4">개인정보를 수집하는 경우에는 반드시 사전에 이용자에게 해당 사실을 알리고 동의를 구하고 있으며, 아래와 같은 방법을 통해 개인정보를 수집합니다.\n- 회원가입 및 서비스 이용 과정에서 이용자가 개인정보 수집에 대해 동의를 하고 직접 정보를 입력하는 경우</string>
+    <string name="privacy_policy_use_title">2. 개인정보 이용</string>
+    <string name="privacy_policy_use_content1">회원관리, 서비스 제공·개선, 신규 서비스 개발 등을 위해 이용합니다.\n회원 가입 시 또는 서비스 이용 과정에서 홈페이지 또는 개별 어플리케이션이나 프로그램 등을 통해 아래와 같이 서비스 제공을 위해 필요한 최소한의 개인정보를 수집하고 있습니다.</string>
+    <string name="privacy_policy_use_content2">- 회원 식별/가입의사 확인, 본인/연령 확인, 부정이용 방지\n- 신규 서비스 개발, 다양한 서비스 제공, 문의사항 또는 불만처리, 공지사항 전달\n- 서비스의 원활한 운영에 지장을 주는 행위(계정 도용 및 부정 이용 행위 등 포함)에 대한 방지 및 제재\n- 서비스 이용 기록, 접속 빈도 및 서비스 이용에 대한 통계, 프라이버시 보호 측면의 서비스 환경 구축, 서비스 개선에 활용</string>
+    <string name="privacy_policy_destruction_title">3. 개인정보 파기</string>
+    <string name="privacy_policy_destruction_content1">개인정보는 수집 및 이용목적이 달성되면 지체없이 파기하며, 절차 및 방법은 아래와 같습니다.\n전자적 파일 형태인 경우 복구 및 재생되지 않도록 안전하게 삭제하고, 그 밖에 기록물, 인쇄물, 서면 등의 경우 분쇄하거나 소각하여 파기합니다.</string>
+    <string name="privacy_policy_destruction_content2">다만, 내부 방침에 따라 일정 기간 보관 후 파기하는 정보는 아래와 같습니다.\n1. 아래 정보는 탈퇴일로부터 최대 1년간 보관 후 파기합니다.\n- 안내메일 발송 및 CS 문의 대응을 위해 탈퇴안내 이메일 주소를 보관\n- 서비스 부정이용 기록</string>
+
 </resources>
