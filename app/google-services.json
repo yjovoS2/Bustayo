@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "717894543340",
+    "firebase_url": "https://bustayo-2478f.firebaseio.com",
+    "project_id": "bustayo-2478f",
+    "storage_bucket": "bustayo-2478f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717894543340:android:76747bd8a640f7f3ac42c9",
+        "android_client_info": {
+          "package_name": "com.bhsd.bustayo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717894543340-r28br914s80914gqstlvf9t4fpd6rhse.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaoW4LNuVAWduCBvLZZpvHldT5ILgAk0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717894543340-r28br914s80914gqstlvf9t4fpd6rhse.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -96,7 +96,6 @@ public class RequestServer {
             }
         };
         bus.start();
-        bus.interrupt();
     }
 
 //    public void requestGetOffAlarm(String busRouteId,String mybus, String arsId, final int alarm, String token) {

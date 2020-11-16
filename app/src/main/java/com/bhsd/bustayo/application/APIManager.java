@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class APIManager {
     private static final String CJB_KEY     = "mwvEaAXw6zA%2BTnM5a7W%2F24dpurVReU2rdiVACF8v3oQrY%2Becbbv018iPqZnXId0oqx4cSkUBbQxU1vFjPn62kw%3D%3D";
     private static final String LYJ_KEY     = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
-    private static final String PCJ_KEY     = "DrDQV2LKFLvVgP0AqAR2o3v6q77Cca6dUU4qq4Sc0j9DW%2FUUtdyheGXXUK8VODlDGhCBMdcQLRkSfdvdzJfulQ%3D%3D";
+    private static final String PCJ_KEY     = "m0Oa7AbIFizhCq03rya2SapvO0bHMctYwrKZls8BAUgoHdvVWVuU%2BVhh%2BEiYxtXXVYuJCOPP3DYvFywUzb%2F3Ow%3D%3D";
     private static final String SERVICE_KEY = LYJ_KEY;
 
     private static final String BUS_URL = "http://ws.bus.go.kr/api/rest/";
