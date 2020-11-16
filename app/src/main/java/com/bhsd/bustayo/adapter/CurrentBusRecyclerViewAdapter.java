@@ -15,12 +15,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bhsd.bustayo.MainActivity;
 import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.application.RequestServer;
 import com.bhsd.bustayo.application.SetAlarmDialog;
 import com.bhsd.bustayo.database.ApplicationDB;
 import com.bhsd.bustayo.dto.BookmarkInfo;
 import com.bhsd.bustayo.dto.CurrentBusInfo;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -40,6 +56,8 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
     private ArrayList<String[]> bookmark;
 
     private OnListItemSelected listener = null;
+
+    int alarmStation;
 
     public interface OnListItemSelected {
         void onItemSelected(View v, int position);
@@ -219,8 +237,24 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
             @Override
             public void onClick(View v) {
                 //몇 정류장전에서 알람을 받을지 설정
-                SetAlarmDialog alarmsetting = new SetAlarmDialog();
-                alarmsetting.Dialog(v.getRootView().getContext());
+                final SetAlarmDialog alarmsetting = new SetAlarmDialog();
+                alarmsetting.Dialog(v.getRootView().getContext(), activity, new SetAlarmDialog.DialogListener() {
+                    @Override
+                    public void setAlarm(int data) {
+                        alarmStation = data;
+                        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(activity);
+                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(activity, new OnSuccessListener<InstanceIdResult>() {
+                            @Override
+                            public void onSuccess(InstanceIdResult instanceIdResult) {
+                                String newToken = instanceIdResult.getToken();
+                                String busRouteId = currentBusInfos.get(position).getBusRouteId();
+                                String station = currentBusInfos.get(position).getArsId();
+                                RequestServer requestServer = new RequestServer(activity);
+                                requestServer.requestGetInAlarm(busRouteId, station, alarmStation, newToken);
+                            }
+                        });
+                    }
+                });
             }
         });
     }
