@@ -1,7 +1,6 @@
 package com.bhsd.bustayo.fragment;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.location.LocationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,12 +31,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bhsd.bustayo.MainActivity;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.application.GpsTracker;
+import com.bhsd.bustayo.application.RequestServer;
 import com.bhsd.bustayo.application.SetAlarmDialog;
 import com.bhsd.bustayo.adapter.StationListAdapter;
 import com.bhsd.bustayo.application.APIManager;
 import com.bhsd.bustayo.dto.BusPositions;
 import com.bhsd.bustayo.dto.StationListItem;
-import com.google.gson.internal.$Gson$Preconditions;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +73,8 @@ public class GetOffAlarmFragment extends Fragment {
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSION_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
+    int alarmStation;
 
     @Nullable
     @Override
@@ -152,7 +155,7 @@ public class GetOffAlarmFragment extends Fragment {
                                     slAdapter = new StationListAdapter();
                                     StationListItem stationListItem;
                                     for (HashMap<String, String> map : stationInfo) {
-                                        stationListItem = new StationListItem(map.get("stationNm"), "station", "arsId", busRouteId, routeType, 4, 5, bus);
+                                        stationListItem = new StationListItem(map.get("stationNm"), map.get("station"), map.get("arsId"), busRouteId, routeType, 4, 5, bus);
                                         stationListItem.setSectionId(map.get("section"));
                                         slAdapter.addItem(stationListItem);
                                     }
@@ -187,11 +190,11 @@ public class GetOffAlarmFragment extends Fragment {
                                         public void run() {
                                             Iterator<StationListItem> iter = slAdapter.getList().iterator();
 
-                                            while(iter.hasNext()){
+                                            while (iter.hasNext()) {
                                                 StationListItem stationItem = iter.next();
                                                 if (stationItem.getSectionId().equals(mySectionId)) {
                                                     alarmAdapter.addItem(stationItem);
-                                                    while (iter.hasNext()){
+                                                    while (iter.hasNext()) {
                                                         stationItem = iter.next();
                                                         alarmAdapter.addItem(stationItem);
                                                         alarmAdapter.notifyDataSetChanged();
@@ -218,7 +221,7 @@ public class GetOffAlarmFragment extends Fragment {
                                     @Override
                                     public void run() {
                                         Toast.makeText(getContext(), "매칭에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                                        if(busStation.getVisibility()==View.VISIBLE)
+                                        if (busStation.getVisibility() == View.VISIBLE)
                                             busStation.setVisibility(View.INVISIBLE);
                                     }
                                 });
@@ -234,8 +237,22 @@ public class GetOffAlarmFragment extends Fragment {
             public void onItemSelected(View v, int position) {
 
                 //몇 정류장전에서 알람을 받을지 설정
-                SetAlarmDialog alarmsetting = new SetAlarmDialog();
-                alarmsetting.Dialog(activity);
+                final SetAlarmDialog alarmsetting = new SetAlarmDialog();
+                alarmsetting.Dialog(getContext(), activity, new SetAlarmDialog.DialogListener() {
+                    @Override
+                    public void setAlarm(int data) {
+                        alarmStation = data;
+                        Log.d("마이바스", myBus);
+//                        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(activity);
+//                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(activity, new OnSuccessListener<InstanceIdResult>() {
+//                            @Override
+//                            public void onSuccess(InstanceIdResult instanceIdResult) {
+//                                String newToken = instanceIdResult.getToken();
+//                                //데이터를 가져와서 getout알람으로 보내야행
+//                                RequestServer requestServer = new RequestServer(activity);
+//                                requestServer.requestGetInAlarm(busRouteId, , alarmStation, newToken);
+                    }
+                });
             }
         });
         return view;
