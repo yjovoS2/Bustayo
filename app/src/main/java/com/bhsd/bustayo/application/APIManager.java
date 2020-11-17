@@ -23,8 +23,15 @@ public class APIManager {
     private static final String ROUTE_INFO = BUS_URL + "busRouteInfo/";
     private static final String STATION_INFO_URL = BUS_URL + "stationinfo/";
 
-    /* 서버주소 */
-    public static final String SERVER_URL = "http://118.67.134.138:3000/";
+    /* 서버 */
+    private static final String SERVER_URL = "http://118.67.134.138:3000/"; // 서버주소
+    /* 공지사항 */
+    public static final String GET_NOTICE_LIST = SERVER_URL + "notice/list";    // 공지사항 목록 받아오기
+    /* 회원 */
+    public static final String GET_USER_ID = SERVER_URL + "user/getId?id=";     // 아이디 중복확인
+    public static final String GET_USER_LOGIN = SERVER_URL + "user/login?id=";  // 로그인
+    public static final String JOIN_USER = SERVER_URL + "user/join?id=";        // 회원가입
+
 
     /* 사용할 API url */
     public static final String GET_BUSPOS_BY_RT_ID = BUS_POS_URL + "getBusPosByRtid?serviceKey=" + SERVICE_KEY;

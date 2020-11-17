@@ -3,7 +3,6 @@ package com.bhsd.bustayo.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.EditText;
 
 public class ApplicationDB extends SQLiteOpenHelper {
         public ApplicationDB(Context context) {
@@ -78,7 +77,6 @@ public class ApplicationDB extends SQLiteOpenHelper {
                     "busRouteId VARCHAR(9), " +
                     "arsId VARCHAR(5) ,"+
                     "PRIMARY KEY (busRouteId, arsId))"
-
             );
         }
 
