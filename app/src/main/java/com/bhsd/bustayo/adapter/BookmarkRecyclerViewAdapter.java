@@ -123,7 +123,6 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position,bookmarkInfos.size());
                 //디비에서 삭제
-
             }
         });
     }

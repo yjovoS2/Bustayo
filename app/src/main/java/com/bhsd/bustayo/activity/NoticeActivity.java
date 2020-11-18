@@ -79,10 +79,10 @@ public class NoticeActivity extends AppCompatActivity {
 //        items.add(new NoticeItem("2020.8 버전 업데이트", "2020-08-07", "2020.8 버전이 업데이트 되었습니다.\n지금 바로 업데이트 해주세요!!\n\n작성자:이예진"));
 //        items.add(new NoticeItem("2020.7 버전 업데이트", "2020-07-07", "2020.7 버전이 업데이트 되었습니다.\n지금 바로 업데이트 해주세요!!\n\n작성자:이예진"));
 
-        String result = "";
+        String result_msg = "";
         try {
             // Open the connection
-            URL url = new URL(APIManager.SERVER_URL);
+            URL url = new URL(APIManager.GET_NOTICE_LIST);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             InputStream is = conn.getInputStream();
@@ -96,12 +96,13 @@ public class NoticeActivity extends AppCompatActivity {
             }
 
             // Set the result
-            result = builder.toString();
+            result_msg = builder.toString();
 
-            JSONObject base = new JSONObject(result);
-            JSONArray jsonArray = (JSONArray) base.get("items");
-            for(int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
+            JSONObject base = new JSONObject(result_msg);
+            JSONObject result = (JSONObject) base.get("result");
+            JSONArray array = (JSONArray) result.get("rows");
+            for(int i = 0; i < array.length(); i++) {
+                JSONObject obj = (JSONObject) array.get(i);
                 NoticeItem item = new NoticeItem(obj.getString("title"), obj.getString("date"), obj.getString("content"));
                 items.add(item);
             }

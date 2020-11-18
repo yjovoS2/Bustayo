@@ -3,6 +3,7 @@ package com.bhsd.bustayo.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,9 +12,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.application.APIManager;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
+    boolean loginState;
     EditText edID, edPasswd;
     Button loginButton, loginNaver, loginKakao, loginGoogle, loginGuest;
     String userID, userPasswd;
@@ -46,52 +57,41 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 userID = edID.getText().toString();
                 userPasswd = edPasswd.getText().toString();
-//                //결과를 처리하는 부분
-//                Response.Listener listener = new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jResponse = new JSONObject(response);
-//                            boolean iD = jResponse.getBoolean("checkID");
-//                            boolean passWD = jResponse.getBoolean("checkPW");
-//                            //return값이 true이면 기존에 없는 아이디 false면 기존에 있는 아이디
-//                            if(iD&&passWD){
-//                                //로그인 이후동작
-//                            }else {
-//                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-//                                AlertDialog dialog = builder.setMessage("아이디나 비밀번호가 잘못되었습니다.").setNegativeButton("확인", null).create();
-//                                dialog.show();
-//                            }
-//                        }catch (Exception e){
-//                            Log.d("mytest",e.toString());
-//                        }
-//                    }
-//                };
-//
-//                ValidateRequest vRequest = new ValidateRequest(userID, userPasswd,listener);
-//                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-//                queue.add(vRequest);
-                //서버 연동
 
-                //test용
+                new Thread() {
+                    @Override
+                    public void run() {
+                        synchronized ((Object) loginState) {
+                            getDB();
+                        }
 
-                if(userID.equals("test")&&userPasswd.equals("1111")) {
-                    login.putExtra("userID",userID);
+                        synchronized ((Object) loginState) {
+                            if(!loginState) {
+                                login.putExtra("userID",userID);
 
-                    /* 성공한 로그인 정보를 SharedPreferences에 저장 */
-                    SharedPreferences loginInfo = getSharedPreferences("setting", 0);
-                    SharedPreferences.Editor editor = loginInfo.edit();
-                    editor.putString("id", userID);
-                    editor.putString("password", userPasswd);
-                    editor.apply();
+                                /* 성공한 로그인 정보를 SharedPreferences에 저장 */
+                                SharedPreferences loginInfo = getSharedPreferences("setting", 0);
+                                SharedPreferences.Editor editor = loginInfo.edit();
+                                editor.putString("id", userID);
+                                editor.putString("password", userPasswd);
+                                editor.apply();
 
-                    setResult(RESULT_OK, login);
-                    finish();
-                }
-                else
-                {
-                    Toast.makeText(LoginActivity.this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                }
+                                setResult(RESULT_OK, login);
+                                finish();
+                            } else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(LoginActivity.this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+
+                        interrupt();
+                    }
+                }.start();
+
 
 
             }
@@ -128,5 +128,34 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    void getDB() {
+        String result_msg = "";
+        try {
+            // Open the connection
+            URL url = new URL(APIManager.GET_USER_ID + userID + "&pw=" + userPasswd);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            InputStream is = conn.getInputStream();
+
+            // Get the stream
+            StringBuilder builder = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+
+            // Set the result
+            result_msg = builder.toString();
+
+            JSONObject base = new JSONObject(result_msg);
+            JSONObject result = (JSONObject) base.get("result");
+            loginState = result.getInt("rowCount") == 0;
+
+        } catch (Exception e) {
+            Log.e("yj", ""+e);
+        }
     }
 }
