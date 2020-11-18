@@ -43,7 +43,7 @@ public class SetAlarmDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //알림 설정해주기
-                Toast.makeText(context, selectedItem.get(0) + "정류장 전으로 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "알림이 설정되었습니다.", Toast.LENGTH_SHORT).show();
                 dialogListener.setAlarm(selectedItem.get(0));
             }
         });

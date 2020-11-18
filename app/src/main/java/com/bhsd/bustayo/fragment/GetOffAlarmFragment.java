@@ -234,7 +234,7 @@ public class GetOffAlarmFragment extends Fragment {
 
         alarmAdapter.setOnListItemSelected(new StationListAdapter.OnListItemSelected() {
             @Override
-            public void onItemSelected(View v, int position) {
+            public void onItemSelected(View v, final int position) {
 
                 //몇 정류장전에서 알람을 받을지 설정
                 final SetAlarmDialog alarmsetting = new SetAlarmDialog();
@@ -242,15 +242,16 @@ public class GetOffAlarmFragment extends Fragment {
                     @Override
                     public void setAlarm(int data) {
                         alarmStation = data;
-                        Log.d("마이바스", myBus);
-//                        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(activity);
-//                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(activity, new OnSuccessListener<InstanceIdResult>() {
-//                            @Override
-//                            public void onSuccess(InstanceIdResult instanceIdResult) {
-//                                String newToken = instanceIdResult.getToken();
-//                                //데이터를 가져와서 getout알람으로 보내야행
-//                                RequestServer requestServer = new RequestServer(activity);
-//                                requestServer.requestGetInAlarm(busRouteId, , alarmStation, newToken);
+                        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(activity);
+                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(activity, new OnSuccessListener<InstanceIdResult>() {
+                            @Override
+                            public void onSuccess(InstanceIdResult instanceIdResult) {
+                                String newToken = instanceIdResult.getToken();
+                                //데이터를 가져와서 getout알람으로 보내야행
+                                RequestServer requestServer = new RequestServer(activity);
+                                requestServer.requestGetOffAlarm(alarmAdapter.getList().get(position).getRouteId(),alarmAdapter.getList().get(position).getArsId() , myBus , alarmStation, newToken, position);
+                            }
+                        });
                     }
                 });
             }
