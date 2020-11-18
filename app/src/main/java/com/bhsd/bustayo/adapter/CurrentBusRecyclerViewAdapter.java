@@ -1,11 +1,9 @@
 package com.bhsd.bustayo.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.bhsd.bustayo.MainActivity;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.application.RequestServer;
 import com.bhsd.bustayo.application.SetAlarmDialog;
@@ -31,12 +21,8 @@ import com.bhsd.bustayo.dto.BookmarkInfo;
 import com.bhsd.bustayo.dto.CurrentBusInfo;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -167,17 +153,26 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
         // ---------------------------------------------------------------------
 
 //  혼잡도
-//        int BusCongestion = Integer.parseInt(currentBusInfos.get(position).getBusCongestion());
+        int BusCongestion = Integer.parseInt(currentBusInfos.get(position).getBusCongestion());
         String color = "#";
-//
-//        if(BusCongestion >= 0 &&BusCongestion <=10)
-//            color = "#70BF70";
-//        else if (BusCongestion <= 20)
-//            color = "#F8E95F";
-//        else
-//            color = "#D16969";
-//
-//        holder.busCongested.setColorFilter(Color.parseColor(color));
+
+        switch (BusCongestion) {
+            case 0: // 데이터 없음
+            case 3: // 여유
+                color = "#70BF70";
+                break;
+            case 4: // 보통
+                color = "#F8E95F";
+                break;
+            case 5: // 혼잡
+            case 6:
+                color = "#D16969";
+                break;
+            default:
+                color = "#AAAAAA";
+        }
+
+        holder.busCongested.setColorFilter(Color.parseColor(color));
 
         int buscolor = Integer.parseInt(currentBusInfos.get(position).getBusColor());
         switch (buscolor) {

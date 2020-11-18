@@ -43,6 +43,7 @@
         android:layout_marginStart="20dp"
         android:contentDescription="버스정류장 아이콘"
         android:src="@drawable/ic_busstop"
+        android:tint="#DDDDDD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

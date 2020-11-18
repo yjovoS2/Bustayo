@@ -1,14 +1,10 @@
 package com.bhsd.bustayo.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.adapter.StationListAdapter;
 import com.bhsd.bustayo.application.APIManager;
-import com.bhsd.bustayo.database.ApplicationDB;
 import com.bhsd.bustayo.dto.StationListItem;
 
 import java.util.ArrayList;
@@ -116,13 +111,13 @@ public class StationListActivity extends AppCompatActivity {
             if(i == 0) {
                 previous = getColor(R.color.invisible);
             } else {
-                previous = Color.DKGRAY;
+                previous = getColor(R.color.colorNormalLight);
             }
 
             if(i == item.size() -1) {
                 next = getColor(R.color.invisible);
             } else {
-                next = Color.DKGRAY;
+                next = getColor(R.color.colorNormalLight);
             }
 
             StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("station"), item.get(i).get("arsId"), busId, busType, previous, next, bus);

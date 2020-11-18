@@ -92,7 +92,7 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
         holder.currnetBusInfo.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         holder.currnetBusInfo.setAdapter(adapter);
         holder.busStopName.setText(bookmarkInfos.get(position).getBusStopName());
-        holder.drawer.setImageResource(R.drawable.ic_drawer_down);
+        holder.drawer.setImageResource(R.drawable.ic_up);
         //holder.bookmark_button.setColorFilter(currentBusInfos.get(position).getBusColor()); 로 색 바꿔줘야하는데 내용 바꿔여함
 
         adapter.setOnListItemSelected(new CurrentBusRecyclerViewAdapter.OnListItemSelected() {
@@ -109,10 +109,13 @@ public class BookmarkRecyclerViewAdapter extends RecyclerView.Adapter<BookmarkRe
         holder.drawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.currnetBusInfo.getVisibility()!=View.VISIBLE)
+                if(holder.currnetBusInfo.getVisibility()!=View.VISIBLE) {
                     holder.currnetBusInfo.setVisibility(View.VISIBLE);
-                else
+                    holder.drawer.setImageResource(R.drawable.ic_up);
+                } else {
                     holder.currnetBusInfo.setVisibility(View.GONE);
+                    holder.drawer.setImageResource(R.drawable.ic_down);
+                }
             }
         });
 

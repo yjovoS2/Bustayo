@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/button_gray"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ffffff"
     android:layout_marginTop="10dp">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -22,6 +22,6 @@
         android:layout_margin="20dp"
         android:src="@drawable/ic_refresh"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />l
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

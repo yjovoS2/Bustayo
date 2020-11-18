@@ -5,9 +5,8 @@
     android:id="@+id/current_businfo"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="8dp"
-    android:layout_marginBottom="8dp"
     android:orientation="horizontal"
-    android:background="@drawable/button_round">
+    android:background="@drawable/background_rect" >
 
     <ImageView
         android:id="@+id/bus_bookmark"
@@ -42,8 +41,8 @@
         android:id="@+id/bus_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        app:layout_constraintHorizontal_weight="49"
+        android:layout_marginStart="10dp"
+        app:layout_constraintHorizontal_weight="4"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/busCongested"
@@ -54,9 +53,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"
             android:ems="5"
             android:text="버스 번호"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/bus_destination"
@@ -74,7 +74,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        app:layout_constraintHorizontal_weight="51"
+        app:layout_constraintHorizontal_weight="6"
         app:layout_constraintLeft_toRightOf="@+id/bus_info"
         app:layout_constraintRight_toLeftOf="@+id/bus_alarm"
         app:layout_constraintTop_toTopOf="parent"
@@ -89,7 +89,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bus_second"
             android:text="도착 시간1"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:ems="14"/>
 
         <TextView

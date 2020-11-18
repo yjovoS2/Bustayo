@@ -2,13 +2,9 @@ package com.bhsd.bustayo.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +19,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bhsd.bustayo.MainActivity;
-import com.bhsd.bustayo.database.ApplicationDB;
-import com.bhsd.bustayo.dto.CurrentBusInfo;
-import com.bhsd.bustayo.adapter.CurrentBusRecyclerViewAdapter;
 import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.adapter.CurrentBusRecyclerViewAdapter;
 import com.bhsd.bustayo.application.APIManager;
+import com.bhsd.bustayo.dto.CurrentBusInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +56,7 @@ public class StationActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion1","routeType","arrmsg1","arrmsg2"});
+                busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -83,7 +77,7 @@ public class StationActivity extends AppCompatActivity {
                 new Thread() {
                     @Override
                     public void run() {
-                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion1","routeType","arrmsg1","arrmsg2"});
+                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -161,14 +155,17 @@ public class StationActivity extends AppCompatActivity {
     int getCongestionColor(int congestion) {
         int color = getColor(R.color.import_error);
         switch(congestion) {
+            case 0: // 데이터 없음
             case 3: // 여유
                 color = getColor(R.color.busy_empty);
+                break;
             case 4: // 보통
                 color = getColor(R.color.busy_half);
+                break;
             case 5: // 혼잡
             case 6:
                 color = getColor(R.color.busy_full);
-            case 0: // 데이터 없음
+                break;
             default:
         }
         return color;

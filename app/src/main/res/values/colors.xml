@@ -36,4 +36,8 @@
     <color name="kakao">#FD0</color>
     <color name="google">#D00</color>
 
+    <!-- 메인 -->
+    <color name="text">#FFFFFF</color>
+    <color name="bg">#B9D8B4ED</color>
+
 </resources>

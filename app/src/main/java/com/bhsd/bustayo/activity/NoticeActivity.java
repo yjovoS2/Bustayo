@@ -56,10 +56,15 @@ public class NoticeActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                getItem();
+                items = new ArrayList<>();
+                synchronized (items) {
+                    getItem();
+                }
+                synchronized (items) {
+                    setAdapter();
+                }
             }
         }.start();
-        setAdapter();
     }
 
     void setAdapter() {
@@ -69,16 +74,6 @@ public class NoticeActivity extends AppCompatActivity {
     }
 
     void getItem() {
-        items = new ArrayList<>();
-
-//        items.add(new NoticeItem("2020.11 버전 업데이트", "2020-11-07", "2020.11 버전이 업데이트 되었습니다.\n지금 바로 업데이트 해주세요!!\n\n작성자:이예진"));
-//        items.add(new NoticeItem("2020.10 버전 업데이트", "2020-10-07", "2020.10 버전이 업데이트 되었습니다.\n지금 바로 업데이트 해주세요!!\n\n작성자:이예진"));
-//        items.add(new NoticeItem("2020.9.2 버전 업데이트", "2020-09-27", "2020.9.2 버전이 업데이트 되었습니다.\n지금 바로 업데이트 해주세요!!\n\n작성자:이예진"));
-//        items.add(new NoticeItem("2020.9.1 버전 업데이트", "2020-09-17", "2020.9.1 버전이 업데이트 되었습니다.\n지금 바로 업데이트 해주세요!!\n\n작성자:이예진"));
-//        items.add(new NoticeItem("2020.9 버전 업데이트", "2020-09-07", "2020.9 버전이 업데이트 되었습니다.\n지금 바로 업데이트 해주세요!!\n\n작성자:이예진"));
-//        items.add(new NoticeItem("2020.8 버전 업데이트", "2020-08-07", "2020.8 버전이 업데이트 되었습니다.\n지금 바로 업데이트 해주세요!!\n\n작성자:이예진"));
-//        items.add(new NoticeItem("2020.7 버전 업데이트", "2020-07-07", "2020.7 버전이 업데이트 되었습니다.\n지금 바로 업데이트 해주세요!!\n\n작성자:이예진"));
-
         String result_msg = "";
         try {
             // Open the connection
@@ -103,7 +98,7 @@ public class NoticeActivity extends AppCompatActivity {
             JSONArray array = (JSONArray) result.get("rows");
             for(int i = 0; i < array.length(); i++) {
                 JSONObject obj = (JSONObject) array.get(i);
-                NoticeItem item = new NoticeItem(obj.getString("title"), obj.getString("date"), obj.getString("content"));
+                NoticeItem item = new NoticeItem(obj.getString("title"), obj.getString("date").split("T")[0], obj.getString("content"));
                 items.add(item);
             }
         } catch (Exception e) {

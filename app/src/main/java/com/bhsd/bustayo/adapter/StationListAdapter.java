@@ -160,6 +160,7 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
         int getCongestionColor(int congestion) {
             int color_id;
             switch(congestion) {
+                case 0: // 데이터 없음
                 case 3: // 여유
                     color_id = R.color.busy_empty;
                     break;
@@ -170,7 +171,6 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
                 case 6:
                     color_id = R.color.busy_full;
                     break;
-                case 0: // 데이터 없음
                 default:
                     color_id = R.color.import_error;
             }

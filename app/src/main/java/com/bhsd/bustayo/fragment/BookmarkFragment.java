@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,17 +22,12 @@ import com.bhsd.bustayo.MainActivity;
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.activity.StationActivity;
 import com.bhsd.bustayo.adapter.BookmarkRecyclerViewAdapter;
-import com.bhsd.bustayo.adapter.ComplaintRecyclerAdapter;
-import com.bhsd.bustayo.adapter.CurrentBusRecyclerViewAdapter;
-import com.bhsd.bustayo.adapter.StationListAdapter;
 import com.bhsd.bustayo.application.APIManager;
 import com.bhsd.bustayo.database.ApplicationDB;
 import com.bhsd.bustayo.dto.BookmarkInfo;
 import com.bhsd.bustayo.dto.CurrentBusInfo;
-import com.bhsd.bustayo.dto.StationListItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -91,7 +85,7 @@ public class BookmarkFragment extends Fragment {
                 @Override
                 public void run() {
                     for (String bookmarkstation : bookmarkBusStation) {
-                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{bookmarkstation}, new String[]{"adirection", "arsId", "stNm", "busRouteId", "rtNm", "rerideNum1", "routeType", "arrmsg1", "arrmsg2"});
+                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{bookmarkstation}, new String[]{"adirection", "arsId", "stNm", "busRouteId", "rtNm", "congestion", "routeType", "arrmsg1", "arrmsg2"});
                         String busStationName = "";
                         String arsId = "";
                         String stNm = "";
@@ -102,7 +96,7 @@ public class BookmarkFragment extends Fragment {
                                     busStationName = map.get("rtNm");
                                     arsId = map.get("arsId");
                                     stNm = map.get("stNm");
-                                    crbuslist.add(new CurrentBusInfo(map.get("busRouteId"), map.get("routeType"), map.get("rerideNum1"), busStationName, map.get("adirection"), map.get("arrmsg1"), map.get("arrmsg2"), true, map.get("arsId")));
+                                    crbuslist.add(new CurrentBusInfo(map.get("busRouteId"), map.get("routeType"), map.get("congestion"), busStationName, map.get("adirection"), map.get("arrmsg1"), map.get("arrmsg2"), true, map.get("arsId")));
                                 }
                             }
                         }

@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean loginState;
     EditText edID, edPasswd;
-    Button loginButton, loginNaver, loginKakao, loginGoogle, loginGuest;
+    Button loginButton, joinButton;
     String userID, userPasswd;
     Intent login;
 
@@ -40,10 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         edID = findViewById(R.id.editID);
         edPasswd = findViewById(R.id.editPASSWD);
         loginButton = findViewById(R.id.loginButton);
-        loginNaver = findViewById(R.id.loginNaver);
-        loginKakao = findViewById(R.id.loginKakao);
-        loginGoogle = findViewById(R.id.loginGoogle);
-        loginGuest = findViewById(R.id.loginGuest);
+        joinButton = findViewById(R.id.join);
 
         findViewById(R.id.searchGoBack).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,31 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginNaver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //네이버 api연동
-                Toast.makeText(LoginActivity.this, "네이버 연동 필요", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        loginKakao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //카카오 api연동
-                Toast.makeText(LoginActivity.this, "카카오 연동 필요", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        loginGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //구글 api연동
-                Toast.makeText(LoginActivity.this, "구글 연동 필요", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        loginGuest.setOnClickListener(new View.OnClickListener() {
+        joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
