@@ -159,7 +159,7 @@ public class RequestServer {
                         //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
                         @Override
                         public void onResponse(JSONObject response) {
-
+                            //응답
                         }
                         //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
                     }, new Response.ErrorListener() {

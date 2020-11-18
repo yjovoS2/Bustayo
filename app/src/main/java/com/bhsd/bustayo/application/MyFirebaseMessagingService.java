@@ -54,7 +54,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         //여기서 FCM메시지 핸들링
-        Log.d("어디서오니?", "From : " + remoteMessage.getFrom());
 
         //푸시알림 메시지 분기
         //putData를 사용했을 때 data가져오기
@@ -62,7 +61,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d("메시지 데이타 페이로드", "Message data payload : " + remoteMessage.getData());
             title = remoteMessage.getData().get("title");
 
-            Log.d("받은데이터", "title : " + title);
 
 //            if (/*10초가 넘어가는 작업*/ true) {
 //                scheduleJob();
@@ -103,7 +101,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void handleNow(){
-        Log.d("끄읕?", "Short live task is done");
     }
 
     private void sendRegistrationToServer(String token){
