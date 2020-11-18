@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +34,8 @@ public class LostGoodsActivity extends AppCompatActivity {
     RecyclerView lgRecyclerView;
     LostGoodsAdapter lgAdapter;
     FloatingActionButton goUp;
+    View loading_background;
+    ProgressBar loading_progressBar;
     int page = 0;
     String searchStr = "";
 
@@ -53,14 +56,18 @@ public class LostGoodsActivity extends AppCompatActivity {
         searchLostGoods = findViewById(R.id.userLostGoods);
         lgRecyclerView = findViewById(R.id.lostList);
         goUp = findViewById(R.id.goUp);
+        loading_background = findViewById(R.id.loading_bg);
+        loading_progressBar = findViewById(R.id.loading_progress);
 
 
         lgRecyclerView.setHasFixedSize(true);
         lgRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         lgRecyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onScrollChange(final View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (!v.canScrollVertically(1)) {    // 스크롤이 마지막에 닿았으면?
+                    loading_background.setVisibility(View.VISIBLE);
+                    loading_progressBar.setVisibility(View.VISIBLE);
                     new Thread() {
                         @Override
                         public void run() {
@@ -68,22 +75,26 @@ public class LostGoodsActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    setAdapter();       // 어댑터 다시 설정!!!!!!!
+                                    lgAdapter.notifyDataSetChanged();
+                                    loading_background.setVisibility(View.GONE);
+                                    loading_progressBar.setVisibility(View.GONE);
                                 }
                             });
+
+                            interrupt();
                         }
                     }.start();
                 }
             }
         });
-        // TODO data 불러오고 현재 스크롤 되어있는 위치로 다시 이동???? 어떻게?????
-        //      api 받아올 때까지 기다리는동안 대기중인걸 나타내게
 
         // 검색버튼 클릭
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 page = 0;   // 새롭게 검색버튼이 눌렸으니 페이지를 0페이지로
+                loading_background.setVisibility(View.VISIBLE);
+                loading_progressBar.setVisibility(View.VISIBLE);
                 new Thread() {
                     @Override
                     public void run() {
@@ -94,8 +105,12 @@ public class LostGoodsActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 setAdapter();
+                                loading_background.setVisibility(View.GONE);
+                                loading_progressBar.setVisibility(View.GONE);
                             }
                         });
+
+                        interrupt();
                     }
                 }.start();
             }
@@ -110,14 +125,20 @@ public class LostGoodsActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
+                loading_background.setVisibility(View.VISIBLE);
+                loading_progressBar.setVisibility(View.VISIBLE);
                 getData();
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         setAdapter();
+                        loading_background.setVisibility(View.GONE);
+                        loading_progressBar.setVisibility(View.GONE);
                     }
                 });
+
+                interrupt();
             }
         }.start();
 

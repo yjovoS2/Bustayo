@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class LostGoodsAdapter extends RecyclerView.Adapter<LostGoodsAdapter.LGViewHolder>{
 
-    ArrayList<LostGoodsInfo> lostGoodsInfos;
+    private ArrayList<LostGoodsInfo> lostGoodsInfos;
     private LostGoodsAdapter.OnListItemSelected listener = null;
 
     public LostGoodsAdapter(ArrayList<LostGoodsInfo> lostGoodsInfos) {
