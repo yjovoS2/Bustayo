@@ -12,20 +12,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.R;
-import com.bhsd.bustayo.dto.NoticeItem;
+import com.bhsd.bustayo.dto.HelpItem;
 
 import java.util.ArrayList;
 
-public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHolder> {
+public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.ItemViewHolder> {
 
-    private ArrayList<NoticeItem> list;
+    private ArrayList<HelpItem> items;
 
-    public NoticeAdapter() {
-        list = new ArrayList<>();
+    public HelpAdapter() {
+        items = new ArrayList<>();
     }
 
-    public NoticeAdapter(ArrayList<NoticeItem> noticeItems) {
-        list = noticeItems;
+    public HelpAdapter(ArrayList<HelpItem> helpItems) {
+        items = helpItems;
     }
 
     @NonNull
@@ -38,24 +38,24 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        holder.onBind(list.get(position));
+        holder.onBind(items.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return items.size();
     }
 
-    public void addItem(NoticeItem item) {
-        list.add(item);
+    public void addItem(HelpItem item) {
+        items.add(item);
     }
 
-    public ArrayList<NoticeItem> getList() {
-        return list;
+    public ArrayList<HelpItem> getItems() {
+        return items;
     }
 
     public void clearList() {
-        this.list.clear();
+        this.items.clear();
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -77,7 +77,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(content.getVisibility() == View.GONE) {
+                    if (content.getVisibility() == View.GONE) {
                         dropdown.setImageResource(R.drawable.ic_up);
                         content.setVisibility(View.VISIBLE);
                     } else {
@@ -88,10 +88,11 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHo
             });
         }
 
-        void onBind(NoticeItem item) {
+        void onBind(HelpItem item) {
             title.setText(item.getTitle());
             date.setText(item.getDate());
             content.setText(item.getContent());
         }
+
     }
 }

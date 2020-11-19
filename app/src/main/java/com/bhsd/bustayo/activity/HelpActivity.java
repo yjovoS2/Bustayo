@@ -1,7 +1,6 @@
 package com.bhsd.bustayo.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -10,33 +9,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.R;
-import com.bhsd.bustayo.adapter.NoticeAdapter;
-import com.bhsd.bustayo.application.APIManager;
-import com.bhsd.bustayo.dto.NoticeItem;
+import com.bhsd.bustayo.adapter.HelpAdapter;
+import com.bhsd.bustayo.dto.HelpItem;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-public class NoticeActivity extends AppCompatActivity {
-
-    ArrayList<NoticeItem> items;
+public class HelpActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    NoticeAdapter adapter;
+    HelpAdapter adapter;
+    ArrayList<HelpItem> items;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice);
-
-        recyclerView = findViewById(R.id.notice_recycler);
+        setContentView(R.layout.activity_help);
 
         init();
     }
@@ -44,7 +31,12 @@ public class NoticeActivity extends AppCompatActivity {
     void init() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        recyclerView = findViewById(R.id.help_recyclerview);
+
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        setAdapter();
 
         findViewById(R.id.searchGoBack).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,13 +44,13 @@ public class NoticeActivity extends AppCompatActivity {
                 finish();
             }
         });
-        setAdapter();
+
         new Thread() {
             @Override
             public void run() {
-                synchronized (items) {
-                    getItem();
-                }
+
+                getItem();
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -71,15 +63,20 @@ public class NoticeActivity extends AppCompatActivity {
 
     void setAdapter() {
         items = new ArrayList<>();
-        adapter = new NoticeAdapter(items);
+        adapter = new HelpAdapter(items);
         recyclerView.setAdapter(adapter);
     }
 
     void getItem() {
-        String result_msg = "";
+        for(int i = 1; i < 10; i++) {
+            HelpItem item = new HelpItem("test title" + i, "2020-11-0" + i, "content" + i);
+            items.add(item);
+        }
+
+
+        /*String result_msg = "";
         try {
-            // Open the connection
-            URL url = new URL(APIManager.GET_NOTICE_LIST);
+            URL url = new URL(APIManager.GET_HELP_LIST);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             InputStream is = conn.getInputStream();
@@ -100,11 +97,12 @@ public class NoticeActivity extends AppCompatActivity {
             JSONArray array = (JSONArray) result.get("rows");
             for(int i = 0; i < array.length(); i++) {
                 JSONObject obj = (JSONObject) array.get(i);
-                NoticeItem item = new NoticeItem(obj.getString("title"), obj.getString("date").split("T")[0], obj.getString("content"));
+                HelpItem item = new HelpItem(obj.getString("title"), obj.getString("date").split("T")[0], obj.getString("content"));
                 items.add(item);
             }
         } catch (Exception e) {
             Log.e("yj", ""+e);
-        }
+        }*/
+
     }
 }

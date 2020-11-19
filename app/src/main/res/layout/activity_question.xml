@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/searchGoBack"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_go_back"
+            android:backgroundTint="@color/colorAccent"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/question_toolbar_title"
+            android:textSize="18sp"
+            android:textColor="#aa777777"
+            android:paddingStart="15dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp">
+
+            <EditText
+                android:id="@+id/question_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/question_user_name"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:nextFocusDown="@id/question_user_email"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/addComplaintContent"/>
+
+            <EditText
+                android:id="@+id/question_user_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLength="20"
+                android:hint="@string/question_user_email"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/question_user_name"
+                app:layout_constraintRight_toLeftOf="@id/at"
+                style="@style/addComplaintContent"/>
+
+            <TextView
+                android:id="@+id/at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_at"
+                app:layout_constraintTop_toTopOf="@id/question_user_email"
+                app:layout_constraintBottom_toBottomOf="@id/question_user_email"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <Spinner
+                android:id="@+id/question_user_email_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="15dp"
+                android:textSize="15sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/question_user_name"
+                app:layout_constraintLeft_toRightOf="@id/at"
+                app:layout_constraintBottom_toBottomOf="@id/question_user_email" />
+
+
+            <EditText
+                android:id="@+id/question_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="18dp"
+                android:padding="15dp"
+                android:lines="10"
+                android:gravity="top"
+                android:hint="@string/question_content"
+                android:textSize="15sp"
+                android:textColor="@color/colorNormalDark"
+                android:textColorHint="@color/colorNormal"
+                android:background="@drawable/search_border"
+                app:layout_constraintTop_toBottomOf="@id/question_user_email"/>
+
+            <TextView
+                android:id="@+id/question_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/complaint_notice"
+                app:layout_constraintTop_toBottomOf="@id/question_content"
+                style="@style/addComplaintInfo"/>
+
+            <TextView
+                android:id="@+id/question_note_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="18dp"
+                android:padding="15dp"
+                android:text="@string/question_notice_content"
+                android:textSize="12sp"
+                android:textColor="@color/colorNormalDark"
+                android:background="@drawable/search_border"
+                app:layout_constraintTop_toBottomOf="@id/question_note"/>
+
+            <Button
+                android:id="@+id/question_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/question_commit"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/colorAccent"
+                app:layout_constraintTop_toBottomOf="@id/question_note_content"
+                style="@style/addComplaintInfo"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

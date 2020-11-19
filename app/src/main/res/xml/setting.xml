@@ -9,11 +9,6 @@
             android:defaultValue="30"
             android:entries="@array/refresh_time"
             android:entryValues="@array/refresh_time_value" />
-        <ListPreference
-            android:key="set_sound"
-            android:title="알림음 설정"
-            android:summary="0"
-            android:defaultValue="0" />
 
 
     <PreferenceCategory android:title="개인정보" />
@@ -36,10 +31,10 @@
 
     <PreferenceCategory android:title="고객지원" />
         <Preference
-            android:key="question"
+            android:key="help"
             android:title="도움말" />
         <Preference
-            android:key="complaint"
+            android:key="question"
             android:title="문의하기" />
 
 </PreferenceScreen>

@@ -13,16 +13,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.bhsd.bustayo.R;
+import com.bhsd.bustayo.activity.HelpActivity;
 import com.bhsd.bustayo.activity.InformationProvider;
 import com.bhsd.bustayo.activity.LoginActivity;
 import com.bhsd.bustayo.activity.PrivacyPolicy;
+import com.bhsd.bustayo.activity.QuestionActivity;
 
 public class SettingFragment extends PreferenceFragment {
 
-    ListPreference auto_refresh, set_sound;
+    ListPreference auto_refresh;
     Preference account_info;
     Preference privacy_policy, information_provider, open_source;
-    Preference question, complaint;
+    Preference help, question;
     boolean login_state;
 
     @Override
@@ -38,13 +40,6 @@ public class SettingFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 preference.setSummary("" + newValue + "초");
-                return true;
-            }
-        });
-        set_sound = (ListPreference) findPreference("set_sound");
-        set_sound.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
                 return true;
             }
         });
@@ -125,19 +120,21 @@ public class SettingFragment extends PreferenceFragment {
 
 
         /* 고객지원 */
+        help = findPreference("help");
+        help.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(getContext(), HelpActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
         question = findPreference("question");
         question.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), preference.getTitle(), Toast.LENGTH_LONG).show();
-                return true;
-            }
-        });
-        complaint = findPreference("complaint");
-        complaint.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), preference.getTitle(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getContext(), QuestionActivity.class);
+                startActivity(intent);
                 return true;
             }
         });

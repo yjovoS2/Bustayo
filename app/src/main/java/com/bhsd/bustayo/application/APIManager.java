@@ -27,6 +27,10 @@ public class APIManager {
     private static final String SERVER_URL = "http://118.67.134.138:3000/"; // 서버주소
     /* 공지사항 */
     public static final String GET_NOTICE_LIST = SERVER_URL + "notice/list";    // 공지사항 목록 받아오기
+    /* 도움말 */
+    public static final String GET_HELP_LIST = SERVER_URL + "help/list";
+    /* 문의(메일전송) */
+    public static final String SEND_MAIL = SERVER_URL + "mail/sendMail";
     /* 회원 */
     public static final String GET_USER_ID = SERVER_URL + "user/getId?id=";     // 아이디 중복확인
     public static final String GET_USER_LOGIN = SERVER_URL + "user/login?id=";  // 로그인
