@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.dto.BusInfo;
@@ -39,10 +40,11 @@ public class BusInfoActivity extends AppCompatActivity {
         busId = inIntent.getStringExtra("busRouteId");
         busType = inIntent.getIntExtra("routeType", 0);
 
-        bus_service_section = findViewById(R.id.bus_service_section_content);
-        bus_service_time_weekday = findViewById(R.id.weekday_time);
-        bus_service_time_weekend = findViewById(R.id.weekend_time);
-        bus_interval = findViewById(R.id.bus_interval);
+        ConstraintLayout layout = findViewById(R.id.layout);
+        bus_service_section = layout.findViewById(R.id.bus_service_section_content);
+        bus_service_time_weekday = layout.findViewById(R.id.weekday_time);
+        bus_service_time_weekend = layout.findViewById(R.id.weekend_time);
+        bus_interval = layout.findViewById(R.id.bus_interval);
 
         new Thread() {
             @Override
@@ -50,7 +52,7 @@ public class BusInfoActivity extends AppCompatActivity {
                 busInfo = new BusInfo(busId);
 
                 final String time = busInfo.getBusInfoItem("beginTm") + " ~ " + busInfo.getBusInfoItem("lastTm");
-                setBusServiceSection(busInfo.getBusInfoItem("edStationNm") + " ~ " + busInfo.getBusInfoItem("stStationNm"));
+                setBusServiceSection(busInfo.getBusInfoItem("edStationNm") + " ↔ " + busInfo.getBusInfoItem("stStationNm"));
                 setBusServiceInterval(busInfo.getBusInfoItem("term") + " 분");
                 runOnUiThread(new Runnable() {
                     @Override

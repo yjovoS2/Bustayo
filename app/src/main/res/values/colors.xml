@@ -27,6 +27,7 @@
     <!--배경색 관련-->
     <color name="button_gray">#f0f0f0</color>
     <color name="background_gray">#d0d0d0</color>
+    <color name="background_gray_alph">#74D0D0D0</color>
 
     <!-- 정류장 -->
     <color name="station">#303B51</color>
