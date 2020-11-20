@@ -39,6 +39,11 @@ public class SettingFragment extends PreferenceFragment {
         auto_refresh.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
+                SharedPreferences refreshSec = getActivity().getSharedPreferences("setting", 0);
+                SharedPreferences.Editor editor = refreshSec.edit();
+                editor.putInt("refresh", Integer.parseInt((String) newValue) * 1000);
+                editor.apply();
+
                 preference.setSummary("" + newValue + "초");
                 return true;
             }

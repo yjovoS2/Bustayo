@@ -6,9 +6,10 @@ import java.util.HashMap;
 public class StationListItem {
     private String stationName, stationId, arsId, routeId, sectionId;
     private int previous, next, busType;
-    private ArrayList<HashMap<String,String>> bus;
+    private ArrayList<HashMap<String, String>> bus;
 
-    public StationListItem(String stationName, String stationId, String arsId, String routeId, int busType, int previous, int next, ArrayList<HashMap<String,String>> bus) {
+
+    public StationListItem(String stationName, String stationId, String arsId, String routeId, int busType, int previous, int next, ArrayList<HashMap<String, String>> bus) {
         this.stationName = stationName;
         this.stationId = stationId;
         this.arsId = arsId;
@@ -17,6 +18,18 @@ public class StationListItem {
         this.previous = previous;
         this.next = next;
         this.bus = bus;
+    }
+
+    public ArrayList<HashMap<String, String>> getBus() {
+        return bus;
+    }
+
+    public int getCongestion(int position) {
+        return Integer.parseInt(bus.get(position).get("congetion"));
+    }
+
+    public boolean getThisStation(int position) {
+        return bus.get(position).get("lastStnId").equals(stationId);
     }
 
     void setStationName(String stationName) {
@@ -68,14 +81,9 @@ public class StationListItem {
         return busType;
     }
 
-    public ArrayList<HashMap<String,String>> getBus() {
-        return bus;
-    }
-
     public String getSectionId() {
         return sectionId;
     }
-
     public void setSectionId(String sectionId) {
         this.sectionId = sectionId;
     }

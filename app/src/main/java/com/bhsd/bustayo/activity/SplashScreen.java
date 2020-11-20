@@ -2,13 +2,13 @@ package com.bhsd.bustayo.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -31,7 +31,15 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.activity_splash);
         StartAnimations();
     }
+    void init() {
+        SharedPreferences refreshSec = getSharedPreferences("setting", 0);
 
+        if(refreshSec.getInt("refresh", 0) == 0) {  // 새로고침 간격이 설정되어있지 않으면
+            SharedPreferences.Editor editor = refreshSec.edit();
+            editor.putInt("refresh", 30000);
+            editor.apply();
+        }
+    }
     private void StartAnimations() {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.splash_mov);
         anim.reset();

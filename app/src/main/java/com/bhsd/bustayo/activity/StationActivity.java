@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +29,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StationActivity extends AppCompatActivity {
+    private final static String LOG_NAME = "StationActivity";
     //
+    ArrayList<CurrentBusInfo> currentBusInfo = new ArrayList<>();
     CurrentBusRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
     ArrayList<HashMap<String,String>> busList;
@@ -36,79 +39,62 @@ public class StationActivity extends AppCompatActivity {
     String stationNm;
     Activity activity;
 
+    // 자동새로고침을 위한 것들
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station);
-        Log.d("ljh", "StationActivity onCreate");
-
-        recyclerView = findViewById(R.id.bus_list_recyclerview);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
 
         Intent inIntent = getIntent();
         arsId = inIntent.getStringExtra("arsId");
         stationNm = inIntent.getStringExtra("stationNm");
         activity = StationActivity.this;
 
+        setRecyclerView();
+
+        // SharedPreferences에 저장된 refresh 값 가져오기!!
+        delay = getSharedPreferences("setting", 0).getInt("refresh", 0);
+
         new Thread() {
             @Override
             public void run() {
-                busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        setAdapter(busList);
-
-                        setToolbar(stationNm);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
+                setDefaultData();
+                interrupt();
             }
         }.start();
 
-        /* 새로고침 버튼 */
+        /* 새로고침 버튼 클릭~! */
         findViewById(R.id.refresh_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new Thread() {
                     @Override
                     public void run() {
-                        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId }, new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
+                        getData();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                setAdapter(busList);
                                 adapter.notifyDataSetChanged();
                             }
                         });
+                        interrupt();
                     }
                 }.start();
             }
         });
     }
 
-    void setAdapter(ArrayList<HashMap<String,String>> list) {
-        ArrayList<CurrentBusInfo> currentBusInfo = new ArrayList<>();
-        for(HashMap<String, String> item : list) {
+    void setRecyclerView() {
+        recyclerView = findViewById(R.id.bus_list_recyclerview);
 
-            String busRouteId = item.get("busRouteId");
-            String busColor = item.get("routeType");
-            String busCongestion = item.get("congestion");
-            String busNum = item.get("rtNm");
-            String busDestination = item.get("adirection") + "방면";
-            String currentLocation1 = item.get("arrmsg1");
-            String currentLocation2 = item.get("arrmsg2");
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-            // (int busColor, int busCongestion, int busNum,
-            // String busDestination, String currentLocation1, String currentLocation2)
-
-            CurrentBusInfo it = new CurrentBusInfo(busRouteId, busColor,busCongestion,busNum,busDestination,currentLocation1,currentLocation2,false,arsId);
-            currentBusInfo.add(it);
-        }
         adapter = new CurrentBusRecyclerViewAdapter(currentBusInfo, false, activity);
         adapter.setArsId(arsId);
 
@@ -125,6 +111,19 @@ public class StationActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    // 기본적인 데이터 불러오고 툴바설정~~!~!
+    void setDefaultData() {
+        busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId },
+                new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setData();
+                setToolbar(stationNm);
+            }
+        });
+    }
 
     void setToolbar(String bus_number_text) {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
@@ -141,61 +140,75 @@ public class StationActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getColor(R.color.station));   // 상태바 색상
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch(id) {
             case android.R.id.home:
-                onBackPressed();
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    int getCongestionColor(int congestion) {
-        int color = getColor(R.color.import_error);
-        switch(congestion) {
-            case 0: // 데이터 없음
-            case 3: // 여유
-                color = getColor(R.color.busy_empty);
-                break;
-            case 4: // 보통
-                color = getColor(R.color.busy_half);
-                break;
-            case 5: // 혼잡
-            case 6:
-                color = getColor(R.color.busy_full);
-                break;
-            default:
-        }
-        return color;
+    // API 데이터 불러오기~!~!
+    void getData() {
+        new Thread() {
+            @Override
+            public void run() {
+                busList = APIManager.getAPIArray(APIManager.GET_STATION_BY_UID_ITEM, new String[]{ arsId },
+                        new String[]{"adirection","busRouteId","rtNm","congestion","routeType","arrmsg1","arrmsg2"});
+                interrupt();
+            }
+        }.start();
     }
 
-    int getTypeColor(int type) {
-        int color = getColor(R.color.import_error);
-        switch (type) {
-            case 1: // 공항
-                color = getColor(R.color.bus_skyblue);
-                break;
-            case 2: // 마을
-            case 4: // 지선
-                color = getColor(R.color.bus_green);
-                break;
-            case 3: // 간선
-                color = getColor(R.color.bus_blue);
-                break;
-            case 5: // 순환
-                color = getColor(R.color.bus_yellow);
-                break;
-            case 6: // 광역
-            case 0: // 공용
-                color = getColor(R.color.bus_red);
-                break;
-            case 7: // 인천
-            case 8: // 경기
-            case 9: // 폐지
-            default:
+    // adapter에 등록되어있는 ArrayList의 data를 설정!!!
+    void setData() {
+        for(int i = 0; i < busList.size(); i++) {
+            HashMap<String, String> item = busList.get(i);
+            String busRouteId = item.get("busRouteId");
+            String busColor = item.get("routeType");
+            String busCongestion = item.get("congestion");
+            String busNum = item.get("rtNm");
+            String busDestination = item.get("adirection") + "방면";
+            String currentLocation1 = item.get("arrmsg1");
+            String currentLocation2 = item.get("arrmsg2");
+
+            CurrentBusInfo it = new CurrentBusInfo(busRouteId, busColor,busCongestion,busNum,busDestination,currentLocation1,currentLocation2,
+                    false, arsId);
+
+            // currentBusInfo와 busList의 사이즈가 다르다면??? => 아직 아무런 데이터도 없다...
+            if(currentBusInfo.size() != busList.size()) {
+                currentBusInfo.add(it);     // 그냥 데이터만 넣기!!
+            } else {    // 아니면 (currentBusInfo와 busList의 사이즈가 같으면???)
+                currentBusInfo.set(i, it);  // 해당 위치 데이터를 새로운 데이터로 변경!!
+            }
+            adapter.notifyItemChanged(i);
         }
-        return color;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, delay);
+                Log.e("yj", LOG_NAME + "  " + (delay / 1000) + " second later");
+
+                getData();
+                setData();
+
+                adapter.notifyDataSetChanged();
+            }
+        }, delay);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
     }
 }

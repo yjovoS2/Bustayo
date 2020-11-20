@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,15 +30,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StationListActivity extends AppCompatActivity {
+    private final static String LOG_NAME = "StationListActivity";
 
-    private  ArrayList<HashMap<String, String>> bus;
+    private ArrayList<HashMap<String, String>> bus;
+    private HashMap<String,String> busInfo;
+    private ArrayList<HashMap<String,String>> stationInfo;
+
+    private ArrayList<StationListItem> items = new ArrayList<>();
 
     private String busNumber;
     private String busId;
     private int busType;
-    private RecyclerView stationListRCV;
-    private StationListAdapter stationListAdapter;
-    private HashMap<String,String> busInfo;
+    private StationListAdapter adapter;
+
+    // 자동새로고침을 위한 것들
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,31 +55,19 @@ public class StationListActivity extends AppCompatActivity {
         //Log.d("ljh", "Station List Activity onCreate");
 
         // 선택된 Bus의 정보를 받아오기 위한 intent
-        Intent inIntent = getIntent();
+        final Intent inIntent = getIntent();
         busNumber = inIntent.getStringExtra("busRouteNm");
 
-        stationListRCV = findViewById(R.id.station_list_recyclerview);
-        init();
+        setRecyclerView();
 
-
+        // SharedPreferences에 저장된 refresh 값 가져오기!!
+        delay = getSharedPreferences("setting", 0).getInt("refresh", 0);
 
         new Thread() {
             @Override
             public void run() {
-                busInfo = APIManager.getAPIMap(APIManager.GET_BUS_ROUTE_LIST, new String[]{busNumber}, new String[]{"busRouteId","routeType"});
-                bus = APIManager.getAPIArray(APIManager.GET_BUSPOS_BY_RT_ID, new String[]{busInfo.get("busRouteId")}, new String[]{"lastStnId", "congetion"});
-                busId = busInfo.get("busRouteId");
-                busType = Integer.parseInt(busInfo.get("routeType"));
-                final ArrayList<HashMap<String,String>> stationInfo = APIManager.getAPIArray(APIManager.GET_STATION_BY_ROUTE, new String[]{busInfo.get("busRouteId")}, new String[]{"station", "arsId", "stationNm"});
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        setAdapter(stationInfo);
-                        setToolbar(busNumber);
-                        stationListAdapter.notifyDataSetChanged();
-                    }
-                });
+                setDefaultData();
+                interrupt();
             }
         }.start();
 
@@ -80,50 +78,51 @@ public class StationListActivity extends AppCompatActivity {
                 new Thread() {
                     @Override
                     public void run() {
-                        busInfo = APIManager.getAPIMap(APIManager.GET_BUS_ROUTE_LIST, new String[]{busNumber}, new String[]{"busRouteId","routeType"});
-                        bus = APIManager.getAPIArray(APIManager.GET_BUSPOS_BY_RT_ID, new String[]{busInfo.get("busRouteId")}, new String[]{"lastStnId", "congetion"});
-                        final ArrayList<HashMap<String,String>> stationInfo = APIManager.getAPIArray(APIManager.GET_STATION_BY_ROUTE, new String[]{busInfo.get("busRouteId")}, new String[]{"station", "arsId", "stationNm"});
-
+                        getData();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                setAdapter(stationInfo);
-                                stationListAdapter.notifyDataSetChanged();
+                                setData();
+                                adapter.notifyDataSetChanged();
                             }
                         });
+                        interrupt();
                     }
                 }.start();
             }
         });
     }
 
-    /* adapter & item 설정! */
-    void init() {
+    void setRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.station_list_recyclerview);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        stationListRCV.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        adapter = new StationListAdapter(items);
+
+        recyclerView.setAdapter(adapter);
     }
 
-    void setAdapter(ArrayList<HashMap<String,String>> item) {
-        int previous, next;
-        stationListAdapter = new StationListAdapter();
-        for(int i = 0; i < item.size(); i++) {
-            if(i == 0) {
-                previous = getColor(R.color.invisible);
-            } else {
-                previous = getColor(R.color.colorNormalLight);
-            }
+    void setDefaultData() {
+        busInfo = APIManager.getAPIMap(APIManager.GET_BUS_ROUTE_LIST, new String[]{ busNumber }, new String[]{"busRouteId","routeType"});
 
-            if(i == item.size() -1) {
-                next = getColor(R.color.invisible);
-            } else {
-                next = getColor(R.color.colorNormalLight);
-            }
+        busId = busInfo.get("busRouteId");
+        busType = Integer.parseInt(busInfo.get("routeType"));
 
-            StationListItem it = new StationListItem(item.get(i).get("stationNm"), item.get(i).get("station"), item.get(i).get("arsId"), busId, busType, previous, next, bus);
-            stationListAdapter.addItem(it);
-        }
-        stationListRCV.setAdapter(stationListAdapter);
+        bus = APIManager.getAPIArray(APIManager.GET_BUSPOS_BY_RT_ID, new String[]{ busId }, new String[]{"lastStnId", "congetion"});
+        stationInfo = APIManager.getAPIArray(APIManager.GET_STATION_BY_ROUTE, new String[]{ busId },
+                new String[]{"station", "arsId", "stationNm"});
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setData();
+                setToolbar(busNumber);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /* toolbar 설정! */
@@ -173,12 +172,14 @@ public class StationListActivity extends AppCompatActivity {
         }
         return color;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.station_list_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -194,5 +195,73 @@ public class StationListActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // API 데이터 불러오기~!~!
+    void getData() {
+        new Thread() {
+            @Override
+            public void run() {
+                busInfo = APIManager.getAPIMap(APIManager.GET_BUS_ROUTE_LIST, new String[]{busNumber}, new String[]{"busRouteId","routeType"});
+                bus = APIManager.getAPIArray(APIManager.GET_BUSPOS_BY_RT_ID, new String[]{busId}, new String[]{"lastStnId", "congetion"});
+                stationInfo = APIManager.getAPIArray(APIManager.GET_STATION_BY_ROUTE, new String[]{busId},
+                        new String[]{"station", "arsId", "stationNm"});
+
+                interrupt();
+            }
+        }.start();
+    }
+
+    // adapter에 등록되어있는 ArrayList의 data를 설정!!!
+    void setData() {
+        int previous, next;
+        adapter = new StationListAdapter();
+        for(int i = 0; i < stationInfo.size(); i++) {
+            String stationName = stationInfo.get(i).get("stationNm");
+            String station = stationInfo.get(i).get("station");
+            String arsId = stationInfo.get(i).get("arsId");
+
+            if(i == 0) {
+                previous = getColor(R.color.invisible);
+            } else {
+                previous = getColor(R.color.colorNormalLight);
+            }
+            if(i == stationInfo.size() -1) {
+                next = getColor(R.color.invisible);
+            } else {
+                next = getColor(R.color.colorNormalLight);
+            }
+
+            StationListItem it = new StationListItem(stationName, station, arsId, busId, busType, previous, next, bus);
+
+            if(items.size() != stationInfo.size()) {
+                items.add(it);
+            } else {
+                items.set(i, it);
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, delay);
+                Log.e("yj", LOG_NAME + "  " + (delay / 1000) + " second later");
+
+                getData();
+                setData();
+
+                adapter.notifyDataSetChanged();
+            }
+        }, delay);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
     }
 }

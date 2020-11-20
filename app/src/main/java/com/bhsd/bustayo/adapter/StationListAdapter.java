@@ -2,8 +2,6 @@ package com.bhsd.bustayo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.MainActivity;
@@ -80,6 +77,7 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
         private TextView stationName;
         private ImageView previous;
         private ImageView next;
+        private ImageView busImage, manImage;
         private String stationId, arsId, routeId;
         private int busType;
         ArrayList<HashMap<String, String>> bus;
@@ -93,6 +91,9 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
             stationName = itemView.findViewById(R.id.busstop_name);
             previous = itemView.findViewById(R.id.previous_busstop);
             next = itemView.findViewById(R.id.next_busstop);
+
+            busImage = itemView.findViewById(R.id.bus);
+            manImage = itemView.findViewById(R.id.man);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,33 +129,21 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListAdapter.
             previous.setBackgroundColor(item.getPreviousColor());
             next.setBackgroundColor(item.getNextColor());
 
+            busImage.setVisibility(View.GONE);
+            manImage.setVisibility(View.GONE);
 
             for(int i = 0; i < bus.size(); i++) {
-                if(bus.get(i).get("lastStnId").equals(stationId)) {
-                    addBusIcon(bus.get(i).get("congetion"), busType);
+                if(item.getThisStation(i)) {
+                    busImage.setVisibility(View.VISIBLE);
+                    manImage.setVisibility(View.VISIBLE);
+                    addBusIcon(item.getCongestion(i), busType);
+                    break;
                 }
             }
         }
-        void addBusIcon(String congestion, int type) {
-            ImageView busIcon = new ImageView(itemView.getContext());
-            ConstraintLayout constraint = itemView.findViewById(R.id.station_list_item);
-
-            ConstraintLayout.LayoutParams constParams = new ConstraintLayout.LayoutParams(85, 85);
-            constParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-            constParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-            constParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-            constParams.setMarginStart(50);
-
-            Drawable bus = context.getDrawable(R.drawable.ic_bus_).mutate();
-            Drawable man = context.getDrawable(R.drawable.ic_man).mutate();
-            LayerDrawable drawable = new LayerDrawable(new Drawable[]{man, bus});
-
-            drawable.getDrawable(0).setTint(getCongestionColor(Integer.parseInt(congestion)));
-            drawable.getDrawable(1).setTint(getTypeColor(type));
-
-            busIcon.setImageDrawable(drawable);
-
-            constraint.addView(busIcon, constParams);
+        void addBusIcon(int congestion, int type) {
+            manImage.setColorFilter(getCongestionColor(congestion));
+            busImage.setColorFilter(getTypeColor(type));
         }
 
         int getCongestionColor(int congestion) {
