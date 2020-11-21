@@ -30,6 +30,8 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         StartAnimations();
+
+        init();
     }
     void init() {
         SharedPreferences refreshSec = getSharedPreferences("setting", 0);

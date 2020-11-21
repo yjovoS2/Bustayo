@@ -111,7 +111,7 @@ public class BookmarkFragment extends Fragment {
         bookmarkBusStation = new ArrayList<>();
         bookmark = new ArrayList<>();
 
-        SQLiteDatabase dbSQL = DBHelper.getReadableDatabase();
+        SQLiteDatabase dbSQL = DBHelper.getWritableDatabase();
         Cursor cursor = dbSQL.rawQuery("SELECT DISTINCT arsId FROM bookmarkTB;", null);
         while (cursor.moveToNext())
             bookmarkBusStation.add(cursor.getString(0));

@@ -114,7 +114,7 @@ public class CurrentBusRecyclerViewAdapter extends RecyclerView.Adapter<CurrentB
         bookmarkBusStation.clear();
         bookmark.clear();
 
-        DBHelper = new ApplicationDB(activity);
+        DBHelper = new ApplicationDB(activity.getApplicationContext());
         SQLiteDatabase dbSQL = DBHelper.getReadableDatabase();
         Cursor cursor = dbSQL.rawQuery("SELECT DISTINCT arsId FROM bookmarkTB;", null);
         while (cursor.moveToNext())

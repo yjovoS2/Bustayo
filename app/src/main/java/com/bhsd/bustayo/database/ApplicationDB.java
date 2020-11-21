@@ -68,6 +68,12 @@ public class ApplicationDB extends SQLiteOpenHelper {
                     "minute VARCHAR(2))"
             );
 
+            db.execSQL("CREATE TABLE testTB(" +
+                    "complaintId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "busNum VARCHAR(30), " +
+                    "content VARCHAR(140))"
+            );
+
             /*
              * 버스 즐겨찾기 테이블
              * arsId      : 정류장 고유번호
@@ -75,7 +81,7 @@ public class ApplicationDB extends SQLiteOpenHelper {
              */
             db.execSQL("CREATE TABLE bookmarkTB(" +
                     "busRouteId VARCHAR(9), " +
-                    "arsId VARCHAR(5) ,"+
+                    "arsId VARCHAR(5), "+
                     "PRIMARY KEY (busRouteId, arsId))"
             );
         }

@@ -1,6 +1,7 @@
 package com.bhsd.bustayo.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -10,8 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhsd.bustayo.R;
 import com.bhsd.bustayo.adapter.HelpAdapter;
+import com.bhsd.bustayo.application.APIManager;
 import com.bhsd.bustayo.dto.HelpItem;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class HelpActivity extends AppCompatActivity {
@@ -68,13 +78,7 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     void getItem() {
-        for(int i = 1; i < 10; i++) {
-            HelpItem item = new HelpItem("test title" + i, "2020-11-0" + i, "content" + i);
-            items.add(item);
-        }
-
-
-        /*String result_msg = "";
+        String result_msg = "";
         try {
             URL url = new URL(APIManager.GET_HELP_LIST);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -102,7 +106,7 @@ public class HelpActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             Log.e("yj", ""+e);
-        }*/
+        }
 
     }
 }
