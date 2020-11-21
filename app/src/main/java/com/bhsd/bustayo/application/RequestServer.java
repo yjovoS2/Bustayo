@@ -1,8 +1,6 @@
 package com.bhsd.bustayo.application;
 
 import android.app.Activity;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -31,7 +29,7 @@ public class RequestServer {
     }
 
     public void requestGetInAlarm(String busRouteId, String arsId, final int alarm, String token) {
-        final String url = "http://10.0.2.2:3000/push/postin";
+        final String url = APIManager.POST_IN; //"http://10.0.2.2:3000/push/postin";
 
         final String routeId = busRouteId;
         final String arsid = arsId;
@@ -103,7 +101,7 @@ public class RequestServer {
     }
 
     public void requestGetOffAlarm(String busRouteId, final String arsId, String mybus, final int alarm, String token, final int position) {
-        final String url = "http://10.0.2.2:3000/push/postOff";
+        final String url = APIManager.POST_OUT; //"http://10.0.2.2:3000/push/postOff";
 
         final String routeId = busRouteId;
         final String arsid = arsId;

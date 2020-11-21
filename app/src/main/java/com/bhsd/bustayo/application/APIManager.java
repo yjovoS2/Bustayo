@@ -25,6 +25,9 @@ public class APIManager {
 
     /* 서버 */
     private static final String SERVER_URL = "http://118.67.134.138:3000/"; // 서버주소
+    /* 알림 */
+    public static final String POST_IN = SERVER_URL + "push/postin";    // 승차
+    public static final String POST_OUT = SERVER_URL + "push/postOut";  // 하차
     /* 공지사항 */
     public static final String GET_NOTICE_LIST = SERVER_URL + "notice/list";    // 공지사항 목록 받아오기
     /* 도움말 */
