@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -23,7 +22,7 @@ public class SettingFragment extends PreferenceFragment {
 
     ListPreference auto_refresh;
     Preference account_info;
-    Preference privacy_policy, information_provider, open_source;
+    Preference privacy_policy, information_provider;
     Preference help, question;
     boolean login_state;
 
@@ -111,14 +110,6 @@ public class SettingFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent(getContext(), InformationProvider.class);
                 startActivity(intent);
-                return true;
-            }
-        });
-        open_source = findPreference("open_source");
-        open_source.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), preference.getTitle(), Toast.LENGTH_LONG).show();
                 return true;
             }
         });

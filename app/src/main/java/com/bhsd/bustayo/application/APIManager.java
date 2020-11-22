@@ -14,7 +14,7 @@ public class APIManager {
     private static final String CJB_KEY     = "mwvEaAXw6zA%2BTnM5a7W%2F24dpurVReU2rdiVACF8v3oQrY%2Becbbv018iPqZnXId0oqx4cSkUBbQxU1vFjPn62kw%3D%3D";
     private static final String LYJ_KEY     = "a9hQklCDHMmI23KG3suYrx0VtU7OOMgN%2B1SbLmIclORV%2FD%2F5QTRxFtmrjHzv4IEh8GiXMgiryKrlu7KKyAstKg%3D%3D";
     private static final String PCJ_KEY     = "m0Oa7AbIFizhCq03rya2SapvO0bHMctYwrKZls8BAUgoHdvVWVuU%2BVhh%2BEiYxtXXVYuJCOPP3DYvFywUzb%2F3Ow%3D%3D";
-    private static final String SERVICE_KEY = LYJ_KEY;
+    private static final String SERVICE_KEY = CJB_KEY;
 
     private static final String BUS_URL = "http://ws.bus.go.kr/api/rest/";
     private static final String LOST_GOODS_URL = "http://apis.data.go.kr/1320000/LostGoodsInfoInqireService/";
@@ -27,7 +27,7 @@ public class APIManager {
     private static final String SERVER_URL = "http://118.67.134.138:3000/"; // 서버주소
     /* 알림 */
     public static final String POST_IN = SERVER_URL + "push/postin";    // 승차
-    public static final String POST_OUT = SERVER_URL + "push/postOut";  // 하차
+    public static final String POST_OFF = SERVER_URL + "push/postOff";  // 하차
     /* 공지사항 */
     public static final String GET_NOTICE_LIST = SERVER_URL + "notice/list";    // 공지사항 목록 받아오기
     /* 도움말 */

@@ -6,13 +6,12 @@ import android.content.DialogInterface;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import com.bhsd.bustayo.MainActivity;
 
 import java.util.ArrayList;
 
 public class SetAlarmDialog {
 
-    MainActivity activity;
+    Activity activity;
     Context context;
     DialogListener dialogListener;
 
@@ -27,7 +26,7 @@ public class SetAlarmDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("알림 설정");
         selectedItem.add(3);
-        this.activity = (MainActivity)activity;
+        this.activity = activity;
         this.context = context;
         this.dialogListener = dialogListener;
 

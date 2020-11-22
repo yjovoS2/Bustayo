@@ -101,7 +101,7 @@ public class RequestServer {
     }
 
     public void requestGetOffAlarm(String busRouteId, final String arsId, String mybus, final int alarm, String token, final int position) {
-        final String url = APIManager.POST_OUT; //"http://10.0.2.2:3000/push/postOff";
+        final String url = APIManager.POST_OFF; //"http://10.0.2.2:3000/push/postOff";
 
         final String routeId = busRouteId;
         final String arsid = arsId;
